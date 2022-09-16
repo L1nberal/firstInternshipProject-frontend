@@ -1,0 +1,116 @@
+.wrapper{
+    background-color:rgba(44, 46, 60, 0.449);
+    width: var(--login-form-wrapper-width);
+    min-height: var(--login-form-wrapper-height);
+    border-radius: 3px;
+   
+    h2{
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    form{
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: column;
+        padding: 0px 1.5%;
+
+        .database-login{
+            width: 100%;
+            // ==============container which stores user's infor for logging in===
+            .database-login-infor-container{
+                div{
+                    background-color: transparent;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    border-radius: 3px;
+                    margin: 10px 0px;
+                    border: solid 1px white;
+
+                    &:focus-within{
+                        border: solid 1px black;
+                    }
+
+                    input{
+                        border: none;
+                        outline: none;
+                        height: 80%;
+                        font-size: 100%;
+                        width: 100%;
+                        background-color: transparent;
+                    }
+
+                    .icon{
+                        padding: 10px;
+                    }
+                }
+
+            }
+            // ==============login button===========
+            .database-login__submit-btn{
+                width: 100%;
+                height: 50px;
+                background-color: transparent;
+                margin: 10px 0px;
+                cursor: pointer;
+                text-transform: uppercase;
+                transition: 0.5s;
+
+                &:hover{
+                    border: solid 1px rgba($color: #ffffff, $alpha: 1.0);
+                }
+            }
+
+        }
+        // ============barrier in between database-login and other-login-methods====
+        .barrier{
+            width: 80%;
+            height: 1px;
+            background-color: rgba($color: #5c5757, $alpha: 1.0);
+            margin: 10px 0px;
+        }
+        // =============other-login-methods==========
+        .other-login-methods{
+            margin: 10px 0px;
+            width: 100%;
+            // ================login-button===========
+            button{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+                cursor: pointer;
+                margin-bottom: 10px;
+                // ==========logo in login button======
+                img{
+                    width: 50px;
+                    margin-right: 15px;
+                }
+            }
+            
+        }
+        // ==================go to home page button=============
+        .home-btn{
+            position: absolute;
+            right: 10%;
+            bottom: 10%;
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            text-transform: uppercase;
+            width: 80px;
+            height: 35px;
+            background-color: rgba($color: #151516, $alpha: 1.0);
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover{
+                background-color: rgba($color: #6f6f6f, $alpha: 1.0);
+            }
+        }
+    }
+}

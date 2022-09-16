@@ -1,0 +1,161 @@
+.wrapper{
+    height: 50px;
+    background:  linear-gradient(to right, rgb(61, 42, 182) , rgb(117, 53, 176) 50%);
+    display: flex;
+    align-items: center;
+
+    // =========================right part of the header===========
+    .wrapper__right{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        .logo{
+            width: 30px;
+            height: 30px;
+            margin-left: 10px;
+        }
+
+
+        nav{
+            height: 50px;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            // border: solid 1px black;
+
+            ul{
+                display: flex;
+                padding: 0;
+                margin: 0;
+                height: 100%;
+                position: relative;
+
+
+                .list-option{
+                    padding: 0px 15px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    position: relative;
+                    padding: 0px 10px;
+                    font-size: 17px;
+                    color: rgb(165, 144, 215);
+                    transition: 0.5s;
+                    background-color: transparent;
+                    border: none;
+                    text-decoration: none;
+                    &:hover{
+                        color: rgb(255, 255, 255);
+
+                        &::after{
+                            display: block;
+                            width: 100%;
+                        }
+                    }
+
+                    &::after{
+                        content: '';
+                        height: 3px;
+                        background-color: rgba($color: #e679c2, $alpha: 1.0);
+                        width: 0%;
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                        
+                    }
+                }
+            }
+        }
+    }
+    // ===============================left part of the header=============
+    .wrapper__left{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        // ==============search container==========
+        .search{
+            display: flex;
+            width: 400px;
+            background-color: white;
+            height: var(--searchContainerHeight);
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+            align-items: center;
+            border: solid 1px transparent;
+
+            &:focus-within{
+                border: solid 1px rgba($color: #454545, $alpha: 1.0);
+            }
+
+            &::after{
+                content: '';
+                width: 1px;
+                height: 80%;
+                background-color: rgba($color: #a1b2cb, $alpha: 1.0);
+                position: absolute;
+                right: calc(var(--searchIconPadding)*2 + var(--searchIconFontsize));
+            }
+            
+            .search__input{
+                width: 100%;
+                outline: none;
+                border: none;
+                display: block;
+                height: calc(var(--searchContainerHeight) - 10px);
+                text-indent: 10px;
+                font-size: calc(var(--searchContainerHeight) - 24px);
+                
+            }
+
+            .search__icon{
+                font-size: var(--searchIconFontsize);
+                padding: var(--searchIconPadding);
+                cursor: pointer;
+
+                &:hover{
+                    background-color: rgba($color: #dcdddf, $alpha: 1.0);
+                }
+
+            }
+        }
+
+        .user{
+            margin-right: 3%;
+            // ==================user, before logging in=============
+            .user__login-btn{
+                color: white;
+                text-decoration: none;
+                background-color: rgba($color: #a772e8, $alpha: 1.0);
+                padding: 10px 20px;
+                border-radius: 3px;
+
+                &:hover{
+                    background-color: rgba($color: #9157d6, $alpha: 1.0);
+                }
+                &:active{
+                    background-color: rgba($color: #9b64df, $alpha: 1.0);
+                }
+            }
+            // =============user, after logging in==================
+            .user__container{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .avatar{
+                    width: 37px;
+                    border-radius: 5px;
+                }
+
+            }
+
+        }
+    }
+
+}
+
+

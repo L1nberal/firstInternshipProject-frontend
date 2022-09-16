@@ -1,0 +1,19 @@
+.wrapper{
+    background-color: white;
+    min-width: 150px;
+    border-radius: 3px;
+    border: solid 1px #cfcece;
+
+    .log-out-btn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        min-height: 30px;
+        
+        &:hover{
+            background-color: #9085a9;
+        }
+    }
+    
+}
