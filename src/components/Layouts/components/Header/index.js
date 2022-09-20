@@ -13,7 +13,7 @@ import { AuthContext } from "../../../../context/AuthContext";
 const cx = classnames.bind(style)
 
 function Header() {
-    const { isLoggedIn, isAdmin } = useContext(AuthContext)
+    const { isLoggedIn, isAdmin, user } = useContext(AuthContext)
     const [organisations, setOrganisations] = useState([])
     const [categories, setCategories] = useState([])
     let newOrganisations = []
@@ -104,10 +104,11 @@ function Header() {
                     {isLoggedIn ? (
                         <div className={cx('user__container')}>
                             <UserMenu isAdmin={isAdmin}>
-                                <img src="https://24s.vn/hinh-dai-dien-facebook-de-thuong/imager_4107.jpg" className={cx('avatar')}/>
-                                
+                                <div className={cx('user__container')}>
+                                    <img src={user.image} className={cx('avatar')}/>
+                                    <span className={cx('username')}>{user.name}</span>
+                                </div>
                             </UserMenu>
-                            
                         </div>
 
                     ) : (

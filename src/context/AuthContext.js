@@ -38,15 +38,16 @@ export const AuthContextProvider = ({children}) => {
     //authorize user
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser)
             if(currentUser) {
                 setIsLoggedIn(true)
                 localStorage.setItem('isLoggedIn', true)
 
                 const userInfor = {
                     name: currentUser.displayName,
-                    email: currentUser.email
+                    email: currentUser.email,
+                    image: currentUser.photoURL
                 }
+                setUser(userInfor)
                 localStorage.setItem('user', JSON.stringify(userInfor))
             }
         })
@@ -76,7 +77,7 @@ export const AuthContextProvider = ({children}) => {
 
     } 
 
-    // console.log(user)
+    console.log(user)
 
     return (
         <AuthContext.Provider value={{isAdmin, isLoggedIn, dataBaseLogin, googleSignIn, facebookSignIn, logOut, user}}>
