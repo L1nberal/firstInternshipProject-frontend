@@ -8,11 +8,14 @@ import {
     FacebookAuthProvider
 } from "firebase/auth";
 import { auth } from "../firebase";
-
-const AuthContext = createContext()
+  
+export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLoggedIn')))
+    const [isAdmin, setIsAdmin] = useState()
+
     //login with google
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider()
@@ -24,29 +27,64 @@ export const AuthContextProvider = ({children}) => {
         const provider = new FacebookAuthProvider()
         signInWithPopup(auth, provider)
     }
-
+  
     //logout function
     const logOut = () => {
         signOut(auth)
+        localStorage.removeItem("user")
+        localStorage.removeItem("isLoggedIn")
+        setIsLoggedIn(false)
     }
-
+    //authorize user
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            console.log('currentUser', currentUser)
+            if(currentUser) {
+                setIsLoggedIn(true)
+                localStorage.setItem('isLoggedIn', true)
+
+                const userInfor = {
+                    name: currentUser.displayName,
+                    email: currentUser.email
+                }
+                localStorage.setItem('user', JSON.stringify(userInfor))
+            }
         })
+
         return () => {
             unsubscribe()
         }
-    }, [])
+    }, [])   
+
+    //database login handler
+    const dataBaseLogin = (respond) => {
+        const userInfor = {
+            name: respond.data.user.username,
+            email: respond.data.user.email
+        }
+        setUser(userInfor)
+
+        if(respond.data.user.isAdmin) {
+            setIsAdmin(true)
+        }else{
+            setIsAdmin(false)
+        }
+
+        localStorage.setItem('user', JSON.stringify(userInfor))
+        localStorage.setItem('isLoggedIn', true)
+        setIsLoggedIn(true)
+
+    } 
+
+    // console.log(user)
 
     return (
-        <AuthContext.Provider value= {{googleSignIn, facebookSignIn, logOut, user}}>
+        <AuthContext.Provider value={{isAdmin, isLoggedIn, dataBaseLogin, googleSignIn, facebookSignIn, logOut, user}}>
             {children}
-        </AuthContext.Provider>
+        </AuthContext.Provider>  
     )
 }
-
+ 
 export const UserAuth = () => {
     return useContext(AuthContext)
 }

@@ -1,20 +1,21 @@
 import classnames from "classnames/bind"
 import {useEffect, useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useContext } from "react";
 
 import { NavbarDropdownMenu, UserMenu } from "../../../menu";
 import Button from "../../../Button";
 import { icons } from "../../../../assets"
 import style from './Header.module.scss'
-import { UserAuth } from "../../../../context/AuthContext";
-import { isLoggedin } from "../../../pages/Login";
+import { AuthContext } from "../../../../context/AuthContext";
+
 
 const cx = classnames.bind(style)
 
 function Header() {
+    const { isLoggedIn, isAdmin } = useContext(AuthContext)
     const [organisations, setOrganisations] = useState([])
     const [categories, setCategories] = useState([])
-    const { logOut } = UserAuth()
     let newOrganisations = []
     let newCategories = []
 
@@ -62,7 +63,8 @@ function Header() {
             to: '/contact-us'
         },  
 
-    ]     
+    ]   
+    
 
     return(
         <div className={cx('wrapper')}>
@@ -99,25 +101,20 @@ function Header() {
                 {/* ==================user-container============= */}
                 <div className={cx('user')}>
                     {/* ======================user, after logging in============= */}
-                    {isLoggedin ? (
+                    {isLoggedIn ? (
                         <div className={cx('user__container')}>
-                            <UserMenu><img src="https://24s.vn/hinh-dai-dien-facebook-de-thuong/imager_4107.jpg" className={cx('avatar')}/></UserMenu>
+                            <UserMenu isAdmin={isAdmin}>
+                                <img src="https://24s.vn/hinh-dai-dien-facebook-de-thuong/imager_4107.jpg" className={cx('avatar')}/>
+                                
+                            </UserMenu>
                             
-                            {/* <button 
-                                className={cx('log-out-btn')}
-                                onClick={async() => {
-                                    try {
-                                        await logOut()
-                                        window.location.reload(1);
-                                    }catch(error) {
-                                        console.log(error)
-                                    }
-                            }}>Log out</button> */}
                         </div>
 
                     ) : (
                     // ================user, before logging in==================
-                        <Button className={cx('user__login-btn')} to='/login'>Login</Button>
+                       <div>
+                            <Button className={cx('user__login-btn')} to='/log-in'>Login</Button>
+                       </div>
                     )}
                     
                 </div>

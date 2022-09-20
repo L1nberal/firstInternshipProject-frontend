@@ -14,7 +14,7 @@
         align-items: center;
         justify-items: center;
         flex-direction: column;
-        padding: 0px 1.5%;
+        padding: 0px 2%;
 
         .database-login{
             width: 100%;
@@ -26,13 +26,16 @@
                     display: flex;
                     align-items: center;
                     border-radius: 3px;
-                    // margin-bottom: 30px;
                     border: solid 1px white;
 
                     &:focus-within{
                         border: solid 1px black;
                     }
-
+                    
+                    .icon{
+                        padding: 10px;
+                    }
+                    
                     input{
                         border: none;
                         outline: none;
@@ -40,11 +43,7 @@
                         font-size: 100%;
                         width: 100%;
                         background-color: transparent;
-                    }
-
-                    .icon{
-                        padding: 10px;
-                    }
+                    } 
                 }
 
                 .invalid-feedback{
@@ -56,7 +55,6 @@
                     margin: 0;
                     color: rgb(189, 27, 27);
                 }
-
             }
             // ==============login button===========
             .database-login__submit-btn{
@@ -84,21 +82,27 @@
         // =============other-login-methods==========
         .other-login-methods{
             margin: 10px 0px 0px 0px;
-            width: 100%;
-            // ================login-button===========
+            width: 100%;            // ================login-button===========
             button{
                 width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+                min-height: 60px;
                 margin-bottom: 10px;
+
                 // ==========icon in login button======
                 img{
                     width: 50px;
                     margin-right: 15px;
                 }
+
+
+
+
             }
+            
         }
         // ==================go to home page button=============
         .home-btn{
@@ -115,13 +119,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            
+
             &:hover{
                 background-color: rgba($color: #6f6f6f, $alpha: 1.0);
             }
         }
-        //=================Go to sign up button==================
-        .user__signup-btn{
+        //=================Go to log in button==================
+        .user__login-btn{
             text-decoration: none;
             width: 100%;
             background-color: white;
@@ -138,9 +142,6 @@
                 margin-right: 10px;
                 font-size: 25px;
             }
-               
-            
         }
-
     }
 }

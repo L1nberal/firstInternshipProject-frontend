@@ -1,10 +1,11 @@
-import {Protected, Account, Home, Login} from '../components'
+import {Account, Home, Login, Signup} from '../components'
 import {DefaultLayout, NoHeaderLayout} from '../components/Layouts'
 
 const publishRoutes = [
-    {path:'/account', Component: Account, CoverComponent: Protected},
+    {path:'/account', Component: Account},
     {path:'/', Component: Home},
-    {path:'/login', Component: Login, Layout: NoHeaderLayout},
+    {path:'/log-in', Component: Login, Layout: NoHeaderLayout},
+    {path:'/sign-up', Component: Signup, Layout: NoHeaderLayout},
 ] 
 
 export {publishRoutes}

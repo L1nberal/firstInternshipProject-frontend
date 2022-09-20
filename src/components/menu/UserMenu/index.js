@@ -10,7 +10,9 @@ const cx = classnames.bind(style)
 
 const UserMenu = React.forwardRef((props, ref) => {
     const {logOut} = UserAuth()
+    console.log(props.isAdmin)
 
+    const admin = true
     return (
         <Tippy
             // visible
@@ -23,16 +25,37 @@ const UserMenu = React.forwardRef((props, ref) => {
                     <div
                         className={cx('wrapper')}
                     >
-                         <Button 
-                                className={cx('log-out-btn')}
-                                onClick={async() => {
-                                    try {
-                                        await logOut()
-                                        window.location.reload(1);
-                                    }catch(error) {
-                                        console.log(error)
-                                    }
-                        }}>Log out</Button>
+                        {!props.isAdmin ? (
+                            <Button 
+                                   className={cx('log-out-btn')}
+                                   onClick={async() => {
+                                       try {
+                                           await logOut()
+                                           window.location.reload(1); //reload page after logout to update login state
+                                       }catch(error) {
+                                            console.log(error)
+                                       }
+                           }}>Log out</Button>
+
+                        ) : (
+                            <>
+                                <Button 
+                                    className={cx('setting-btn')}
+                                    to='/setting'
+                                >Settings</Button>
+
+                                <Button 
+                                    className={cx('log-out-btn')}
+                                    onClick={async() => {
+                                        try {
+                                            await logOut()
+                                            window.location.reload(1); //reload page after logout to update login state
+                                        }catch(error) {
+                                            console.log(error)
+                                            }
+                                }}>Log out</Button>
+                            </>
+                        )}
                     </div>
                 )
             }}
