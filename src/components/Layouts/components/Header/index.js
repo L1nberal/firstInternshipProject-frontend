@@ -69,7 +69,7 @@ function Header() {
     return(
         <div className={cx('wrapper')}>
             {/* ================= right part of the header ============== */}
-            <div className={cx('wrapper__right')}>
+            <div className={cx('wrapper__left')}>
                 {/* ================logo=============== */}
                 <img className={cx('logo')} src="https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK"/>
                 {/* ===============navbar============= */}
@@ -92,7 +92,7 @@ function Header() {
                 </nav>
             </div>
             {/* ================= left part of the header ============== */}
-            <div className={cx('wrapper__left')}>
+            <div className={cx('wrapper__right')}>
                 {/* ===============search-container============== */}
                 <div className={cx('search')}>
                     <input className={cx('search__input')} type="text" placeholder="type something..." />
@@ -101,12 +101,12 @@ function Header() {
                 {/* ==================user-container============= */}
                 <div className={cx('user')}>
                     {/* ======================user, after logging in============= */}
-                    {isLoggedIn ? (
+                    {user ? (
                         <div className={cx('user__container')}>
-                            <UserMenu isAdmin={isAdmin}>
+                            <UserMenu isAdmin={user.isAdmin}>
                                 <div className={cx('user__container')}>
-                                    <img src={user.image} className={cx('avatar')}/>
-                                    <span className={cx('username')}>{user.name}</span>
+                                    <img src={user.photoURL} className={cx('avatar')}/>
+                                    <span className={cx('username')}>{user.displayName}</span>
                                 </div>
                             </UserMenu>
                         </div>

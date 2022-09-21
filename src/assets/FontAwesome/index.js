@@ -6,6 +6,8 @@ import {
     faRightToBracket,
     faX,
     faCircleXmark,
+    faAngleLeft,
+    faAngleRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 
@@ -17,6 +19,7 @@ export {
     faRightToBracket,
     faCircleXmark,
     faX,
-
+    faAngleLeft,
+    faAngleRight,
 }
 

@@ -7,14 +7,15 @@ import {
     onAuthStateChanged,
     FacebookAuthProvider
 } from "firebase/auth";
+import axios from 'axios';
+
 import { auth } from "../firebase";
-  
+
 export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-    const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLoggedIn')))
-    const [isAdmin, setIsAdmin] = useState()
+    // const [userInfor, setUserInfor] = useState()
 
     //login with google
     const googleSignIn = () => {
@@ -27,28 +28,19 @@ export const AuthContextProvider = ({children}) => {
         const provider = new FacebookAuthProvider()
         signInWithPopup(auth, provider)
     }
-  
-    //logout function
+   //logout function
     const logOut = () => {
         signOut(auth)
         localStorage.removeItem("user")
-        localStorage.removeItem("isLoggedIn")
-        setIsLoggedIn(false)
     }
+
     //authorize user
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if(currentUser) {
-                setIsLoggedIn(true)
-                localStorage.setItem('isLoggedIn', true)
-
-                const userInfor = {
-                    name: currentUser.displayName,
-                    email: currentUser.email,
-                    image: currentUser.photoURL
-                }
-                setUser(userInfor)
-                localStorage.setItem('user', JSON.stringify(userInfor))
+                setUser(currentUser)
+                localStorage.setItem('user', JSON.stringify(currentUser))
+                
             }
         })
 
@@ -56,31 +48,28 @@ export const AuthContextProvider = ({children}) => {
             unsubscribe()
         }
     }, [])   
-
     //database login handler
     const dataBaseLogin = (respond) => {
-        const userInfor = {
-            name: respond.data.user.username,
-            email: respond.data.user.email
-        }
-        setUser(userInfor)
-
-        if(respond.data.user.isAdmin) {
-            setIsAdmin(true)
-        }else{
-            setIsAdmin(false)
-        }
-
-        localStorage.setItem('user', JSON.stringify(userInfor))
-        localStorage.setItem('isLoggedIn', true)
-        setIsLoggedIn(true)
-
+        axios.get(
+            `http://localhost:1337/api/users/${respond.data.user.id}?populate=*`,
+            {headers: { Authorization: `Bearer ${respond.data.jwt}` }}
+        )   
+            .then(respond => {
+                const userInfor = {
+                    displayName: respond.data.username,
+                    isAdmin: respond.data.isAdmin,
+                    jwt: respond.data.jwt,
+                    email: respond.data.email,
+                    photoURL: `http://localhost:1337${respond.data.avatar.url}`,
+                }
+                console.log(userInfor)
+                setUser(userInfor)
+                localStorage.setItem('user', JSON.stringify(userInfor))
+            })
+            .catch(error => console.log(error))
     } 
-
-    console.log(user)
-
     return (
-        <AuthContext.Provider value={{isAdmin, isLoggedIn, dataBaseLogin, googleSignIn, facebookSignIn, logOut, user}}>
+        <AuthContext.Provider value={{dataBaseLogin, googleSignIn, facebookSignIn, logOut, user}}>
             {children}
         </AuthContext.Provider>  
     )

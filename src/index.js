@@ -11,13 +11,13 @@ import GlobalStyle from './components/GlobalStyle';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AuthContextProvider>
-    <GlobalStyle>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
-    </GlobalStyle>
-  </AuthContextProvider>
+    <AuthContextProvider>
+      <GlobalStyle>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+      </GlobalStyle>
+    </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

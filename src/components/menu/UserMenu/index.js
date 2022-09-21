@@ -10,9 +10,7 @@ const cx = classnames.bind(style)
 
 const UserMenu = React.forwardRef((props, ref) => {
     const {logOut} = UserAuth()
-    console.log(props.isAdmin)
-
-    const admin = true
+    
     return (
         <Tippy
             // visible

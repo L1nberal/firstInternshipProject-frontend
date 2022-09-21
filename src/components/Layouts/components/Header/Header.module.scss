@@ -1,11 +1,11 @@
 .wrapper{
     height: 50px;
-    background:  linear-gradient(to right, rgb(61, 42, 182) , rgb(117, 53, 176) 50%);
     display: flex;
     align-items: center;
-
+    width: 1250px;
+    
     // =========================right part of the header===========
-    .wrapper__right{
+    .wrapper__left{
         width: 100%;
         display: flex;
         align-items: center;
@@ -39,7 +39,7 @@
                     cursor: pointer;
                     position: relative;
                     padding: 0px 10px;
-                    font-size: 17px;
+                    font-size: 15px;
                     color: rgb(165, 144, 215);
                     transition: 0.5s;
                     background-color: transparent;
@@ -70,7 +70,7 @@
         }
     }
     // ===============================left part of the header=============
-    .wrapper__left{
+    .wrapper__right{
         width: 100%;
         display: flex;
         align-items: center;
@@ -107,7 +107,7 @@
                 display: block;
                 height: calc(var(--searchContainerHeight) - 10px);
                 text-indent: 10px;
-                font-size: calc(var(--searchContainerHeight) - 24px);
+                font-size: calc(var(--searchContainerHeight) - 26px);
                 
             }
 
