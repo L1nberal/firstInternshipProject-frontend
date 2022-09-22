@@ -49,7 +49,9 @@ export const AuthContextProvider = ({children}) => {
         }
     }, [])   
     //database login handler
+
     const dataBaseLogin = (respond) => {
+
         axios.get(
             `http://localhost:1337/api/users/${respond.data.user.id}?populate=*`,
             {headers: { Authorization: `Bearer ${respond.data.jwt}` }}
@@ -58,15 +60,22 @@ export const AuthContextProvider = ({children}) => {
                 const userInfor = {
                     displayName: respond.data.username,
                     isAdmin: respond.data.isAdmin,
-                    jwt: respond.data.jwt,
                     email: respond.data.email,
                     photoURL: `http://localhost:1337${respond.data.avatar.url}`,
                 }
-                console.log(userInfor)
                 setUser(userInfor)
+                console.log(userInfor)
                 localStorage.setItem('user', JSON.stringify(userInfor))
             })
             .catch(error => console.log(error))
+        
+        
+        // userInfor = {...userInfor, 'jwt': respond.data.jwt}
+        // userInfor.jwt = respond.data.jwt
+        // setUser(userInfor)
+        // console.log(userInfor)
+
+
     } 
     return (
         <AuthContext.Provider value={{dataBaseLogin, googleSignIn, facebookSignIn, logOut, user}}>

@@ -84,11 +84,11 @@ function Login() {
 
     // check if user has logged in, then redirect
     useEffect(() => {
-        // console.log('user', user)
         if(user != null) {
             navigate('/')
         }
     }, [user])
+
 
     return(
         <div className={cx('wrapper')}>

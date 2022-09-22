@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import classnames from 'classnames/bind'
-import Moment from 'moment';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+// import Moment from 'moment';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 import style from './Home.module.scss'
-import { faAngleLeft, faAngleRight } from '../../../assets/FontAwesome'
-import { faCommentsDollar } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classnames.bind(style)
 
@@ -27,86 +27,65 @@ function Home() {
             })  
         })
     }, [])
-
-    //button onClick handler
-    const track = document.getElementById('track')
-    let i=0
-   
-    const turnRightHandler = () => {
-        console.log(i)
-        if(i>track.children.length-5) {
-            i=track.children.length-5
-        }
-        for(i=i+1; i<track.children.length; i++) {
-            track.style.transform = 'translateX(-' + 273*i + 'px)'
-            break
-        }
-        console.log(i)
-
-        hidingButtonHadler(i)
-    }
-
-    const turnLeftHandler = () => {
-        if(i<1) {
-            i=1
-        }
-        for(i=i-1; i>=0; i--) {
-            track.style.transform = 'translateX(-' + 273*i + 'px)'
-            break
-        }
-        hidingButtonHadler(i)
-    }
-
-    const hidingButtonHadler = (i) => {
-        console.log(i)
-        const leftButton = document.getElementById('app-turn-left-button')
-        const rightButton = document.getElementById('app-turn-right-button')
-        if(i>1) {
-            rightButton.style.display = "none"
-            leftButton.style.display = "block"
-        }else if(i<1) {
-            leftButton.style.display = "none"
-            rightButton.style.display = "block"
-        }else{
-            rightButton.style.display = "block"
-            leftButton.style.display = "block"
-        }
-    }
-
+    // settings for the carousel
+    const settings = {
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        initialSlide: 0,
+        responsive: [
+            {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+            }
+            },
+            {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2
+            }
+            },
+            {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+            }
+        ]
+    };
+ 
     return(
         <div className={cx('content')}>
-            <section className={cx('apps-wrapper')}>
-                <h3 className={cx('title')}>Apps nổi bật</h3>
-                
-                <button 
-                    id="app-turn-left-button"
-                    className={cx('app-turn-left-btn')}
-                    onClick={turnLeftHandler}
-                ><FontAwesomeIcon icon={faAngleLeft}/></button>
-
-                <div className={cx('apps-list')}>
-                    <ul id="track" className={cx('track')}>
-                        {apps.map((app, index) => {
-                            // console.log(app)
-                            // const formatDate = Moment(app.publishedAt).format('DD-MM-YYYY')
-                            return(
-                                <div key={index} className={cx('app')} id="app">
-                                    <img className={cx('app__image')} src={`http://localhost:1337${app.photos.data[0].attributes.url}`} alt={app.name}/>
-                                    <div className={cx('app__name')}>{app.name}</div>
-                                    <div className={cx('app__downloaded')}>Lượt tải: {app.downloaded}</div>
-                                    <div className={cx('app__details')}>xem thêm</div>
-                                </div>     
-                            )
-                        })}
-                    </ul>
-                </div>
-
-                <button 
-                    id="app-turn-right-button"
-                    className={cx('app-turn-right-btn')} 
-                    onClick={turnRightHandler}
-                ><FontAwesomeIcon icon={faAngleRight}/></button>
-            </section>
+            {/* ===========app-carousel-container============== */}
+           <div className={cx('apps-carousel')}>
+                {/* ==============title========== */}
+                <h3 className={cx('title')}>APPs</h3>
+                {/* =========carousel=========== */}
+                <Slider {...settings} className={cx('track')}>
+                    {apps.map((app, index) => {
+                        // console.log(app)
+                        // const formatDate = Moment(app.publishedAt).format('DD-MM-YYYY')
+                        return(
+                            <div key={index} className={cx('app')} id="app">
+                                <img className={cx('app__image')} src={`http://localhost:1337${app.photos.data[0].attributes.url}`} alt={app.name}/>
+                                <div className={cx('app__name')}>{app.name}</div>
+                                <div className={cx('app__downloaded')}>Lượt tải: {app.downloaded}</div>
+                                <div className={cx('app__details')}>xem thêm</div>
+                            </div>     
+                        )
+                    })}
+                </Slider>
+           </div>
+            
         </div>
     )
 }
