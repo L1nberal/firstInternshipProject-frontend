@@ -2,10 +2,9 @@ import { useContext, createContext, useEffect, useState } from "react";
 import { 
     GoogleAuthProvider,
     signInWithPopup, 
-    signInWithRedirect,
     signOut,
+    FacebookAuthProvider,
     onAuthStateChanged,
-    FacebookAuthProvider
 } from "firebase/auth";
 import axios from 'axios';
 
@@ -15,8 +14,8 @@ export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-    // const [userInfor, setUserInfor] = useState()
 
+    // console.log(user)
     //login with google
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider()
@@ -25,9 +24,14 @@ export const AuthContextProvider = ({children}) => {
     }
     //login with facebook
     const facebookSignIn = () => {
-        const provider = new FacebookAuthProvider()
+        
+        const provider = new FacebookAuthProvider();
+
         signInWithPopup(auth, provider)
+       
+      
     }
+
    //logout function
     const logOut = () => {
         signOut(auth)
@@ -40,7 +44,7 @@ export const AuthContextProvider = ({children}) => {
             if(currentUser) {
                 setUser(currentUser)
                 localStorage.setItem('user', JSON.stringify(currentUser))
-                
+
             }
         })
 
@@ -69,12 +73,6 @@ export const AuthContextProvider = ({children}) => {
             })
             .catch(error => console.log(error))
         
-        
-        // userInfor = {...userInfor, 'jwt': respond.data.jwt}
-        // userInfor.jwt = respond.data.jwt
-        // setUser(userInfor)
-        // console.log(userInfor)
-
 
     } 
     return (

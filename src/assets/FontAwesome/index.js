@@ -8,6 +8,8 @@ import {
     faCircleXmark,
     faAngleLeft,
     faAngleRight,
+    faDownload,
+    faCloudArrowDown,
 } from '@fortawesome/free-solid-svg-icons'
 
 
@@ -20,6 +22,8 @@ export {
     faCircleXmark,
     faX,
     faAngleLeft,
+    faDownload,
+    faCloudArrowDown,
     faAngleRight,
 }
 

@@ -1,0 +1,212 @@
+.wrapper{   
+    width: 1250px;
+    height: auto;
+    margin-top: 25px;
+    display: flex;
+
+    .app-details{
+        width: 70%;
+        background-color: rgba($color: #ffffff, $alpha: 1.0);
+        border-radius: 7px;
+        padding: 15px;
+        margin-right: 25px;
+
+        .head{
+            display: flex;
+            position: relative; 
+            
+            img{
+                width: 180px;
+            }
+
+            .head__infor{
+                font-weight: bolder;
+                margin-left: 15px;
+                position: relative;
+                
+                .name{
+                    margin-bottom: 10px;
+                }
+
+                .organisation{
+                    margin-bottom: 10px;
+                }
+
+            }
+
+            .download-container{
+                height: 70px;
+                display: flex;
+                width: 200px;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                bottom: 0px;
+                right: 15px;
+                color:rgba(179, 149, 149, 0.562); 
+
+                .head__download-link{
+                    font-size: 35px;
+                    position: absolute;
+                    bottom: 0px;
+                    right: 15px;
+
+                    &:hover{
+                        color: rgba($color: #c88f8f, $alpha: 1.0);
+                    }
+                }
+
+                .message{
+                    text-align: center;
+                }
+            }
+
+        }
+
+        .general-infor{
+            margin-top: 35px;
+            text-indent: 50px;
+        }
+
+        .carousel{
+            margin: 30px 0px;
+
+            .carousel__title{
+                margin-bottom: 15px;
+                font-weight: bolder;
+            }
+          
+            .carousel-slide{
+                // margin-right: 10px;
+
+                img{
+                    width: 200px;
+                }
+            }
+
+            .btn-container{
+                margin: 10px auto;
+                width: 160px;
+                display: flex;
+                justify-content: space-between;
+
+                .carousel-left-btn{
+                    background-color:rgba(7, 7, 7, 0.562); 
+                    border: 0px;         
+                    padding: 10px 15px;  
+                    border-radius: 5px;
+                    color: white;
+
+                    &:hover{
+                        background-color:rgba(179, 149, 149, 0.562); 
+                        color: black;
+                    }
+                }
+    
+                .carousel-right-btn{
+                    background-color:rgba(7, 7, 7, 0.562);   
+                    border: 0px;     
+                    color: white;
+                    padding: 10px 15px;  
+                    border-radius: 5px;
+
+                    &:hover{
+                        background-color:rgba(179, 149, 149, 0.562); 
+                        color: black;
+                    }
+
+                }
+            }
+        }
+
+        .developer{
+            .developer__title{
+                font-weight: bolder;
+            }
+
+            .developer__contact{
+                margin-top: 20px;
+
+                .title{
+                    font-weight: bolder;
+                }
+
+                .infor{
+                    font-weight: bolder;
+                    padding-left: 25px;
+
+                    div{
+                        font-weight: bolder;
+                        margin: 10px 0px;
+                    }
+
+                   
+                }
+            }
+        }
+    }
+
+    .related-apps{
+        background-color: rgba($color: #ffffff, $alpha: 1.0);
+        width: 30%;
+        padding: 15px;
+        border-radius: 7px;
+
+        .related-apps__title{
+            margin-bottom: 25px;
+        }
+
+        a{
+            text-decoration: none;
+            color: rgba($color: #c88f8f, $alpha: 1.0);
+
+            .app-container{
+                margin: 15px 0px;
+                height: 105px;
+                border-radius: 0px;
+                border: 0px;
+                position: relative;
+                
+                &::after{
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 0.5px;
+                    bottom: 0px;
+                    left: 0px;
+                    background-color: rgba($color: #c4c2c2, $alpha: 1.0);
+                }
+    
+                &:last-child::after{
+                    display: none;
+                }
+    
+                .image{
+                    width: 70px;
+                    height: 70px;
+                    margin-right: 15px;
+                }
+    
+                .name{
+                    margin-bottom: 10px;
+                }
+    
+                .description{
+                    height: 100%;
+                    width: 200px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+    
+                }
+            }
+        }
+
+        // message is shown when there are no related apps
+        .related-apps__message{
+            font-size: 17px;
+
+        }
+
+    }
+}

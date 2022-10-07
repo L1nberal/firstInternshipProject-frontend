@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {
@@ -17,12 +18,15 @@ import {
 import style from './Signup.module.scss'
 import {UserAuth} from '../../../context/AuthContext'
 import Button from '../../Button';
+import ErrorPopup from './ErrorPopup';
 
 const cx = classnames.bind(style)
 
 function Signup() {
     const {user, googleSignIn, facebookSignIn} = UserAuth()
     const navigate = useNavigate()
+    // set popup when signing up
+    const [popup, setPopup] = useState(false)
 
     //login with google
     const handleGoogleSignIn = async (e) => {
@@ -67,16 +71,26 @@ function Signup() {
         axios.post('http://localhost:1337/api/auth/local/register', {  
             username: data.username,
             email: data.email,
-            isAdmin: true,
+            isAdmin: false,
             password: data.password,
         })
-            .then(respond => {console.log(respond)})
-            .catch(error => {console.log(error)})
+            .then(respond => {
+                setPopup(false)})
+            .catch(error => {
+                setPopup(true)
+            })
+    
+    }
+
+    if(popup === false) {
+        navigate('/log-in')
     }
     
     return(
         <div className={cx('wrapper')}>
             <h2>Sign up</h2>
+
+            {popup && <ErrorPopup setPopup={setPopup}/>}
 
             <form method='' action='' onSubmit={handleSubmit(onSubmit)}>
                 <div className={cx('database-login')}>

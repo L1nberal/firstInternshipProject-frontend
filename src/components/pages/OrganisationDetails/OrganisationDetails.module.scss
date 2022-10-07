@@ -1,0 +1,163 @@
+.wrapper{
+    width: 1250px;
+    height: auto;
+
+    .head{
+        display: flex;
+        background-color: rgba($color: #ffffff, $alpha: 1.0);
+        border-radius: 7px;
+        margin: 20px 0px;
+        padding: 15px;
+
+        .head__image{
+            width: 300px;
+            margin-right: 35px;
+        }
+
+        .head__infor{
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+
+            div{
+                font-size: 18px;
+                margin-right: 25px;
+                div{
+                    span{
+                        color: rgba($color: #c88f8f, $alpha: 1.0);
+                    }
+                }
+            }
+        }
+    }
+
+    .carousel{
+        img{
+            height: 365px;
+            
+        }
+    }
+
+    .general-infor{
+        background-color: rgba($color: #ffffff, $alpha: 1.0);
+        padding: 15px;
+        border-radius: 7px;
+        margin: 20px 0px 0px 0px;
+
+        .title{
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: bolder;        
+        }
+
+        .about{
+            text-indent: 50px;
+        }
+    }
+
+    .apps-developed {        
+        margin-top: 20px;
+        background-color: white;
+        padding: 15px;
+
+        .title{
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: bolder;
+        }
+
+        .app-container{
+            border: 0px;
+            padding: 20px 0px;
+            cursor: pointer;
+
+            &:hover{
+                background-color: rgba($color: #f2f2f2, $alpha: 1.0);
+            }   
+            // Link tag
+            a{
+                display: block;
+                text-decoration: none;
+                color: black;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+            }
+
+            .app-image{
+                width: 150px;
+                margin: 0px auto;
+                border-radius:  15px;
+            }
+
+            .app-name{
+                text-align: center;
+            }
+        }
+
+        //  a message is prined out when there is no app 
+        .message{
+            text-indent: 50px;
+        }
+    }
+
+    .apps-owned{
+        padding: 15px;
+        margin-top: 20px;
+        background-color: white;
+
+        .title{
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: bolder;
+        }
+
+        .apps-wrapper{
+
+            .app-container{
+                border: 0px;
+                margin: 0px;
+                padding: 20px 0px;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: rgba($color: #f2f2f2, $alpha: 1.0);
+                }
+
+                 // Link tag
+                a{
+                    display: block;
+                    text-decoration: none;
+                    color: black;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .app-image{
+                        width: 150px;
+                        margin: 0px auto;
+                        border-radius:  15px;
+                    }
+        
+                    .app-name{
+                        text-align: center;
+                    }
+                }
+
+            }
+        }
+
+        //  a message is prined out when there is no app 
+        .message{
+            text-indent: 50px;
+        }
+    }
+
+}

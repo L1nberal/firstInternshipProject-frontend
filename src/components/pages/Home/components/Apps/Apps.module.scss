@@ -1,0 +1,65 @@
+//=============== all sorted  apps==============
+.apps{
+    width: 100%;
+    height: 420px;
+    //============== each app============
+    a{
+        text-decoration: none;
+
+        .each-app{
+            margin-bottom: 15px;
+            border-radius: 5px;
+            position: relative;
+
+            &:hover::after{
+                width: 100%;
+            }
+
+            &::after{
+                content: '';
+                width: 0%;
+                height: 100%;
+                background-color:rgba(222, 215, 215, 0.538);    
+                top: 0px;
+                border-radius: 5px;            
+                position: absolute;
+                transition: 0.5s;
+            }
+    
+            .app-infor-container{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                height: 55px;
+                position: relative;
+    
+                .app-name{
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    position: absolute;
+                    z-index: 5;
+                }
+    
+                .app-owner{
+                    position: absolute;
+                    right: 35px;
+                    top: 26%;
+                    z-index: 5;
+                }
+            }
+
+            .download-link{
+                .app-download{
+                    position: relative;
+                    z-index: 5;
+                }
+            }
+        }
+    }
+}
+//==============pagination container==================
+.pagination-container{
+    height: 40px;
+
+}

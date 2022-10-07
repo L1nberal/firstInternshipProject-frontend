@@ -1,0 +1,58 @@
+ // styling the error popup dialogue box
+ .popup-wrapper{
+    position: fixed;
+    left: 25%;
+    top: 30%;
+    width: 50%;
+    border: 1px solid #011627;
+    border-radius: 5px;
+    box-shadow: -2px 5px 5px #374768;
+    background-color:rgba(47, 80, 177, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: #011627;
+
+    .popup-x{
+        position: absolute;
+        right: 0;
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+
+        &:hover{
+            color: red;
+        }
+        
+    }
+
+    .pu-content-container{
+        display: flex;
+        padding: 50px 20px;
+        align-items: center;
+        font-size: 20px;
+        color: white;
+
+        .message{
+            margin-left: 15px;
+        }
+    }
+
+    .pu-button-container{
+        margin: 10px 0px;
+
+        button{
+            background-color: transparent;
+            color: white;
+            padding: 5px 20px;
+            border: solid 1px white;
+            cursor: pointer;
+
+            &:hover{
+                background-color: rgba($color: #2c345a, $alpha: 1.0);
+            }
+        }
+    }
+}

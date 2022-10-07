@@ -1,19 +1,47 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState } from "react"
 import classnames from 'classnames/bind'
-// import Moment from 'moment';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+import Moment from 'moment';
+import CardGroup from 'react-bootstrap/CardGroup';
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form';
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Link} from 'react-router-dom'
 
+import {
+    faDownload,
+} from '../../../assets/FontAwesome'
 import style from './Home.module.scss'
+import Button from "../../Button";
+import Apps from './components/Apps'
 
 const cx = classnames.bind(style)
 
 function Home() {
+    // store apps
     const [apps, setApps] = useState([])
     let store = []
+    // store categories
+    const [categories, setCategories] = useState([])
+    let storeCategories = []
+    // navigate  
+    const navigate = useNavigate()
 
-    //get infor from API
+    //get categories infor from API
+    useEffect(() => {
+        fetch('http://localhost:1337/api/categories?populate=*')
+        .then(response => response.json())
+        .then(data => {
+            data.data.map((post, index) => {
+                setCategories(() => {
+                    storeCategories = [...storeCategories, post.attributes]
+                    return storeCategories
+                })               
+            })  
+        })
+    }, [])
+
+    //get apps infor from API
     useEffect(() => {
         fetch('http://localhost:1337/api/apps?populate=*')
         .then(response => response.json())
@@ -27,65 +55,71 @@ function Home() {
             })  
         })
     }, [])
-    // settings for the carousel
-    const settings = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
-        responsive: [
-            {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: true
-            }
-            },
-            {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2
-            }
-            },
-            {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-            }
-        ]
-    };
- 
+    // checked the first radio tag
+    setTimeout(() => {
+        const firstRadio = document.getElementsByClassName('checked')
+        firstRadio[0].checked = true
+    }, 500)
+
     return(
         <div className={cx('content')}>
-            {/* ===========app-carousel-container============== */}
-           <div className={cx('apps-carousel')}>
-                {/* ==============title========== */}
-                <h3 className={cx('title')}>APPs</h3>
-                {/* =========carousel=========== */}
-                <Slider {...settings} className={cx('track')}>
+            {/* ===============apps container================s */}
+            <div className={cx('apps-container')}>
+                <h3 className={cx('title')}>Nổi bật</h3>
+                {/* =========================app-list====================== */}
+                <CardGroup>
                     {apps.map((app, index) => {
-                        // console.log(app)
-                        // const formatDate = Moment(app.publishedAt).format('DD-MM-YYYY')
-                        return(
-                            <div key={index} className={cx('app')} id="app">
-                                <img className={cx('app__image')} src={`http://localhost:1337${app.photos.data[0].attributes.url}`} alt={app.name}/>
-                                <div className={cx('app__name')}>{app.name}</div>
-                                <div className={cx('app__downloaded')}>Lượt tải: {app.downloaded}</div>
-                                <div className={cx('app__details')}>xem thêm</div>
-                            </div>     
+                        const formatDate = Moment(app.publishedAt).format('DD-MM-YYYY') 
+                        return (
+                            <React.Fragment key={index}>
+                                {index < 4 && (
+                                    <Card className={cx('app')}>
+                                        <Card.Img className={cx('app-image')} variant="top" src={`http://localhost:1337${app.photo.data.attributes.url}`} alt={app.name}/>
+                                        <Card.Body className={cx('app-body')}>
+                                            <Card.Title className={cx('app-title')}>{app.name}</Card.Title>
+                                            <div>
+                                                <Card.Text className={cx('app-description')}>
+                                                    {app.description}
+                                                </Card.Text>
+                                                
+                                                <Card.Text className={cx('app-publishing-date')}>
+                                                    {formatDate}
+                                                </Card.Text>
+                                            </div>
+                                        </Card.Body>
+                                        {/* =================go to details button */}
+                                        <Link className={cx('app-details-button')} to={'/app-details'} state={{app: app, apps: apps}}>Chi tiết</Link>
+                                    </Card>
+                                )}
+                            </React.Fragment>
                         )
                     })}
-                </Slider>
-           </div>
-            
+                </CardGroup>
+            </div>
+            {/* =================categories container=============== */}
+            <div className={cx('categories-container')}>
+                {/* ===================categories list=============== */}
+                <div className={cx('categories')}>
+                    <h3 className={cx('title')}>Thể loại</h3>
+
+                    <Form>
+                        <div className="mb-3">
+                            {categories.map((category, index) => {
+                                return( 
+                                    <Form.Check key={index} className={cx('each-category')}>
+                                        <Form.Check.Input type="radio" className={cx('checked')} name='category'/>
+                                        <Form.Check.Label>{category.name}</Form.Check.Label>
+                                    </Form.Check>
+                                )
+                            })}
+                        </div>
+                    </Form>
+                </div>
+                {/* ======================pagination==================== */}
+                <div className={cx('sorted-apps')}>
+                    <Apps data={apps}/>
+                </div>
+            </div>
         </div>
     )
 }

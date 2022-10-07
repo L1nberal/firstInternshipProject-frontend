@@ -6,8 +6,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios';
-import { useContext } from 'react';
-
+import { useContext } from 'react'
 
 import {
     faUser,
@@ -88,7 +87,6 @@ function Login() {
             navigate('/')
         }
     }, [user])
-
 
     return(
         <div className={cx('wrapper')}>
