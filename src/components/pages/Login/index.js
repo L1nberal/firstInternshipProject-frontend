@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios';
 import { useContext } from 'react'
+import Modal from 'react-bootstrap/Modal';
 
 import {
     faUser,
@@ -16,7 +17,6 @@ import {
 import style from './Login.module.scss'
 import {AuthContext} from '../../../context/AuthContext'
 import Button from '../../Button';
-import ErrorPopup from './ErrorPopup';
 
 const cx = classnames.bind(style)
 
@@ -25,7 +25,7 @@ function Login() {
     const { user, googleSignIn, facebookSignIn, dataBaseLogin } = useContext(AuthContext)
     //used to redirect where is necessary
     const navigate = useNavigate()
-    //login with database declaration
+    //checking errors for logging in with database 
     const formSchema = Yup.object().shape({
         username: Yup.string()
             .required('Bạn chưa nhập tên đăng nhập'),
@@ -37,8 +37,6 @@ function Login() {
     const formOptions = { resolver: yupResolver(formSchema)}
     const { register, handleSubmit, reset, formState } = useForm(formOptions)
     const { errors } = formState
-    //used to pop up a dialogue when an error exists
-    const [popup, setPopup] = useState(false)
 
     //login with google
     const handleGoogleSignIn = async (e) => {
@@ -76,7 +74,7 @@ function Login() {
                 }
             })
             .catch(error => {
-                setPopup(true)  
+                setShow(true)  
             })      
         
     }
@@ -88,11 +86,31 @@ function Login() {
         }
     }, [user])
 
+    //a dialogue pops up when errors occur
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+
     return(
         <div className={cx('wrapper')}>
+            {/* =============popup dialogue============== */}
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Có lỗi xảy ra!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Thông tin bạn nhập không chính xác, mời bạn thử lại!</Modal.Body>
+                <Modal.Footer>
+                    <button 
+                        variant="secondary" 
+                        onClick={handleClose}
+                        className={cx('modal-btn')}
+                    >
+                        Đã hiểu
+                    </button>
+                </Modal.Footer>
+            </Modal>
+
             <h2>Log in</h2>
-            {/* ===========a dialogue pops up when an error exists */}
-            {popup && <ErrorPopup setPopup={setPopup}/>}
             {/* ==========login form============== */}
             <form method='' action='' onSubmit={handleSubmit(onSubmit)}>
                 {/* ===================database login============= */}

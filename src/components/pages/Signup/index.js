@@ -18,15 +18,12 @@ import {
 import style from './Signup.module.scss'
 import {UserAuth} from '../../../context/AuthContext'
 import Button from '../../Button';
-import ErrorPopup from './ErrorPopup';
 
 const cx = classnames.bind(style)
 
 function Signup() {
-    const {user, googleSignIn, facebookSignIn} = UserAuth()
+    const { googleSignIn, facebookSignIn} = UserAuth()
     const navigate = useNavigate()
-    // set popup when signing up
-    const [popup, setPopup] = useState(false)
 
     //login with google
     const handleGoogleSignIn = async (e) => {
@@ -75,22 +72,37 @@ function Signup() {
             password: data.password,
         })
             .then(respond => {
-                setPopup(false)})
+                navigate('/log-in')})
             .catch(error => {
-                setPopup(true)
+                setShow(true)
             })
     
     }
+    //a dialogue pops up when errors occur
+    const [show, setShow] = useState(false);
 
-    if(popup === false) {
-        navigate('/log-in')
-    }
+    const handleClose = () => setShow(false);
     
     return(
         <div className={cx('wrapper')}>
-            <h2>Sign up</h2>
+            {/* =============popup dialogue============== */}
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Có lỗi xảy ra!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Thông tin bạn nhập không khả dụng, mời bạn thử lại!</Modal.Body>
+                <Modal.Footer>
+                    <button 
+                        variant="secondary" 
+                        onClick={handleClose}
+                        className={cx('modal-btn')}
+                    >
+                        Đã hiểu
+                    </button>
+                </Modal.Footer>
+            </Modal>
 
-            {popup && <ErrorPopup setPopup={setPopup}/>}
+            <h2>Sign up</h2>
 
             <form method='' action='' onSubmit={handleSubmit(onSubmit)}>
                 <div className={cx('database-login')}>
