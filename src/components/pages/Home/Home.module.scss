@@ -1,5 +1,6 @@
 .content{
     margin-top: 50px;
+    height: auto;
     width: 1250px;
     background-color: rgba($color: #f1f1f1, $alpha: 1.0); 
     
@@ -15,10 +16,11 @@
             margin-right: 15px;
             background-color:rgb(252, 252, 252);
             border-radius: 13px;
+            border: 0px;
             cursor: pointer;
             position: relative;
-            border: 0;
             overflow: hidden;
+            box-shadow: 0px 0px 2px rgba($color: #dfdfdf, $alpha: 1.0);
 
             &:hover{
                 .app-details-button{
@@ -35,6 +37,26 @@
 
             &:last-child{
                 margin-right: 0;
+            }
+            
+            .app-state{
+                display: flex;
+                justify-content: end;
+
+                // when app is new
+                .app-state__new{
+                    z-index: 5;
+                    width: 50px;
+                    margin: 5px 5px 5px 0px;
+                }
+                // when app is not new
+                .app-state__old{
+                    visibility: hidden;
+                    width: 50px;
+                    margin: 5px 5px 5px 0px;
+
+                    
+                }
             }
             
             .app-image{
@@ -62,13 +84,10 @@
                     align-items: center;                    
 
                     .app-description{
+                        margin: 15px 0px;
                         height: 100px;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                    }
-
-                    .app-publishing-date{
-                        color: rgba($color: #c88f8f, $alpha: 1.0);
                     }
                 }
             }
@@ -80,7 +99,7 @@
                 position: absolute;
                 top: 0px;
                 left: 0px;
-                background-color: rgba(77, 80, 101, 0.638);
+                background-color: rgba(218, 218, 218, 0.638);
                 display: none;
             }
 
@@ -118,20 +137,16 @@
                 font-weight: bolder;
                 margin-bottom: 20px;
             }
-
-            width: 20%;
-
             .each-category{
                 margin-bottom: 10px;
             }
-
         }
 
         .sorted-apps{
             width: 80%;
             border-radius: 10px;
             position: relative;
-            height: 400px;
+            height: auto;
             display: flex;
             flex-direction: column;
             align-items: center;

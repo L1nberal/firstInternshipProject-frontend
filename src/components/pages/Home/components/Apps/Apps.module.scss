@@ -1,65 +1,99 @@
-//=============== all sorted  apps==============
-.apps{
+.wrapper {
     width: 100%;
-    height: 420px;
-    //============== each app============
-    a{
-        text-decoration: none;
+    height: 475px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-        .each-app{
-            margin-bottom: 15px;
-            border-radius: 5px;
+    .list-group{
+        width: 100%;
+        min-height: 425px;
+
+        a{ //Link tag which covers list-item
+            text-decoration: none;
             position: relative;
-
-            &:hover::after{
-                width: 100%;
-            }
-
-            &::after{
-                content: '';
-                width: 0%;
-                height: 100%;
-                background-color:rgba(222, 215, 215, 0.538);    
-                top: 0px;
-                border-radius: 5px;            
-                position: absolute;
-                transition: 0.5s;
-            }
     
-            .app-infor-container{
-                width: 100%;
+            .list-item{
+                border: 0px;
+                box-shadow: 0px 0px 2px rgba($color: #dfdfdf, $alpha: 1.0);
+                display: flex;
+                margin-bottom: 15px;
+                height: 90px;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: 10px;
+    
+                &:hover::after{
+                    width: 100%;
+                }
+    
+                &::after{
+                    content: "";
+                    width: 0%;
+                    top: 0%;
+                    left: 0%;
+                    border-radius: 10px;
+                    height: 100%;
+                    position: absolute;
+                    background-color: rgba(218, 218, 218, 0.638);
+                    transition: 0.3s;
+                }
+            }
+        
+            .list-item__owner-infor{
                 display: flex;
                 align-items: center;
-                height: 55px;
-                position: relative;
-    
-                .app-name{
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                    position: absolute;
-                    z-index: 5;
-                }
-    
-                .app-owner{
-                    position: absolute;
-                    right: 35px;
-                    top: 26%;
-                    z-index: 5;
+                width: 550px;
+                .logo{
+                    width: 70px;
+                    border-radius: 10px;
+                    margin-right: 10px;
                 }
             }
-
-            .download-link{
-                .app-download{
-                    position: relative;
-                    z-index: 5;
+        
+            .list-item__status{
+                position: absolute;
+                right: 1%;
+                top: 2%;
+        
+                .new{
+                    padding: 5px 10px;
+                }
+        
+                .old{
+                    visibility: hidden;
                 }
             }
         }
+    
     }
-}
-//==============pagination container==================
-.pagination-container{
-    height: 40px;
-
+    
+    .Pagination{
+        ul{
+            // max-width: 650px;
+            padding: 0px;
+            margin: 0px;
+            display: flex;
+             
+            li{
+                list-style: none;
+                margin-right: 25px;
+                border: solid 1px rgba($color: #eaeaea, $alpha: 1.0);
+                background-color: rgba($color: #ffffff, $alpha: 1.0);
+        
+                a{
+                    display: block;
+                    text-decoration: none;
+                    padding: 10px 17px;
+                    transition: 0.5s;
+        
+                    &:hover{
+                        background-color: rgba($color: #f1f1f1, $alpha: 1.0);
+                    }
+        
+                }
+            }
+    
+        }
+    }       
 }

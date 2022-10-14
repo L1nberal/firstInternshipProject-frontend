@@ -1,29 +1,24 @@
 import {
-    faMagnifyingGlass,
+    faAngleLeft,
+    faAngleRight,
     faUser,
     faKey,
     faFeather,
     faRightToBracket,
-    faX,
-    faCircleXmark,
-    faAngleLeft,
-    faAngleRight,
-    faDownload,
-    faCloudArrowDown,
+    faEarthAsia,
+    faListCheck,
+    
 } from '@fortawesome/free-solid-svg-icons'
 
 
 export {
-    faMagnifyingGlass,
+    faAngleLeft,
+    faAngleRight,
     faUser,
     faKey,
     faFeather,
     faRightToBracket,
-    faCircleXmark,
-    faX,
-    faAngleLeft,
-    faDownload,
-    faCloudArrowDown,
-    faAngleRight,
+    faEarthAsia,
+    faListCheck,
 }
 

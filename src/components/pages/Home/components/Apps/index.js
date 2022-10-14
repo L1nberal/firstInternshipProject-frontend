@@ -1,70 +1,134 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
 import classnames from 'classnames/bind'
+import Moment from 'moment';
+import ReactPaginate from 'react-paginate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import {
-    faDownload,
-} from '../../../../../assets/FontAwesome'
 import style from './Apps.module.scss'
-import PaginationComponent from '../Pagination';
+import {
+    icons
+} from '../../../../../assets'
 
 const cx = classnames.bind(style)
 
-function Apps({data}) {
+function Apps({apps, organisations, sortingCategory, sortingIndex}) {
     const [currentPage, setCurrentPage] = useState(1)
     const [appsPerPage, setAppsPerPage] = useState(4)
+    // ==============move to page 1 again after changing the category=================
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [sortingIndex])
     
-    // get current posts
+    //========================= get current posts===========================
     const indexOfLastApp = currentPage * appsPerPage
     const indexOfFirstApp = indexOfLastApp - appsPerPage
-    const currentApps = data.slice(indexOfFirstApp, indexOfLastApp)
+    // sorting apps into categories
 
-    // change page
-    const paginate = (number) => {
-        setCurrentPage(number)
+    let newArrayOfApps = []
+    if(sortingCategory === "Tất cả") {
+        apps.map(app => {
+            newArrayOfApps.push(app)
+        })
+    }else(
+        apps.filter(app => {
+            if(app.attributes.category.data.attributes.name === sortingCategory) {
+                newArrayOfApps.push(app)
+            }
+        })
+    )
+
+    const currentApps = newArrayOfApps.slice(indexOfFirstApp, indexOfLastApp)
+   
+    const  numberOfpages = Math.ceil(newArrayOfApps.length/appsPerPage)
+    // ======================change page=====================
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected+1)
     }
- 
+  
     return (
-        <React.Fragment>
-            <div className={cx('apps')}>
-                <ListGroup>
-                    {currentApps.map((app, index) => {        
-                        return (
-                            <Link to='/app-details' state={{app: app, apps: data}} key={index}>
-                                <div className={cx('each-app')}>
-                                    <ListGroup.Item
-                                        as="li"
-                                        className="d-flex justify-content-between align-items-start"
-                                    >
-                                        <div className={cx('app-infor-container')}>
-                                            <div className={cx('app-name')}>{app.name}</div>
-                                            <a href='#' target="blank"><div className={cx('app-owner')}>{app.Owner.data.attributes.name}</div></a>
-                                        </div>
-            
-                                        <a href='google.com' target="blank" className={cx('download-link')}>
-                                            <Badge bg="primary" pill className={cx('app-download')}>
-                                                <FontAwesomeIcon icon={faDownload}/>
-                                            </Badge>
-                                        </a>
-                                    </ListGroup.Item>
-                                </div>
-                            </Link>
-                        )
-                    })}
-                </ListGroup>
-            </div>
+        <div className={cx('wrapper')}>
+            <ListGroup as="ol" className={cx('list-group')}>
+                {currentApps.map(app => {
+                    // distinguishing new and old apps
+                    const formatDate = Moment(app.attributes.publishedAt).format("MM/DD/YYYY") 
+                    const now = new Date()
+                    const date = new Date(formatDate)
+                    const amountOfDays1 = Math.ceil((now.getTime() -  date.getTime())/(1000*60*60*24))
+                    return (
+                        <React.Fragment key={app.id}> 
+                            {organisations.map((organisation) => {
+                                return (
+                                    <React.Fragment key={organisation.id}>
+                                        {app.attributes.Owner.data.attributes.name === organisation.attributes.name && (
+                                            <Link to={`/app-details-${app.id}`} state={{app: app}}>
+                                                <ListGroup.Item
+                                                    as="li"
+                                                    className={cx('list-item')}
+                                                    key={organisation.id}
+    
+                                                >
+                                                    <div className={cx('list-item__name')}>
+                                                        {app.attributes.name}
+                                                    </div>
+    
+                                                    <div className={cx('list-item__owner-infor')}>
+                                                        <img 
+                                                            className={cx('logo')}
+                                                            src={`http://localhost:1337${organisation.attributes.logo.data.attributes.url}`}
+                                                        />
+    
+                                                        <div className={cx('name')}>
+                                                            {organisation.attributes.name}
+                                                        </div>
+                                                    </div>
+    
+                                                    <div className={cx('list-item__status')}>
+                                                        {amountOfDays1 < 25 ? (
+                                                            <Badge 
+                                                                bg="primary"
+                                                                className={cx('new')} 
+                                                                pill 
+                                                            >
+                                                                new
+                                                            </Badge>
+                                                        ) : (
+                                                            <Badge 
+                                                                bg="primary"
+                                                                className={cx('old')} 
+                                                                pill 
+                                                            >
+                                                                old
+                                                            </Badge>
+                                                        )}
+                                                    </div>
+                        
+                                                </ListGroup.Item>
+                                            </Link>
+                                        )}
+                                    </React.Fragment>
+                                )
+                                
+                            })}
+                        </React.Fragment>
+                    )
+                })}
+            </ListGroup>
 
-            <div className={cx('pagination-container')}>
-                <PaginationComponent 
-                    appsPerPage={appsPerPage} 
-                    totalApps={data.length}
-                    paginate={paginate}
+            <div className={cx('Pagination')}>
+                <ReactPaginate
+                    nextLabel={<FontAwesomeIcon icon={icons.faAngleRight}/>}
+                    previousLabel={<FontAwesomeIcon icon={icons.faAngleLeft}/>}
+                    pageCount={numberOfpages}
+                    marginPagesDisplayed={2}
+                    onPageChange={handlePageClick}
+                    pageClassName={'page-item'}
+                    renderOnZeroPageCount={null}
                 />
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 

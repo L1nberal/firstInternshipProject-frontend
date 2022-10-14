@@ -1,6 +1,5 @@
 import classnames from 'classnames/bind'
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
@@ -11,35 +10,10 @@ import React, { useEffect, useState } from 'react';
 
 const cx = classnames.bind(style)
 
-function OrganisationDetails() {
-    // store infor got from API
-    const [organisations, setOrganisations] = useState([])
-    const [apps, setApps] = useState([])
-    let store = []
+function OrganisationDetails({apps, organisations, organisationId}) {
     // get infor from Link tag
     const location = useLocation();
     const data = location.state;
-    // get organisations' infor from API
-    useEffect(() => {
-        axios.get('http://localhost:1337/api/organisations?populate=*')
-            .then(respond => setOrganisations(respond.data.data))
-    }, [])
-   
-    //get apps infor from API
-    useEffect(() => {
-        fetch('http://localhost:1337/api/apps?populate=*')
-        .then(response => response.json())
-        .then(data => {
-            // console.log(data.data)
-            data.data.map((app, index) => {
-                setApps(() => {
-                    store = [...store, app.attributes]
-                    return store
-                })               
-            })  
-        })
-    }, [])
-
     // the amount of owned apps
     let amountOfOwnedApps = 0
     //the amount of developed apps
@@ -52,7 +26,7 @@ function OrganisationDetails() {
                     // organisations' details
                     <React.Fragment key={index}>
                         {/* compare to print out the right organisation */}
-                        {organisation.attributes.name === data.data.attributes.name && (
+                        {organisation.id === organisationId && (
                             <React.Fragment>
                                 <div className={cx('head')}>
                                     <img 
@@ -68,7 +42,7 @@ function OrganisationDetails() {
                                         </div>
                                         <div>
                                             <div>Email: <span>{organisation.attributes.email}</span></div>
-                                            <div>Website: <span><a href='www.huecit.vn' target="blank">{organisation.attributes.website}</a></span></div>
+                                            <div>Website: <span><a href={organisation.attributes.website} target="blank">{organisation.attributes.website}</a></span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -83,10 +57,6 @@ function OrganisationDetails() {
                                                         src={`http://localhost:1337${photo.attributes.url}`}
                                                         alt="First slide"
                                                     />
-                                                    <Carousel.Caption>
-                                                    <h3>First slide label</h3>
-                                                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                                                    </Carousel.Caption>
                                                 </Carousel.Item>
                                             )
                                         })}
@@ -98,7 +68,7 @@ function OrganisationDetails() {
 
                                     <div className={cx('about')}>{organisation.attributes.about}</div>
                                 </div>
-                                {/* apps devloped by the organisation */}
+                                {/*====================== apps devloped by the organisation ====================*/}
                                 <div className={cx('apps-developed')}>
                                     <h5 className={cx('title')}>Những ứng dụng đã phát triển:</h5>
                                     
@@ -107,22 +77,22 @@ function OrganisationDetails() {
                                             return (
                                                 <React.Fragment key={index}>
                                                     {organisation.attributes.appsDeveloped.data.map((developedApp, index)=> {
-                                                        if(app.name === developedApp.attributes.name) {
+                                                        if(app.attributes.name === developedApp.attributes.name) {
                                                             amountOfDevelopedApps++
                                                         }
-
+                                                        let enter = amountOfDevelopedApps < 5
                                                         return (
                                                             <React.Fragment key={index}>
-                                                                {app.name === developedApp.attributes.name && (
+                                                                {app.attributes.name === developedApp.attributes.name && enter && (
                                                                     <Card className={cx('app-container')}>
-                                                                        <Link to={'/app-details'} state={{app: app, apps: apps}}>
+                                                                        <Link to={`/app-details-${app.id}`} state={{app: app}}>
                                                                             <Card.Img 
                                                                                 className={cx('app-image')}  
                                                                                 variant="top" 
-                                                                                src={`http://localhost:1337${app.photo.data.attributes.url}`} 
+                                                                                src={`http://localhost:1337${app.attributes.photo.data.attributes.url}`} 
                                                                             />
                                                                             <Card.Body className={cx('app-name')}>
-                                                                                <Card.Title>{app.name}</Card.Title>
+                                                                                <Card.Title>{app.attributes.name}</Card.Title>
                                                                             </Card.Body>
                                                                         </Link>
                                                                   </Card>
@@ -135,49 +105,59 @@ function OrganisationDetails() {
                                         })}
                                     </CardGroup>
                                     
-                                    {/* a message is prined out when there is no app */}
+                                    {/* ==============a message is prined out when there is no app================ */}
                                     {amountOfDevelopedApps===0 && (
                                         <div className={cx('message')}>Hiện tại cơ quan này vẫn chưa phát triển bất kì ứng dụng nào!</div>
                                     )} 
+                                    {/* ==============a button is rendered out when there are more than 4 apps================ */}
+                                    {/* {amountOfDevelopedApps > 4 && ( */}
+                                        <Link to={`/organisation-details-${organisation.id}-developed-apps`}>Xem Thêm</Link>
+                                    {/* )}  */}
                                 </div>
-                                {/* apps owned by the organisation */}
+                                {/*============= apps owned by the organisation ===============*/}
                                 <div className={cx('apps-owned')}>
                                     <h5 className={cx('title')}>Những ứng dụng đang sở hữu:</h5>
                                     
                                     <CardGroup className={cx('apps-wrapper')}>
-
-                                        {apps.map((app, index) => {
-                                            return (
-                                                <React.Fragment key={index}> 
-                                                    {organisation.attributes.appsOwned.data.map((appsOwned, index)=> {
-                                                        if(app.name === appsOwned.attributes.name) {
-                                                            amountOfOwnedApps++
-                                                        }
-                                                        return (
-                                                            <React.Fragment key={index}>
-                                                                {app.name === appsOwned.attributes.name && (
-                                                                    <Card className={cx('app-container')}>
-                                                                        <Link to={'/app-details'} state={{app: app, apps: apps}}>
-                                                                            <Card.Img 
-                                                                                className={cx('app-image')}  
-                                                                                variant="top" 
-                                                                                src={`http://localhost:1337${app.photo.data.attributes.url}`} 
-                                                                            />
-                                                                            <Card.Body className={cx('app-name')}>
-                                                                                <Card.Title>{app.name}</Card.Title>
-                                                                            </Card.Body>
-                                                                        </Link>
-                                                                    </Card>
-                                                                )}                                                            </React.Fragment>
-                                                        )
-                                                    })}
-                                                </React.Fragment>
-                                            )
-                                        })}
+                                            {apps.map((app, index) => {
+                                                return (
+                                                    <React.Fragment key={index}>
+                                                        {organisation.attributes.appsOwned.data.map((appsOwned, index)=> {
+                                                            if(app.attributes.name === appsOwned.attributes.name) {
+                                                                amountOfOwnedApps++
+                                                            }
+                                                            let enter = amountOfOwnedApps%4 != 0
+                                                            return (
+                                                                <React.Fragment key={index}>
+                                                                    {app.attributes.name === appsOwned.attributes.name && enter && (
+                                                                        <Card className={cx('app-container')}>
+                                                                            <Link to={`/app-details-${app.id}`} state={{app: app}}>
+                                                                                <Card.Img 
+                                                                                    className={cx('app-image')}  
+                                                                                    variant="top" 
+                                                                                    src={`http://localhost:1337${app.attributes.photo.data.attributes.url}`} 
+                                                                                />
+                                                                                <Card.Body className={cx('app-name')}>
+                                                                                    <Card.Title>{app.attributes.name}</Card.Title>
+                                                                                </Card.Body>
+                                                                            </Link>
+                                                                        </Card>
+                                                                    )}
+                                                                </React.Fragment>
+                                                            )
+                                                            
+                                                        })}  
+                                                    </React.Fragment>
+                                                )
+                                            })}
                                     </CardGroup>
                                     {/* a message is prined out when there is no app */}
                                     {amountOfOwnedApps===0 && (
                                         <div className={cx('message')}>Hiện tại cơ quan này vẫn chưa sở hữu bất kì ứng dụng nào!</div>
+                                    )} 
+                                    {/* ==============a button is rendered out when there are more than 4 apps================ */}
+                                    {amountOfOwnedApps > 4 && (
+                                        <Link to={`/organisation-details-${organisation.id}-owned-apps`}>Xem Thêm</Link>
                                     )} 
                                 </div>
                             </React.Fragment>

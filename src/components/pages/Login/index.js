@@ -10,10 +10,8 @@ import { useContext } from 'react'
 import Modal from 'react-bootstrap/Modal';
 
 import {
-    faUser,
-    faKey,
-    faFeather,
-} from '../../../assets/FontAwesome'
+    icons
+} from '../../../assets'
 import style from './Login.module.scss'
 import {AuthContext} from '../../../context/AuthContext'
 import Button from '../../Button';
@@ -118,7 +116,7 @@ function Login() {
                     <div className={cx('database-login-infor-container')}>
                         Tên đăng nhập:
                         <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={faUser}/>
+                            <FontAwesomeIcon className={cx('icon')} icon={icons.faUser}/>
                             <input 
                                 type='text' 
                                 placeholder='email or username' 
@@ -130,7 +128,7 @@ function Login() {
 
                         Mật khẩu
                         <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={faKey}/>
+                            <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
                             <input 
                                 type='password' 
                                 placeholder='password' 
@@ -167,7 +165,7 @@ function Login() {
 
                 <Button to='/' className={cx('home-btn')}>Home</Button> 
                 <Button className={cx('user__signup-btn')} to='/sign-up'>
-                    <FontAwesomeIcon className={cx('icon')} icon={faFeather}/>
+                    <FontAwesomeIcon className={cx('icon')} icon={icons.faFeather}/>
                     Sign up
                 </Button>
 

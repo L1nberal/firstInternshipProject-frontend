@@ -10,11 +10,8 @@ import Modal from 'react-bootstrap/Modal';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {
-    faUser,
-    faKey,
-    faRightToBracket,
-
-} from '../../../assets/FontAwesome'
+    icons
+} from '../../../assets'
 import style from './Signup.module.scss'
 import {UserAuth} from '../../../context/AuthContext'
 import Button from '../../Button';
@@ -109,7 +106,7 @@ function Signup() {
                     <div className={cx('database-login-infor-container')}>
                         Tên người dùng:
                         <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={faUser}/>
+                            <FontAwesomeIcon className={cx('icon')} icon={icons.faUser}/>
                             <input 
                                 type='text' 
                                 placeholder='username' 
@@ -121,7 +118,7 @@ function Signup() {
 
                         Email:
                         <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={faUser}/>
+                            <FontAwesomeIcon className={cx('icon')} icon={icons.faUser}/>
                             <input 
                                 type='email' 
                                 placeholder='username' 
@@ -134,7 +131,7 @@ function Signup() {
 
                         Mật khẩu
                         <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={faKey}/>
+                            <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
                             <input 
                                 type='password' 
                                 placeholder='password' 
@@ -146,7 +143,7 @@ function Signup() {
                         
                         Nhập lại mật khẩu:
                         <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={faKey}/>
+                            <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
                             <input 
                                 type='password' 
                                 placeholder='password' 
@@ -183,7 +180,7 @@ function Signup() {
 
                 <Button to='/' className={cx('home-btn')}>Home</Button> 
                 <Button className={cx('user__login-btn')} to='/log-in'>
-                    <FontAwesomeIcon className={cx('icon')} icon={faRightToBracket}/>
+                    <FontAwesomeIcon className={cx('icon')} icon={icons.faRightToBracket}/>
                     Log in
                 </Button>  
             </form>

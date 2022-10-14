@@ -1,0 +1,55 @@
+.wrapper{
+    width: 1250px;
+
+
+    .title{
+        margin: 30px 0px;
+        text-align: center;
+
+        span{
+            color: rgba($color: #e39696, $alpha: 1.0);
+        }
+    }
+
+    .apps-container{
+        margin-top: 50px;
+
+
+        .each-app{
+            vertical-align: middle;
+
+            .image{
+                padding: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img{
+                    width: 150px;
+                    border-radius: 15px;
+                }
+            }
+
+            .name{
+                text-align: center;
+            }
+
+            .category{
+                text-align: center;
+               
+            }
+
+            .download-link{
+                text-align: center;
+               
+                color: rgba($color: #e39696, $alpha: 1.0);
+                
+                img{
+                    display: block;
+                    width: 200px;
+                    margin: 0px auto;
+                }
+            }
+        }
+    }
+}

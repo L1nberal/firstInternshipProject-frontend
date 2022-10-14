@@ -15,7 +15,7 @@ export const AuthContext = createContext()
 export const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
-    // console.log(user)
+    // console.log(user.photoURL)
     //login with google
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider()

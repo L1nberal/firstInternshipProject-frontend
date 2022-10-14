@@ -3,12 +3,14 @@ import classnames from 'classnames/bind'
 import Form from 'react-bootstrap/Form';
 import axios from 'axios'
 import Button from 'react-bootstrap/Button'
+import { useForm } from "react-hook-form";
 
 import style from './AddOrganisations.module.scss'
 
 const cx = classnames.bind(style)
 
 function AddOrganisations() {
+    const { register, handleSubmit } = useForm();
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState()
     const [address, setAddress] = useState('')
@@ -17,29 +19,25 @@ function AddOrganisations() {
     const [about, setAbout] = useState('')
     const [logo, setLogo] = useState()
     const [ownedBy, setOwnedBy] = useState()
-    // console.log(`name: ${name}
-    //         phone number: ${phoneNumber}
-    //         address: ${address}
-    //         website: ${website}
-    //         email: ${email}
-    //         about: ${about}        
-    //         logo: ${logo}        
-    // `)
+    console.log(logo)
 
-    // console.log(logo)
-    function submitHandler(e) {
-        e.preventDefault()
+    function submitHandler( data) {
+        // e.preventDefault()
+        console.log(data)
+        // const formData = new FormData()
+        // formData.append(`files.${data.logo[0].}`, data.img)
+        // formData.append("data", JSON.stringify(data))
 
         axios.post('http://localhost:1337/api/organisations', {
-            "data": {
-                name: name,
-                phoneNumber: phoneNumber,
-                address: address,
-                website: website,
-                email: email,
-                about: about,
-                logo: logo,
-                ownedBy: ownedBy,
+            data: {
+                name: data.name,
+                phoneNumber: data.phoneNumber,
+                address: data.address,
+                website: data.website,
+                email: data.email,
+                about: data.about,
+                // logo: data.logo,
+                ownedBy: data.ownedBy,
             }
         },{
             headers: {
@@ -53,26 +51,29 @@ function AddOrganisations() {
             console.log(error);
         });
 
-        setName('')
-        setAbout('')
-        setAddress('')
-        setEmail('')
-        setWebsite('')
-        setPhoneNumber()
-        setOwnedBy()
+        // setName('')
+        // setAbout('')
+        // setAddress('')
+        // setEmail('')
+        // setWebsite('')
+        // setPhoneNumber()
+        // setOwnedBy()
 
     }
     return(
         <div className={cx('wrapper')}>
-            <Form className={cx('form')} onSubmit={submitHandler}>
+            <Form className={cx('form')} onSubmit={
+                handleSubmit(submitHandler)
+            }>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Tên cơ quan</Form.Label>
                     <Form.Control 
-                        value={name}
+                        // value={name}
                         type="text" 
                         placeholder="Enter name" 
                         name="name" 
-                        onChange={e => setName(e.target.value)}
+                        // onChange={e => setName(e.target.value)}
+                        {...register("name")}
                     />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -82,11 +83,12 @@ function AddOrganisations() {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>email</Form.Label>
                     <Form.Control 
-                        value={email}
+                        // value={email}
                         type="email" 
                         placeholder="Enter email" 
                         name="email" 
-                        onChange={e => setEmail(e.target.value)}
+                        // onChange={e => setEmail(e.target.value)}
+                        {...register("email")}
 
                     />
                     {/* <Form.Text className="text-muted">
@@ -100,8 +102,9 @@ function AddOrganisations() {
                         type="text" 
                         placeholder="Enter address" 
                         name="address" 
-                        onChange={e => setAddress(e.target.value)}
-                        value={address}
+                        // onChange={e => setAddress(e.target.value)}
+                        // value={address}
+                        {...register("address")}
                     />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -114,9 +117,9 @@ function AddOrganisations() {
                         type="text" 
                         placeholder="Enter website" 
                         name="website"
-                        onChange={e => setWebsite(e.target.value)}
-                        value={website}
-                         
+                        // onChange={e => setWebsite(e.target.value)}
+                        // value={website}
+                        {...register("website")}
                     />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -129,9 +132,9 @@ function AddOrganisations() {
                         type="text" 
                         placeholder="Enter owner" 
                         name="ownedBy"
-                        onChange={e => setOwnedBy(e.target.value)}
-                        value={ownedBy}
-                         
+                        // onChange={e => setOwnedBy(e.target.value)}
+                        // value={ownedBy}
+                        {...register("ownedBy")}
                     />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -144,8 +147,9 @@ function AddOrganisations() {
                         type="text" 
                         placeholder="Enter phone number" 
                         name="phone number" 
-                        onChange={e => setPhoneNumber(e.target.value)}
-                        value={phoneNumber}
+                        // onChange={e => setPhoneNumber(e.target.value)}
+                        // value={phoneNumber}
+                        {...register("phoneNumber")}
                     />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -158,8 +162,9 @@ function AddOrganisations() {
                         type="text" 
                         placeholder="Enter about" 
                         name="about" 
-                        onChange={e => setAbout(e.target.value)}
-                        value={about}
+                        // onChange={e => setAbout(e.target.value)}
+                        // value={about}
+                        {...register("about")}
                     />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -172,7 +177,8 @@ function AddOrganisations() {
                         type="file" 
                         placeholder="Enter email" 
                         name="logo"
-                        onChange={e => setLogo(e.target.files[0])}
+                        // onChange={e => setLogo(e.target.files[0])}
+                        {...register("logo")}
                     />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.

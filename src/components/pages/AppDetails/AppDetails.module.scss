@@ -28,7 +28,7 @@
                     margin-bottom: 10px;
                 }
 
-                .organisation{
+                .owner{
                     margin-bottom: 10px;
                 }
 
@@ -151,6 +151,8 @@
         width: 30%;
         padding: 15px;
         border-radius: 7px;
+        max-height: 1015px;
+        overflow-y: scroll;
 
         .related-apps__title{
             margin-bottom: 25px;

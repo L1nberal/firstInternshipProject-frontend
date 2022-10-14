@@ -9,7 +9,6 @@
         width: 100%;
         display: flex;
         align-items: center;
-        position: relative;
 
         .logo{
             width: 30px;
@@ -29,15 +28,7 @@
                 padding: 0;
                 margin: 0;
                 height: 100%;
-                position: relative;
-                // last child of list option
-                span:nth-child(5){
-                    &:hover ~ div{
-                        visibility: visible;
-
-                    }
-                }               
-                
+              
                 .list-option{
                     padding: 0px 15px;
                     height: 100%;
@@ -75,89 +66,109 @@
                     }
                 }
 
-                // ==============search container==========
-                .search-container{
-                    position: relative;
+                // =====================search=====================
+                .popup{
                     visibility: hidden;
-                    top: 50px;
-                    left: -17%;
-                    transition: 1s;
+                    position: absolute;
+                    display: flex;
+                    left: 0px;
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    height: 50px;
+                    top: 0px;
+                    transition: 0.2s;
 
-                    &:hover{
-                        visibility: visible;
+                    &::after{
+                        content: "";
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        background-color:rgba(161, 161, 161, 0.637);
+                        z-index: 1;
                     }
 
-                    &:focus-within{
-                        visibility: visible;
-                    }
-
-                    // &::after{
-                    //     content: '';
-                    //     width: 1px;
-                    //     height: 80%;
-                    //     background-color: rgba($color: #a1b2cb, $alpha: 1.0);
-                    //     position: absolute;
-                    //     right: calc(var(--searchIconPadding)*2 + var(--searchIconFontsize));
-                    // }
-                    
-
-                    .search-bar{
+                    .search-container{
+                        background-color: rgba($color: #ffffff, $alpha: 1.0);
+                        padding: 5px 5px;
+                        width: 0px;
+                        height: 40px;
+                        border-radius: 5px;
                         display: flex;
-                        width: 400px;
-                        background-color: white;
-                        height: var(--searchContainerHeight);
-                        border-radius: 3px;
-                        position: relative;
-                        overflow: hidden;
                         align-items: center;
-                        border: solid 1px transparent;
-                        position: absolute;
+                        justify-content: center;
+                        z-index: 5;
+                        position: relative;
+                        transition: 0.2s;
+                        opacity: 0;
+    
+                        .search-bar{
+                            display: flex;
+                            flex: 1;
+                            height: 100%;
+    
+                            .search__input{
+                                width: 100%; 
+                                border: 0px;
+                                height: 100%;
+                                outline: none;
 
-                        &:focus-within{
-                            border: solid 1px rgba($color: #686868, $alpha: 1.0);
-                        }
-                        
-                        .search__input{
-                            width: 100%;
-                            outline: none;
-                            border: none;
-                            display: block;
-                            height: calc(var(--searchContainerHeight) - 10px);
-                            text-indent: 10px;
-                            font-size: calc(var(--searchContainerHeight) - 26px);
-                        }
-    
-                        .search__icon{
-                            font-size: var(--searchIconFontsize);
-                            padding: var(--searchIconPadding);
-                            cursor: pointer;
-    
-                            &:hover{
-                                background-color: rgba($color: #dcdddf, $alpha: 1.0);
+                                &::after{
+                                    content: "";
+                                    width: 1px;
+                                    height: 20px;
+                                    position: absolute;
+                                    background-color: rgba($color: #797979, $alpha: 1.0);
+                                    right: 0px;
+                                    top: 0px;
+                                }
                             }
+                        } 
+
+                        .search-results{
+                            position: absolute;
+                            top: 100%;
+                            left: 0px;
+                            width: 400px;
+
+                            // ==========each item ============
+                            div{
+                                border-bottom: solid 1px rgba($color: #e6e6e6, $alpha: 1.0);
+                                
+                                &:hover{
+                                    background-color: rgba($color: #ebebeb, $alpha: 1.0);
+                                }
+
+                                a{
+                                    text-decoration: none;
+                                    
+                                    div{
+                                        border: 0px;
+                                        height: 45px;
     
+                                    }
+                                }
+                               
+                                &:last-child{
+                                    border: 0px;
+                                }
+                            }
+
                         }
                     }
 
-                    .search-results{
-                        position: absolute;
-                        display: none;
-                        top: 40px;
-                        width: 400px;
-                        z-index: 10;
+                    .close-mark{
+                        cursor: pointer;
+                        margin-left: 15px;
+                        font-size: 20px;
+                        z-index: 5;
+                        padding: 2px 5px;
 
-                        div{
-                            border: 0px;
-
-                            &:hover{
-                                background-color: rgba($color: #ededed, $alpha: 1.0);
-                            }
-
-                            a{
-                                text-decoration: none;
-                            }
+                        &:hover{
+                            color: rgba($color: #000000, $alpha: 1.0);
+                            padding: 2px 5px;
+                            border-radius: 10px;
                         }
-
                     }
                 }
             }

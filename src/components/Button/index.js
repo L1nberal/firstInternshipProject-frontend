@@ -1,17 +1,17 @@
 import classnames from "classnames/bind"
 import { Link } from 'react-router-dom'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import style from './Button.module.scss'
 
 const cx = classnames.bind(style)
 
-function Button({children, to, href, onClick, state, ...passProps}) {
+function Button({children, to, href, onClick, state, rightIcon, leftIcon, ...passProps}) {
     let Component = 'button'
 
     const props = {
         onClick,
-        ...passProps
+        ...passProps,
     }
 
     if(to) {
@@ -23,7 +23,11 @@ function Button({children, to, href, onClick, state, ...passProps}) {
     }
 
     return(
-        <Component className={cx('button')} {...props} to={to} state={state}>{children}</Component>
+        <Component className={cx('button')} {...props} to={to} state={state}>
+            {leftIcon && <FontAwesomeIcon icon={leftIcon}/>}
+            {children}
+            {rightIcon && <FontAwesomeIcon icon={rightIcon}/>}
+        </Component>
     )
 }
 
