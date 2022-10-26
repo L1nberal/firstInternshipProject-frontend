@@ -1,121 +1,149 @@
 import React, { useState, useEffect } from "react"
 import classnames from 'classnames/bind'
+import Button from "react-bootstrap/esm/Button"
+import Modal from "react-bootstrap/esm/Modal"
 import Form from 'react-bootstrap/Form';
-import { useContext } from "react";
-import axios from 'axios'
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import Modal from 'react-bootstrap/Modal';
-import { yupResolver } from '@hookform/resolvers/yup';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
 import $ from 'jquery'
-import Button from "react-bootstrap/Button";
+import Dropdown from 'react-bootstrap/Dropdown';
+import axios from "axios";
 
-import style from './AddApps.module.scss'
-import { AuthContext } from "../../../context/AuthContext";
+import style from './AppUpdate.module.scss'
+import { UserAuth } from "../../../context/AuthContext";
 
 const cx = classnames.bind(style)
 
-function AddApps(data) {
+function AppUpdate(
+    {apps, 
+    appId, 
+    app, 
+    organisations, 
+    users, 
+    categories}
+    ) {
     // =================get users===================
-    const users = data.users
-    const { user } = useContext(AuthContext)
+    const { user } = UserAuth()
     let userId
     users.map(userMapped => {
-        if(userMapped.username === user.username) {
-            userId = userMapped.id
-        }
-    })
-    // ============get organisations==================
-    const organisations = data.organisations
-    // =============set developer================
-    const [developerId, setDeveloperId] = useState()
-    // =============set owner================
-    const [ownerId, setOwnerId] = useState()
-
+         if(userMapped.username === user.username) {
+             userId = userMapped.id
+         }
+     })
     // ===========set category choice============
-    const [category, setCategory] = useState('Chọn phân loại')
-    const [categoryId, setCategoryId] = useState()
-    // ============get categories==================
-    const categories = data.categories
-    // ===============check if form has been submitted successfully=============
-    const  [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false)
-    // ===============get apps=================
-    const apps = data.data
-    //============ set fields as being required==========
-    const schema = yup.object().shape({
-        name: yup.string().required("Bạn chưa nhập tên ứng dụng"),
-        description: yup.string().required("Bạn chưa nhập mô tả cho ứng dụng"),
-        androidLink: yup.string().required("Bạn chưa cung cấp liên kết tải cho Android"),
-        iosLink: yup.string().required("Bạn chưa cung cấp liên kết tải cho IOS"),
-    }).required();
-    // =============destructuring from useForm hook================
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
-        resolver: yupResolver(schema),
-    })
-    // ==========reset data when submiting successfully=============
+    const [category, setCategory] = useState(app.attributes.category.data.attributes.name)
+    const [categoryId, setCategoryId] = useState(app.attributes.category.data.id)
+
+    // =============set developer================
+    const [developerId, setDeveloperId] = useState(app.attributes.developer.data.id)
+    // =============set owner================
+    const [ownerId, setOwnerId] = useState(app.attributes.owner.data.id)
+    // ==========check developer and owner checkboxes============
     useEffect(() => {
-        reset({
-            data: 'test'
-        })
-    }, [isSubmitSuccessful])
+        $(`#developer-checkbox-${developerId}`).prop("checked", true)
+        $(`#owner-checkbox-${ownerId}`).prop("checked", true)
+    }, [])
+    //a dialogue pops up when errors occur
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+
+    // ================set app infor =============
+    const [name, setName] = useState(app.attributes.name)
+    const [description, setDescription] = useState(app.attributes.description)
+    const [androidLink, setAndroidLink] = useState(app.attributes.androidLink)
+    const [iosLink, setIosLink] = useState(app.attributes.iosLink)
+    const [logo, setLogo] = useState(null)
+    const [screenshots, setScreenshots] = useState([])
 
     // ============== submit handler==============
-    async function submitHandler(data) {
+    async function submitHandler(e) {
+        e.preventDefault()
+
         let error = false
         // ==================check if infor typed is wrong=============
-        await apps.map(app => {
-            if(app.attributes.name === data.name) {
+        await apps.map(appMapped => {
+            if(appMapped.attributes.name === name && app.attributes.name != name) {
                 error = true
-            }else if(app.attributes.androidLink === data.androidLink) {
+            }else if(appMapped.attributes.androidLink === androidLink && androidLink != app.attributes.androidLink) {
                 error = true
-
-            }else if(app.attributes.iosLink === data.iosLink) {
+            }else if(appMapped.attributes.iosLink === iosLink && iosLink != app.attributes.iosLink) {
                 error = true
             }
         })
         // ==================submit if no error exists=============
         if(error === false) {
             let logoId
-            let screenshotsId = []
+            let screenshotsIds = []
             let file = new FormData()
             let files = new FormData()
-    
-            file.append('files', data.logo[0])
-            const newArray = Object.values(data.screenshots)
+
+            file.append('files', logo)
+            const newArray = Object.values(screenshots)
             newArray.forEach(screenshot => {
                 files.append('files', screenshot)
             })
-            // ================upload logo====================
             async function submit() {
-                await axios.post('http://localhost:1337/api/upload', file, {
-                    headers: {
-                    'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
-                    }
-                })
-                    .then(async (respond) => {
-                        logoId = respond.data[0].id
-                        // =============upload screenshots==============
-                        await axios.post('http://localhost:1337/api/upload', files, {
-                            headers: {
-                            'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
-                            }
-                        })
-                            .then(respond => {
-                                respond.data.map(screenshot => screenshotsId.push(screenshot.id))
-                                
-                            })
+                if(logo != null) {
+                    // ================upload logo====================
+                    await axios.post('http://localhost:1337/api/upload', file, {
+                        headers: {
+                        'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                        }
                     })
-                // =======uploading apps attached with screenshots and logo===============
-                    axios.post('http://localhost:1337/api/apps', {
+                        .then(async (respond) => {
+                            logoId = respond.data[0].id
+                           
+                        })
+                }
+
+                if(screenshots.length > 0) {
+                    // =============upload screenshots==============
+                    await axios.post('http://localhost:1337/api/upload', files, {
+                        headers: {
+                        'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                        }
+                    })
+                        .then(respond => {
+                            respond.data.map(screenshot => screenshotsIds.push(screenshot.id))
+                            
+                        })
+                }
+
+                // ============post method==============
+                if(logo === null && screenshots.length === 0) {
+                    // =======uploading apps without screenshots and logo ===============
+                    axios.put(`http://localhost:1337/api/apps/${appId}`, {
                         "data": {
-                            name: data.name,
-                            description: data.description,
-                            androidLink: data.androidLink,
-                            iosLink: data.iosLink,
+                            name: name,
+                            description: description,
+                            androidLink: androidLink,
+                            iosLink: iosLink,
+                            category: categoryId,
+                            developer: developerId,
+                            owner: ownerId,
+                            author: userId
+                        }
+                    },{
+                        headers: {
+                            'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                        }
+                    })
+                        .then((response) => {
+                            console.log('uploaded successfully!')
+                            window.location.reload()
+                            
+                        }, (error) => {
+                            console.log(error);
+                        });
+                }else if(logo != null && screenshots.length > 0) {
+                    // =======uploading apps attached with screenshots and logo ===============
+                    axios.put(`http://localhost:1337/api/apps/${appId}`, {
+                        "data": {
+                            name: name,
+                            description: description,
+                            androidLink: androidLink,
+                            iosLink: iosLink,
                             logo: logoId,
-                            screenshots: screenshotsId,
+                            screenshots: screenshotsIds,
                             category: categoryId,
                             developer: developerId,
                             owner: ownerId,
@@ -129,25 +157,76 @@ function AddApps(data) {
                     )
                         .then((response) => {
                             console.log('uploaded successfully!')
+                            window.location.reload()
                             
-                            // ===========set input value to be empty================
-                            $('.form-control').val("")
                         }, (error) => {
                             console.log(error);
-                });
+                        });
+                }else if(logo != null && screenshots.length === 0) {
+                    // =======uploading apps attached with logo ===============
+                    axios.put(`http://localhost:1337/api/apps/${appId}`, {
+                        "data": {
+                            name: name,
+                            description: description,
+                            androidLink: androidLink,
+                            iosLink: iosLink,
+                            logo: logoId,
+                            category: categoryId,
+                            developer: developerId,
+                            owner: ownerId,
+                            author: userId
+                        }
+                    },{
+                        headers: {
+                            'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                        }
+                    }
+                    )
+                        .then((response) => {
+                            console.log('uploaded successfully!')
+                            window.location.reload()
+
+                            
+                        }, (error) => {
+                            console.log(error);
+                        });
+                }else if(logo===null && screenshots.length > 0) {
+                    // =======uploading apps attached with screenshots ===============
+                    axios.put(`http://localhost:1337/api/apps/${appId}`, {
+                        "data": {
+                            name: name,
+                            description: description,
+                            androidLink: androidLink,
+                            iosLink: iosLink,
+                            screenshots: screenshotsIds,
+                            category: categoryId,
+                            developer: developerId,
+                            owner: ownerId,
+                            author: userId
+                        }
+                    },{
+                        headers: {
+                            'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                        }
+                    }
+                    )
+                        .then((response) => {
+                            console.log('uploaded successfully!')
+                            window.location.reload()
+                            
+                        }, (error) => {
+                            console.log(error);
+                        });
+                }
             }
             submit()
+
         }else {
             setShow(true)
-        }
-        
+        } 
     }
 
-    //a dialogue pops up when errors occur
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-
-    return(
+    return (
         <div className={cx('wrapper')}>
             {/* =============popup dialogue============== */}
             <Modal show={show} onHide={handleClose}>
@@ -166,20 +245,16 @@ function AddApps(data) {
                 </Modal.Footer>
             </Modal>
 
-            <Form className={cx('form')} onSubmit={handleSubmit(submitHandler)}>
+            <Form className={cx('form')} onSubmit={e => submitHandler(e)}>
                 <Form.Group className="mb-3 formBasic" controlId="formBasic">
                     <Form.Label>Tên ứng dụng</Form.Label>
                     <Form.Control 
+                        value={name}
                         type="text" 
                         placeholder="Enter name" 
                         name="name" 
-                        {...register("name")}
+                        onChange={e => setName(e.target.value)}
                     />
-                    {errors.name && 
-                        <Form.Text className="text-muted">
-                            {errors.name.message}
-                        </Form.Text>
-                    }
                 </Form.Group>
 
                 <Form.Group className="mb-3 formBasic" controlId="formBasic">
@@ -188,15 +263,9 @@ function AddApps(data) {
                         type="text" 
                         placeholder="Enter description" 
                         name="description" 
-                        {...register("description")}
-
-
+                        onChange={e => setDescription(e.target.value)}
+                        value={description}
                     />
-                    {errors.description && 
-                        <Form.Text className="text-muted">
-                            {errors.description.message}
-                        </Form.Text>
-                    }
                 </Form.Group>
 
                 <Form.Group className="mb-3 formBasic"  controlId="formBasic">
@@ -205,14 +274,9 @@ function AddApps(data) {
                         type="text" 
                         placeholder="Enter android link" 
                         name="androidLink" 
-                        {...register("androidLink")}
-
+                        value={androidLink}
+                        onChange={e => setAndroidLink(e.target.value)}
                     />
-                    {errors.androidLink && 
-                        <Form.Text className="text-muted">
-                            {errors.androidLink.message}
-                        </Form.Text>
-                    }
                 </Form.Group>
 
                 <Form.Group className="mb-3 formBasic"  controlId="formBasic">
@@ -221,14 +285,9 @@ function AddApps(data) {
                         type="text" 
                         placeholder="Enter ios link" 
                         name="iosLink" 
-                        {...register("iosLink")}
-
+                        onChange={e => setIosLink(e.target.value)}
+                        value={iosLink}
                     />
-                    {errors.iosLink && 
-                        <Form.Text className="text-muted">
-                            {errors.iosLink.message}
-                        </Form.Text>
-                    }
                 </Form.Group>
 
                 <Form.Group className="mb-3 formBasic" controlId="formBasic">
@@ -237,9 +296,12 @@ function AddApps(data) {
                         type="file" 
                         placeholder="Upload logo" 
                         name="logo" 
-                        {...register("logo")}
-                        required
+                        onChange={e => setLogo(e.target.files[0])}
                     />
+
+                    <div className={cx('logo')}>
+                        <img src={`http://localhost:1337${app.attributes.logo.data.attributes.url}`}/>
+                    </div>
                 </Form.Group>
 
                 <Form.Group className="mb-3 formBasic" controlId="formBasic">
@@ -248,10 +310,20 @@ function AddApps(data) {
                         type="file" 
                         placeholder="Uppload screenshots" 
                         name="screenshots" 
-                        {...register("screenshots")}
                         multiple
-                        required
+                        onChange={e => setScreenshots(e.target.files)}
                     />
+
+                    <div className={cx('screenshots')}>
+                        {app.attributes.screenshots.data.map(screenshot => {
+                            return (
+                                <img
+                                    key={screenshot.id}
+                                    src={`http://localhost:1337${screenshot.attributes.url}`}
+                                />
+                            )
+                        })}
+                    </div>
                 </Form.Group>
 
                 <Form.Group className={cx('mb-3', 'formBasic', 'categories-dropdown')} controlId="formBasic">
@@ -354,4 +426,4 @@ function AddApps(data) {
     )
 }
 
-export default AddApps
+export default AppUpdate

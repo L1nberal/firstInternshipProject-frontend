@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import classnames from "classnames/bind"
 import $ from 'jquery'
+import { useNavigate } from "react-router-dom";
 
 import style from './UserMenu.module.scss'
 import { UserAuth } from "../../../context/AuthContext"
@@ -14,6 +15,8 @@ import {
 const cx = classnames.bind(style)
 
 const UserMenu = React.forwardRef((props, ref) => {
+    const navigate = useNavigate()
+
     const {logOut} = UserAuth()
     // store menu
     const [history, setHistory] = useState([props.data])
@@ -24,17 +27,7 @@ const UserMenu = React.forwardRef((props, ref) => {
 
     // console.log(history)
     function resetHandler () {
-        const reset = document.getElementsByClassName('reset')
-        $(`.reset`).click(() => {
-            setHistory(history.slice(0, 1))
-            // console.log('clicked')
-
-        })
-        // for(let i=0; i<reset.length; i++) {
-        //     $(`.reset-${i}`).click(() => {
-        //         // setHistory(history.slice(0, 1))
-        //     })
-        // }
+        setHistory(history.slice(0,1))
     }
   
     return (
@@ -84,6 +77,7 @@ const UserMenu = React.forwardRef((props, ref) => {
                                                 if(item.function === "logout") {
                                                     async function logout () {
                                                         try {
+                                                            navigate('/')
                                                             await logOut()
                                                             window.location.reload(1); //reload page after logout to update login state
                                                         }catch(error) {
@@ -123,7 +117,7 @@ const UserMenu = React.forwardRef((props, ref) => {
                                             className={cx('setting-btn')}
                                             key={index}
                                             onClick = {() => {
-                                                // resetHandler()
+                                                resetHandler()
 
                                                 if(item.submenu) {
                                                     setMenuIndex(index)
@@ -132,6 +126,7 @@ const UserMenu = React.forwardRef((props, ref) => {
                                                 if(item.function === "logout") {
                                                     async function logout () {
                                                         try {
+                                                            navigate('/')
                                                             await logOut()
                                                             window.location.reload(1); //reload page after logout to update login state
                                                         }catch(error) {

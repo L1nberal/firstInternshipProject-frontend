@@ -1,17 +1,27 @@
 .wrapper{
     width: 1250px;
-    height: auto;
+    min-height: 100vh;
 
     .head{
         display: flex;
         background-color: rgba($color: #ffffff, $alpha: 1.0);
         border-radius: 7px;
         margin: 20px 0px;
-        padding: 15px;
+        padding: 25px;
+        position: relative;
+        min-height: 180px;
 
-        .head__image{
-            width: 300px;
+        .image-container{
+            display: flex;
+            align-items: center;
             margin-right: 35px;
+
+
+            .head__image{
+                width: 200px;
+                margin: 0px auto;
+                height: auto;
+            }
         }
 
         .head__infor{
@@ -28,6 +38,12 @@
                     }
                 }
             }
+        }
+
+        .head__update-popup-btn{
+            position: absolute;
+            right: 5%;
+            bottom: 10%;
         }
     }
 
@@ -60,7 +76,9 @@
     .apps-developed {        
         margin-top: 20px;
         background-color: white;
-        padding: 15px;
+        // padding: 15px;
+        padding: 20px 0px 35px 0px;
+        position: relative;
 
         .title{
             padding: 15px;
@@ -104,12 +122,25 @@
         .message{
             text-indent: 50px;
         }
+        // go to more apps button
+        .more-apps{
+            height: auto;
+            position: absolute;
+            right: 0%;
+            bottom: 3%;
+            width: 10%;
+
+            span{
+                margin-right: 3%;
+            }
+        }
     }
 
     .apps-owned{
         padding: 15px;
         margin-top: 20px;
         background-color: white;
+        position: relative;
 
         .title{
             padding: 15px;
@@ -158,6 +189,18 @@
         .message{
             text-indent: 50px;
         }
-    }
 
+        // go to more apps button
+        .more-apps{
+            height: auto;
+            position: absolute;
+            right: 0%;
+            bottom: 3%;
+            width: 10%;
+
+            span{
+                margin-right: 3%;
+            }
+        }
+    }
 }

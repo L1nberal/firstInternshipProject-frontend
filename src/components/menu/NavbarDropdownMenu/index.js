@@ -20,7 +20,9 @@ const NavbarDropdownMenu = React.forwardRef((props, ref) => {
                 return (
                     <div className={cx('wrapper')}>
                         {props.data.submenu.map((option, index) => {
-                            return <Button key={index} className={cx('option')} to={`${props.to}-${option.id}`} state={{data: option}}>{option.attributes.name}</Button>
+                            return (
+                                <Button key={index} className={cx('option')} to={`${props.to}-${option.id}`} state={{data: option}}>{option.attributes.name}</Button>
+                            )
                         } )}
                     </div>
                 )

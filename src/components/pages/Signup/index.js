@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
+import ButtonBootstrap from 'react-bootstrap/esm/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {
@@ -77,7 +78,6 @@ function Signup() {
     }
     //a dialogue pops up when errors occur
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     
     return(
@@ -89,13 +89,13 @@ function Signup() {
                 </Modal.Header>
                 <Modal.Body>Thông tin bạn nhập không khả dụng, mời bạn thử lại!</Modal.Body>
                 <Modal.Footer>
-                    <button 
+                    <ButtonBootstrap 
                         variant="secondary" 
                         onClick={handleClose}
                         className={cx('modal-btn')}
                     >
                         Đã hiểu
-                    </button>
+                    </ButtonBootstrap>
                 </Modal.Footer>
             </Modal>
 

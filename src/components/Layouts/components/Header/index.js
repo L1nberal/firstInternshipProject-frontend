@@ -5,13 +5,15 @@ import React, { useContext } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from "react-router-dom";
 import $ from 'jquery';
+import Spinner from 'react-bootstrap/Spinner';
+import { GoogleMap, useLoadScript, Marker  } from '@react-google-maps/api';
 
 import { NavbarDropdownMenu, UserMenu } from "../../../menu";
 import Button from "../../../Button";
 import { icons } from "../../../../assets"
 import style from './Header.module.scss'
 import { AuthContext } from "../../../../context/AuthContext";
-import { faListCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import {faX } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classnames.bind(style)
 
@@ -93,11 +95,10 @@ function Header() {
         {
             title: 'Thể loại',
             submenu: categories,
-            to:'/category-details'
+            to:'/category'
         }, 
         {
             title: 'Liên hệ',
-            to: '/contact-us'
         },  
         {
             title: 'Tìm kiếm',
@@ -185,6 +186,35 @@ function Header() {
         document.getElementById('search-input').value = ""
         setQuery('')
     })
+
+    // ==============contact=================
+    $('#list-option-3').hover(function() {
+        document.getElementById('contact').style.visibility = "visible"
+        document.getElementById('contact').style.opacity = "1"
+    }, function() {
+        document.getElementById('contact').style.visibility = "hidden"
+        document.getElementById('contact').style.opacity = "0"
+    })
+
+    $('#contact').hover(function() {
+        document.getElementById('contact').style.visibility = "visible"
+        document.getElementById('contact').style.opacity = "1"
+    }, function() {
+        document.getElementById('contact').style.visibility = "hidden"
+        document.getElementById('contact').style.opacity = "0"
+    }) 
+
+    // gg map
+    // console.log(process.env.KEY)   
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: `AIzaSyCe2LvWG408VgKLfrd_p01eOZo-DFJTo8s`    
+    })
+    
+    const center = {
+        lat: 16.459228872399986,
+        lng: 107.58130201122881
+    }
+
     return(
         <div className={cx('wrapper')}>
             {/* ================= right part of the header ============== */}
@@ -203,12 +233,55 @@ function Header() {
                                         </NavbarDropdownMenu>
                                     ):(
                                         <Button key={index} className={cx('list-option')} to={listOption.to} >
-                                            {listOption.title}            
+                                            {listOption.title} 
                                         </Button>
                                     )}
                                 </span>
                             ) 
                         })}
+                        
+                        <div className={cx('contact')} id="contact">
+                            <div className={cx('wrapper')}>
+                                <div className={cx('wrapper__left')}>
+                                    <h6 className={cx('title')}>Cơ quan quản lý: HueCIT</h6>
+                                    <div className={cx('infor')}>
+                                        <div>
+                                            <h6>Liên hệ:</h6>
+                                            E-mail: <p>info@huecit.vn</p>
+                                            Website: <a href="https://www.huecit.vn/">www.huecit.vn</a>
+                                        </div>
+                                        <div>
+                                            <h6>DỊCH VỤ</h6>
+                                            <p>0234.3 823 077 nhánh số 19</p>
+                                            <h6>ĐÀO TẠO</h6>
+                                            <p>0234.390 7777</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={cx('wrapper__right')}>
+                                    {!isLoaded ? (
+                                        <Spinner 
+                                            animation="border" 
+                                            role="status"
+                                            className={cx('spinner')}
+                                        >
+                                            <span className="visually-hidden">Loading...</span>
+                                        </Spinner>
+                                    ) : (
+                                        <GoogleMap
+                                            mapContainerClassName={cx('map')}
+                                            center={center}
+                                            zoom={20}
+                                        >
+                                            <Marker
+                                                position={{lat: 16.459228872399986,
+                                                    lng: 107.58130201122881}}    
+                                            />
+                                        </GoogleMap>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
 
                         {/* ===============search-container============== */}
                         <div className={cx('popup')} id="popup">
@@ -259,8 +332,8 @@ function Header() {
                         <div className={cx('user__container')}>
                             <UserMenu isAdmin={user.isAdmin} data={userOptions}>
                                 <div className={cx('user__container')}>
-                                    <img src={user.photoURL} className={cx('avatar')}/>
-                                    <span className={cx('username')}>{user.displayName}</span>
+                                    <img src={user.avatar} className={cx('avatar')}/>
+                                    <span className={cx('username')}>{user.username}</span>
                                 </div>
                             </UserMenu>
                         </div>

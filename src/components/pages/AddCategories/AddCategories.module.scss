@@ -1,13 +1,50 @@
 .wrapper{
-    height: 100vh;
+    min-height: 100vh;
     width: 1250px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0px;
 
-    .form{
-        background-color: rgba($color: #ffffff, $alpha: 1.0);
-        width: 70%;
-        margin: 20px auto;
-        padding: 20px;
-        border-radius: 12px;
+    .content{
+        display: inline-block;
+        width: 65%;
+
+        .form{
+            background-color: rgba($color: #ffffff, $alpha: 1.0);
+            width: 100%;
+            padding: 20px;
+            border-radius: 12px;
+        }
     }
 
+    .sidebar{
+        width: 30%;
+        padding: 15px 20px;
+        border-radius: 12px;
+        background-color: #ffffff;
+
+        .sidebar__title{
+            font-size: 18px;
+            font-weight: bolder;
+        }
+
+        .sidebar__container{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+}
+
+.modal-btn{
+    border: solid 1px rgba($color: #e2bb4f, $alpha: 1.0);
+    border-radius: 5px;
+    color: rgba($color: #e2bb4f, $alpha: 1.0);
+    background-color: #ffffff;
+    padding: 3px;
+
+    &:hover{
+        background-color: rgba($color: #e2bb4f, $alpha: 1.0);
+        color: white;
+    }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import classnames from 'classnames/bind'
 import CardGroup from 'react-bootstrap/CardGroup';
 import Card from 'react-bootstrap/Card'
@@ -7,7 +7,8 @@ import {Link} from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge';
 import axios from 'axios'
 import Moment from 'moment';
-// import moment from 'moment';
+import Spinner from 'react-bootstrap/Spinner';
+import $ from 'jquery'
 
 import style from './Home.module.scss'
 import Apps from './components/Apps'
@@ -15,6 +16,12 @@ import Apps from './components/Apps'
 const cx = classnames.bind(style)
 
 function Home() {
+    // =========check if the document is loading============
+    const [loading, setLoading] = useState(true)
+
+    $(document).ready(function() {
+        setLoading(false)
+    })
     // store apps
     const [apps, setApps] = useState([])
     let store = []
@@ -25,7 +32,7 @@ function Home() {
     const [organisations, setOrganisations] = useState([])
     let storeOrganisations = []
 
-    //get categories infor from API
+    //============get categories infor from API====================
     useEffect(() => {
         const getCategories = () => {
             axios('http://localhost:1337/api/categories?populate=*')
@@ -35,7 +42,7 @@ function Home() {
 
         getCategories()
     }, [])
-
+    //============get organisations infor from API====================
     useEffect(() => {
         fetch('http://localhost:1337/api/organisations?populate=*')
         .then(response => response.json())
@@ -49,7 +56,7 @@ function Home() {
         })
     }, [])
 
-    //get apps infor from API
+    //===============get apps infor from API==================
     useEffect(() => {
         fetch('http://localhost:1337/api/apps?populate=*')
         .then(response => response.json())
@@ -62,21 +69,11 @@ function Home() {
             })  
         })
     }, [])
-    // checked the first radio tag
+    // ===============checked radio tag==============
     const [sortingIndex, setSortingIndex] = useState(0)
-    setTimeout(() => {
-        const firstRadio = document.getElementsByClassName('checked')
-        firstRadio[sortingIndex].checked = true
-    }, 10)
-    
-    useEffect(() => {
-        setTimeout(() => {
-            const firstRadio = document.getElementById(`check-${sortingIndex}`)
-            firstRadio.checked = true
-        }, 10)
-    }, [sortingIndex])
+    $(`#check-${sortingIndex}`).prop("checked", true) 
 
-    // ordering categories to prioritize some scrucial ones
+    // ==================ordering categories to prioritize some scrucial ones============
     let categoriesTemporary
     for(let i = 0; i < categories.length-1; i++) {
         for(let j = i + 1; j < categories.length; j++) {
@@ -88,81 +85,83 @@ function Home() {
         }
     }    
     
-    
-    // ordering apps based on the date where they are published
+    // ===========ordering apps based on the date where they are published============
     let appsTemporary
     for(let i = 0; i < apps.length-1; i++) {
         for(let j = i + 1; j < apps.length; j++) {
-            const formatDateI = Moment(apps[i].attributes.publishedAt).format("MM/DD/YYYY") 
-            const formatDateJ = Moment(apps[j].attributes.publishedAt).format("MM/DD/YYYY") 
-            const dateI = new Date(formatDateI)
+            const dateI = new Date(apps[i].attributes.publishedAt)
             const now = new Date()
-            const dateJ = new Date(formatDateJ)
+            const dateJ = new Date(apps[j].attributes.publishedAt)
             if(now.getTime()-dateI.getTime() > now.getTime()-dateJ.getTime()) {
                 appsTemporary = apps[i]
                 apps[i] = apps[j]
                 apps[j] = appsTemporary
             }
         }
-    }  
+    }
      
-    // sorting apps
+    // ==============sorting apps=============
     const [sortingCategory, setSortingCategory] = useState('Tất cả')
     const checkHandler = (index) => {
-        // console.log('123')
         const input = document.getElementById(`check-${index}`)
         setSortingCategory(input.nextElementSibling.innerHTML)
         setSortingIndex(index)
     }
     
-    // console.log(sortingCategory)
+    //============= console.log(sortingCategory)===================
     return(
         <div className={cx('content')}>
-            {/* ===============apps container================s */}
-            <div className={cx('apps-container')}>
-                <h3 className={cx('title')}>Nổi bật</h3>
-                {/* =========================app-list====================== */}
-                <CardGroup>
-                    {apps.map((app, index) => {
-                        // distinguishing new and old apps
-                        const formatDate = Moment(app.attributes.publishedAt).format("MM/DD/YYYY") 
-                        const now = new Date()
-                        const date = new Date(formatDate)
-                        const amountOfDays1 = Math.ceil((now.getTime() -  date.getTime())/(1000*60*60*24))
+            {loading === true ? (
+                <div className={cx('spinner')}>
+                    <Spinner animation="grow" variant="info" />
+                </div>
+            ) : (
+                //  ===============apps container================s 
+                <div className={cx('apps-container')}>
+                    <h3 className={cx('title')}>Nổi bật</h3>
+                    {/* =========================app-list====================== */}
+                    <CardGroup>
+                        {apps.map((app, index) => {
+                            // distinguishing new and old apps
+                            const formatDate = Moment(app.attributes.publishedAt).format("MM/DD/YYYY") 
+                            const now = new Date()
+                            const date = new Date(formatDate)
+                            const amountOfDays1 = Math.ceil((now.getTime() -  date.getTime())/(1000*60*60*24))
 
-                        return (
-                            <React.Fragment key={index}>
-                                {index < 4 && (
-                                    <Card className={cx('app')}>
-                                        <div className={cx('app-state')}>
-                                            {amountOfDays1 < 25 ? (
-                                                <Badge bg="primary" pill className={cx('app-state__new')}>
-                                                    new
-                                                </Badge>
-                                            ) : (
-                                                <Badge bg="primary" pill className={cx('app-state__old')}>
-                                                    old
-                                                </Badge>
-                                            )}
-                                        </div>
-                                        <Card.Img className={cx('app-image')} variant="top" src={`http://localhost:1337${app.attributes.photo.data.attributes.url}`} alt={app.name}/>
-                                        <Card.Body className={cx('app-body')}>
-                                            <Card.Title className={cx('app-title')}>{app.attributes.name}</Card.Title>
-                                            <div>
-                                                <Card.Text className={cx('app-description')}>
-                                                    {app.attributes.description}
-                                                </Card.Text>
+                            return (
+                                <React.Fragment key={index}>
+                                    {index < 4 && (
+                                        <Card className={cx('app')}>
+                                            <div className={cx('app-state')}>
+                                                {amountOfDays1 < 25 ? (
+                                                    <Badge bg="primary" pill className={cx('app-state__new')}>
+                                                        new
+                                                    </Badge>
+                                                ) : (
+                                                    <Badge bg="primary" pill className={cx('app-state__old')}>
+                                                        old
+                                                    </Badge>
+                                                )}
                                             </div>
-                                        </Card.Body>
-                                        {/* =================go to details button ================*/}
-                                        <Link className={cx('app-details-button')} to={`/app-details-${app.id}`} state={{app: app}}>Chi tiết</Link>
-                                    </Card>
-                                )}
-                            </React.Fragment>
-                        )
-                    })}
-                </CardGroup>
-            </div>
+                                            <Card.Img className={cx('app-image')} variant="top" src={`http://localhost:1337${app.attributes.logo.data.attributes.url}`} alt={app.name}/>
+                                            <Card.Body className={cx('app-body')}>
+                                                <Card.Title className={cx('app-title')}>{app.attributes.name}</Card.Title>
+                                                <div>
+                                                    <Card.Text className={cx('app-description')}>
+                                                        {app.attributes.description}
+                                                    </Card.Text>
+                                                </div>
+                                            </Card.Body>
+                                            {/* =================go to details button ================*/}
+                                            <Link className={cx('app-details-button')} to={`/app-details-${app.id}`} >Chi tiết</Link>
+                                        </Card>
+                                    )}
+                                </React.Fragment>
+                            )
+                        })}
+                    </CardGroup>
+                </div>
+            )}
             {/* =================categories container=============== */}
             <div className={cx('categories-container')}>
                 {/* ===================categories list=============== */}

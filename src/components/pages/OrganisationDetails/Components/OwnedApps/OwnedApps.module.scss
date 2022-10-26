@@ -1,6 +1,6 @@
 .wrapper{
     width: 1250px;
-
+    min-height: 100vh;
 
     .title{
         margin: 30px 0px;
@@ -14,6 +14,23 @@
     .apps-container{
         margin-top: 50px;
 
+        .head{
+            .head__index{
+                text-align: center;
+            }
+            .head__image{
+                text-align: center;
+            }
+            .head__name{
+                text-align: center;
+            }
+            .head__category{
+                text-align: center;
+            }
+            .head__download-link{
+                text-align: center;
+            }
+        }
 
         .each-app{
             vertical-align: middle;
@@ -36,12 +53,10 @@
 
             .category{
                 text-align: center;
-               
             }
 
             .download-link{
                 text-align: center;
-               
                 color: rgba($color: #e39696, $alpha: 1.0);
                 
                 img{
@@ -49,6 +64,14 @@
                     width: 200px;
                     margin: 0px auto;
                 }
+            }
+        }
+        
+        .message{
+            text-align: center;
+
+            span{
+                color: rgba($color: #e39696, $alpha: 1.0);
             }
         }
     }

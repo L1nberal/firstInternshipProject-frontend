@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 import axios from 'axios';
 import { useContext } from 'react'
 import Modal from 'react-bootstrap/Modal';
+import ButtonBootstrap from 'react-bootstrap/esm/Button';
 
 import {
     icons
@@ -86,7 +87,6 @@ function Login() {
 
     //a dialogue pops up when errors occur
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
 
     return(
@@ -98,13 +98,13 @@ function Login() {
                 </Modal.Header>
                 <Modal.Body>Thông tin bạn nhập không chính xác, mời bạn thử lại!</Modal.Body>
                 <Modal.Footer>
-                    <button 
+                    <ButtonBootstrap 
                         variant="secondary" 
                         onClick={handleClose}
                         className={cx('modal-btn')}
                     >
                         Đã hiểu
-                    </button>
+                    </ButtonBootstrap>
                 </Modal.Footer>
             </Modal>
 

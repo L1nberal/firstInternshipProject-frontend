@@ -1,24 +1,29 @@
 import classnames from 'classnames/bind'
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button'
 
 import style from './OrganisationDetails.module.scss'
-import React, { useEffect, useState } from 'react';
+import { icons } from '../../../assets'
+import { UserAuth } from '../../../context/AuthContext';
 
 const cx = classnames.bind(style)
 
 function OrganisationDetails({apps, organisations, organisationId}) {
-    // get infor from Link tag
-    const location = useLocation();
-    const data = location.state;
-    // the amount of owned apps
+    const { user } = UserAuth()
+    //================ the amount of owned apps===================
     let amountOfOwnedApps = 0
-    //the amount of developed apps
+    //============the amount of developed apps==================
     let amountOfDevelopedApps = 0
+    // ==========navigate==================
+    const navigate = useNavigate()
 
+    
     return (
         <div className={cx('wrapper')}>
             {organisations.map((organisation, index) => {
@@ -29,11 +34,13 @@ function OrganisationDetails({apps, organisations, organisationId}) {
                         {organisation.id === organisationId && (
                             <React.Fragment>
                                 <div className={cx('head')}>
-                                    <img 
-                                        className={cx('head__image')} 
-                                        src={`http://localhost:1337${organisation.attributes.logo.data.attributes.url}`}
-                                    />
-                                    
+                                    <div className={cx('image-container')}>
+                                        <img 
+                                            className={cx('head__image')} 
+                                            src={`http://localhost:1337${organisation.attributes.logo.data.attributes.url}`}
+                                        />
+                                    </div>
+
                                     <div className={cx('head__infor')}>
                                         <div>
                                             <div>{organisation.attributes.name} | {organisation.attributes.ownedBy}</div>
@@ -45,6 +52,19 @@ function OrganisationDetails({apps, organisations, organisationId}) {
                                             <div>Website: <span><a href={organisation.attributes.website} target="blank">{organisation.attributes.website}</a></span></div>
                                         </div>
                                     </div>
+
+                                    {/* ============ organisation update button ============== */}
+                                    {user && (
+                                        <React.Fragment>
+                                            {user.isAdmin && <Button 
+                                                variant="outline-primary"
+                                                className={cx('head__update-popup-btn')}
+                                                onClick={() => navigate(`/organisation-update-${organisation.id}`)}
+                                            >
+                                                Cập nhật 
+                                            </Button>}
+                                        </React.Fragment>
+                                    )}
                                 </div>
 
                                 <div className={cx('carousel')}>
@@ -77,25 +97,26 @@ function OrganisationDetails({apps, organisations, organisationId}) {
                                             return (
                                                 <React.Fragment key={index}>
                                                     {organisation.attributes.appsDeveloped.data.map((developedApp, index)=> {
+                                            
                                                         if(app.attributes.name === developedApp.attributes.name) {
                                                             amountOfDevelopedApps++
                                                         }
-                                                        let enter = amountOfDevelopedApps < 5
+                                                        let enter = amountOfDevelopedApps > 4
                                                         return (
                                                             <React.Fragment key={index}>
-                                                                {app.attributes.name === developedApp.attributes.name && enter && (
+                                                                {app.attributes.name === developedApp.attributes.name && !enter && (
                                                                     <Card className={cx('app-container')}>
                                                                         <Link to={`/app-details-${app.id}`} state={{app: app}}>
                                                                             <Card.Img 
                                                                                 className={cx('app-image')}  
                                                                                 variant="top" 
-                                                                                src={`http://localhost:1337${app.attributes.photo.data.attributes.url}`} 
+                                                                                src={`http://localhost:1337${app.attributes.logo.data.attributes.url}`} 
                                                                             />
                                                                             <Card.Body className={cx('app-name')}>
                                                                                 <Card.Title>{app.attributes.name}</Card.Title>
                                                                             </Card.Body>
                                                                         </Link>
-                                                                  </Card>
+                                                                </Card>
                                                                 )}
                                                             </React.Fragment>
                                                         )
@@ -110,9 +131,15 @@ function OrganisationDetails({apps, organisations, organisationId}) {
                                         <div className={cx('message')}>Hiện tại cơ quan này vẫn chưa phát triển bất kì ứng dụng nào!</div>
                                     )} 
                                     {/* ==============a button is rendered out when there are more than 4 apps================ */}
-                                    {/* {amountOfDevelopedApps > 4 && ( */}
-                                        <Link to={`/organisation-details-${organisation.id}-developed-apps`}>Xem Thêm</Link>
-                                    {/* )}  */}
+                                    {amountOfDevelopedApps > 4 && (
+                                        <Link 
+                                            to={`/organisation-details-${organisation.id}-developed-apps`}
+                                            className={cx('more-apps')}
+                                        >
+                                            <span>Xem Thêm</span>
+                                            <FontAwesomeIcon icon={icons.faAnglesRight}/>
+                                        </Link>
+                                    )}   
                                 </div>
                                 {/*============= apps owned by the organisation ===============*/}
                                 <div className={cx('apps-owned')}>
@@ -126,16 +153,16 @@ function OrganisationDetails({apps, organisations, organisationId}) {
                                                             if(app.attributes.name === appsOwned.attributes.name) {
                                                                 amountOfOwnedApps++
                                                             }
-                                                            let enter = amountOfOwnedApps%4 != 0
+                                                            let enter = amountOfOwnedApps > 4
                                                             return (
                                                                 <React.Fragment key={index}>
-                                                                    {app.attributes.name === appsOwned.attributes.name && enter && (
+                                                                    {app.attributes.name === appsOwned.attributes.name && !enter && (
                                                                         <Card className={cx('app-container')}>
-                                                                            <Link to={`/app-details-${app.id}`} state={{app: app}}>
+                                                                            <Link to={`/app-details-${app.id}`}>
                                                                                 <Card.Img 
                                                                                     className={cx('app-image')}  
                                                                                     variant="top" 
-                                                                                    src={`http://localhost:1337${app.attributes.photo.data.attributes.url}`} 
+                                                                                    src={`http://localhost:1337${app.attributes.logo.data.attributes.url}`} 
                                                                                 />
                                                                                 <Card.Body className={cx('app-name')}>
                                                                                     <Card.Title>{app.attributes.name}</Card.Title>
@@ -157,7 +184,13 @@ function OrganisationDetails({apps, organisations, organisationId}) {
                                     )} 
                                     {/* ==============a button is rendered out when there are more than 4 apps================ */}
                                     {amountOfOwnedApps > 4 && (
-                                        <Link to={`/organisation-details-${organisation.id}-owned-apps`}>Xem Thêm</Link>
+                                        <Link 
+                                            to={`/organisation-details-${organisation.id}-owned-apps`}
+                                            className={cx('more-apps')}
+                                        >
+                                            <span>Xem Thêm</span>
+                                            <FontAwesomeIcon icon={icons.faAnglesRight}/>
+                                        </Link>
                                     )} 
                                 </div>
                             </React.Fragment>

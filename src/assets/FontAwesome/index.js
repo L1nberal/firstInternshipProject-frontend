@@ -7,7 +7,7 @@ import {
     faRightToBracket,
     faEarthAsia,
     faListCheck,
-    
+    faAnglesRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 
@@ -19,6 +19,7 @@ export {
     faFeather,
     faRightToBracket,
     faEarthAsia,
+    faAnglesRight,
     faListCheck,
 }
 
