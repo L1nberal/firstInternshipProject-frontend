@@ -1,3 +1,23 @@
+.warning-wrapper{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .warning{
+        margin: 10px 0px;
+        color: red;
+        font-size: 25px;
+    }
+
+    .message{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
+
 .wrapper{
     width: 1250px;
     min-height: 100vh;
@@ -47,7 +67,6 @@
             width: 100%;
             overflow-x: scroll;
 
-
             .checkbox-container{
                 margin-right: 40px;
                 height: 250px;
@@ -64,6 +83,7 @@
 
                     .name{
                         text-align: center;
+                        height: 90px;
                     }
 
                     img{
@@ -71,6 +91,114 @@
                         border-radius: 15px;
                     }
                 }
+            }
+        }
+    }
+}
+
+// ======responsive for both mobiles and tablets===================
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .wrapper{
+        width: 100%;
+        padding: 0px 10px;
+        background-color: #f1f1f1;
+
+        .form{
+            background-color: rgba($color: #ffffff, $alpha: 1.0);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 15px;
+
+            .infor-input{
+                font-size: 15px;
+            }
+    
+            .about{
+                font-size: 15px;
+            }
+    
+            .logo{
+                margin: 15px 0px;
+    
+                img{
+                    display: block;
+                    width: 150px;
+                    margin: 0px auto;
+                }
+            }
+    
+            .photos{
+                img{
+                    width: 200px;
+                    height: auto;
+                }
+            }
+    
+            .checkboxes{
+                .checkbox-container{
+                    height: 180px;
+                    
+                    .app-container{
+                        img{
+                            width: 120px;
+                            height: 120px;
+                        }
+                    }
+                }
+            }
+
+            .submit-btn{
+                display: block;
+                margin: 0px auto;
+            }
+        }
+    }
+}
+// =================responsive for mobiles only=================
+@media only screen and (min-width: 320px) and (max-width: 599px) {
+    .warning-wrapper{
+        .message{
+            text-align: center;
+        }
+    }
+
+    .wrapper{
+        .form{
+            font-size: 14px;
+
+            .infor-input{
+                font-size: 14px;
+            }
+    
+            .about{
+                font-size: 14px;
+            }
+    
+            .logo{
+                margin: 15px 0px;
+    
+                img{
+                    width: 100px;
+                    margin: 0px auto;
+                }
+            }
+    
+            .photos{
+                img{
+                    width: 180px;
+                    height: auto;
+                }
+            }
+    
+            .checkboxes{
+                .checkbox-container{
+                    height: 180px;
+                }
+            }
+
+            .submit-btn{
+                display: block;
+                margin: 0px auto;
             }
         }
     }

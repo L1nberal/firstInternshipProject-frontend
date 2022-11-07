@@ -52,7 +52,6 @@ function DevelopedApps ({apps, organisations, organisationId, organisation}) {
                             return (
                                 <React.Fragment key={organisation.id}>
                                     {apps.map((app, index) => {
-                                        console.log(app)
                                         if(app.attributes.developer.data.attributes.name === organisation.attributes.name) {
                                             developedApps.push(app)
                                         }

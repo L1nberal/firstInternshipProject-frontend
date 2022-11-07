@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import {
-    Account, 
+    PrivatePage, 
     Home, 
     Login, 
     Signup,
@@ -44,8 +44,8 @@ function TotalRoutes() {
                     })
                 })
 
-            }) 
-    
+            })
+            .catch(error => console.log(error))
         // =============get apps from strapi API=============
         fetch('http://localhost:1337/api/organisations?populate=*')
             .then(response => response.json())
@@ -58,6 +58,7 @@ function TotalRoutes() {
                 })
 
             }) 
+            .catch(error => console.log(error))
         // =============get categories from strapi API=============
         fetch('http://localhost:1337/api/categories?populate=*')
             .then(response => response.json())
@@ -69,6 +70,7 @@ function TotalRoutes() {
                     })
                 })
             })
+            .catch(error => console.log(error))
         // =============get comments from strapi API=============
         fetch('http://localhost:1337/api/comments?populate=*')
             .then(response => response.json())
@@ -80,6 +82,7 @@ function TotalRoutes() {
                     })
                 })
             })
+            .catch(error => console.log(error))
         // =============get users from strapi API=============
         axios.get('http://localhost:1337/api/users?populate=*', {
             headers: {
@@ -91,7 +94,6 @@ function TotalRoutes() {
     }, []) 
     // routes that show pages
     const PagesRoutes = [
-        {path:'/account', Component: Account},
         {path:'/', Component: Home},
         {path:'/log-in', Component: Login, Layout: NoHeaderLayout},
         {path:'/sign-up', Component: Signup, Layout: NoHeaderLayout},
@@ -105,13 +107,13 @@ function TotalRoutes() {
     })
     // routes that show individual organisation
     const OrganisationDetailsRoutes = organisations.map((organisation) => {
-        return {path: `/organisation-details-${organisation.id}`, Component: OrganisationDetails, organisationId: organisation.id}
+        return {path: `/organisation-details-${organisation.id}`, Component: OrganisationDetails, organisationId: organisation.id, organisation: organisation}
     })
     // routes that show owned apps
     const OwnedAppsRoutes = organisations.map((organisation) => {
         return {path: `/organisation-details-${organisation.id}-owned-apps`, Component: OwnedApps, organisationId: organisation.id, organisation: organisation}
     })
-    // routes that show owned organisations
+    // routes that show developed apps
     const DevelopedAppsRoutes = organisations.map((organisation) => {
         return {path: `/organisation-details-${organisation.id}-developed-apps`, Component: DevelopedApps, organisationId: organisation.id, organisation: organisation}
     })
@@ -123,9 +125,13 @@ function TotalRoutes() {
     const organisationUpdateRoutes = organisations.map((organisation) => {
         return {path: `/organisation-update-${organisation.id}`, Component: OrganisationUpdate, organisationId: organisation.id, organisation: organisation, organisations: organisations, apps: apps}
     })
-    // routes that update individual organisation
+    // routes that update individual app
     const appUpdateRoutes = apps.map((app) => {
         return {path: `/app-update-${app.id}`, Component: AppUpdate, appId: app.id, app: app, apps: apps, organisations: organisations, users: users, categories: categories}
+    })
+    // routes that show each individual user's infor
+    const privatePageRoutes = users.map((user) => {
+        return {path: `/private-page-${user.id}`, Component: PrivatePage, userId: user.id, users: users, userInfor: user, apps: apps}
     })
 
     return(
@@ -261,6 +267,8 @@ function TotalRoutes() {
                                     apps={apps} 
                                     organisations={organisations} 
                                     organisationId={route.organisationId}
+                                    users={users}
+                                    organisation={route.organisation}
                                 />
                             </Layout>
                         }
@@ -345,6 +353,35 @@ function TotalRoutes() {
                                     app= {route.app}
                                     users= {route.users}
                                     categories= {route.categories}
+                                />
+                            </Layout>
+                        }
+                    />
+
+                )
+            })}
+
+            {/* ==============routes that each individual user's infor================= */}
+            {privatePageRoutes.map((route, index) => {
+                const Component = route.Component
+                let Layout = DefaultLayout
+
+                if(route.Layout) {
+                    Layout = route.Layout
+                }
+
+                return(
+                    <Route 
+                        key={index} 
+                        path={route.path} 
+                        element={
+                            <Layout>
+                                <Component 
+                                    userId = {route.userId}
+                                    userInfor = {route.userInfor}
+                                    apps = {route.apps}
+                                    comments={comments}
+                                    users = {route.users}
                                 />
                             </Layout>
                         }

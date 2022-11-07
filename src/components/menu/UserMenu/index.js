@@ -24,21 +24,19 @@ const UserMenu = React.forwardRef((props, ref) => {
     const currentMenu = history[history.length-1]
     // index to show menuHeader
     const [menuIndex, setMenuIndex] = useState(0)
-
-    // console.log(history)
-    function resetHandler () {
-        setHistory(history.slice(0,1))
-    }
   
-    return (
+    return ( 
         <Tippy
             // visible
+            id
             interactive
             delay={[0, 100]}
             offset={[0, 6]}
             placement='top-start'
+            onHide={() => {
+                setHistory([props.data])
+            }}
             render={attrs => {
-                
                 return (
                     <div
                         className={cx('wrapper')}
@@ -68,8 +66,6 @@ const UserMenu = React.forwardRef((props, ref) => {
                                             to={item.to}
                                             leftIcon={item.icon}
                                             onClick = {() => {
-                                                resetHandler()
-
                                                 if(item.submenu) {
                                                     setMenuIndex(index)
                                                     setHistory(prev => [...prev, item.submenu])
@@ -111,13 +107,14 @@ const UserMenu = React.forwardRef((props, ref) => {
                                     </React.Fragment>
                                 }
 
-                                {currentMenu.filter(item => item.title != "management").map((item, index) => {
+                                {currentMenu.filter(item => item.for != "admin").map((item, index) => {
                                     return (
                                         <Button 
                                             className={cx('setting-btn')}
                                             key={index}
+                                            leftIcon={item.icon}
+                                            to={item.to}
                                             onClick = {() => {
-                                                resetHandler()
 
                                                 if(item.submenu) {
                                                     setMenuIndex(index)
@@ -128,7 +125,7 @@ const UserMenu = React.forwardRef((props, ref) => {
                                                         try {
                                                             navigate('/')
                                                             await logOut()
-                                                            window.location.reload(1); //reload page after logout to update login state
+                                                            window.location.reload(); //reload page after logout to update login state
                                                         }catch(error) {
                                                             console.log(error)
                                                         }

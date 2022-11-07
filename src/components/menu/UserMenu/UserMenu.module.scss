@@ -37,5 +37,30 @@
             background-color: #9085a9;
         }
     }
+}
+
+// =====================responsive for both mobiles and  tablets=======================
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .wrapper{
+        min-width: 100px;
+        .menu-header{
+            min-width: 100%;
+            min-height: 30px;
+            font-size: 11px;
+        
+            .header-icon{
+                margin-right: 10px;
+            }
+        }
     
+        .setting-btn{
+            font-size: 10px;
+            min-width: 100%;
+            min-height: 25px;
+    
+            &:hover{
+                background-color: #9085a9;
+            }
+        }
+    }
 }

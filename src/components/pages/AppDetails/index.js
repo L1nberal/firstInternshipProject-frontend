@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import classnames from 'classnames/bind'
 import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
 import style from './AppDetails.module.scss'
 import Button from 'react-bootstrap/esm/Button';
 import { useNavigate, Link } from 'react-router-dom';
@@ -15,6 +16,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 
 import { UserAuth } from '../../../context/AuthContext';
 import Comments from './components/Comments';
+import axios from 'axios';
 
 const cx = classnames.bind(style)
 
@@ -43,12 +45,69 @@ function AppDetails({apps, appId, comments, users, app}) {
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
             return 'IOS'
         }
-    
         return "unknown";
     }
- 
+    // ==============app delete handler=============
+    const deleteHandler = async (appId) => {
+        await axios.delete(`http://localhost:1337/api/upload/files/${app.attributes.logo.data.id}`, {
+            headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+            }
+        })
+            .then(respond => {})
+            .catch(error => console.log(error))
+        app.attributes.screenshots.data.map( async (screenshot) => {
+            await axios.delete(`http://localhost:1337/api/upload/files/${screenshot.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                }
+            })
+                .then(respond => {})
+                .catch(error => console.log(error))
+        })
+        await axios.delete(`http://localhost:1337/api/apps/${appId}`, {
+            headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+            }
+        })
+            .then(respond => {
+                navigate('/')
+            })
+            .catch(error => console.log(error))
+    }
+    //=================a dialogue pops up when a delete request exists============
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+
     return(
         <div className={cx('wrapper')}>
+            {/* =============a dialogue pops up whenever a delete request exists============== */}
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xóa ứng dụng</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Bạn có thực sự muốn xóa ứng dụng này không?</Modal.Body>
+                <Modal.Footer>
+                    <Button 
+                        variant="secondary" 
+                        onClick={() => handleClose()}
+                        className={cx('modal-btn')}
+                    >
+                        Hủy
+                    </Button>
+                    <Button 
+                        variant="danger" 
+                        onClick={() => {
+                            handleClose()
+                            deleteHandler(appId)
+                        }}
+                        className={cx('modal-btn')}
+                    >
+                        Xóa
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             <div className={cx('infor')}>
                 <div className={cx('app-details')}>
                     <div className={cx('head')}>
@@ -84,16 +143,26 @@ function AppDetails({apps, appId, comments, users, app}) {
                         
                         {user && (
                             <React.Fragment>
-                                {user.isAdmin &&
-                                    //  =============app update button============== 
-                                    <Button
-                                        variant='outline-primary'
-                                        className={cx('head__update-btn')}
-                                        onClick={() => navigate(`/app-update-${appId}`)}
-                                    >
-                                        Cập nhật
-                                    </Button>
-                                }
+                                {user.isAdmin &&( 
+                                    <div className={cx('head__btn-group')}>
+                                        {/* =============app update button==============  */}
+                                        <Button
+                                            variant='outline-primary'
+                                            className={cx('head__update-btn')}
+                                            onClick={() => navigate(`/app-update-${appId}`)}
+                                        >
+                                            Cập nhật
+                                        </Button>
+
+                                        <Button
+                                            variant='outline-danger'
+                                            className={cx('head__delete-btn')}
+                                            onClick={() => setShow(true)}
+                                        >
+                                            Xóa ứng dụng
+                                        </Button>
+                                    </div>
+                                )}
                             </React.Fragment>
                         )}
                        
@@ -137,16 +206,17 @@ function AppDetails({apps, appId, comments, users, app}) {
                     
                     <div className={cx('carousel')}>
                         <h5 className={cx('carousel__title')}>Ảnh chụp màn hình:</h5>
-    
-                        <CarouselProvider
-                            naturalSlideWidth={100}
-                            naturalSlideHeight={125}
-                            totalSlides={8}
-                            visibleSlides={4}
-                            currentSlide={0}
-                        >
-                            <Slider>
-                                    <React.Fragment>
+                                
+                        <div className={cx('carousel-provider')}>
+                            {app.attributes.screenshots.data != null ? (
+                                <CarouselProvider
+                                    naturalSlideWidth={100}
+                                    naturalSlideHeight={125}
+                                    totalSlides={8}
+                                    visibleSlides={4}
+                                    currentSlide={0}
+                                >
+                                    <Slider>
                                         {app.attributes.screenshots.data.map((screenshot, index) => {
                                             return (
                                                 <React.Fragment key={index}>
@@ -154,14 +224,46 @@ function AppDetails({apps, appId, comments, users, app}) {
                                                 </React.Fragment>
                                             )
                                         })}
-                                    </React.Fragment>
-                            </Slider>
-    
-                            <div className={cx('btn-container')}>
-                                <ButtonBack className={cx('carousel-left-btn')}>Back</ButtonBack>
-                                <ButtonNext className={cx('carousel-right-btn')}>Next</ButtonNext>
-                            </div>
-                        </CarouselProvider>
+                                    </Slider>
+            
+                                    <div className={cx('btn-container')}>
+                                        <ButtonBack className={cx('carousel-left-btn')}>Back</ButtonBack>
+                                        <ButtonNext className={cx('carousel-right-btn')}>Next</ButtonNext>
+                                    </div>
+                                </CarouselProvider>
+                            ) : (
+                                <div>Chưa có ảnh minh họa nào cho ứng dụng này</div>
+                            )}
+                        </div>
+
+                        <div className={cx('carousel-provider-mobile-tablet')}>
+                            {app.attributes.screenshots.data != null ? (
+                                <CarouselProvider
+                                    naturalSlideWidth={100}
+                                    naturalSlideHeight={125}
+                                    totalSlides={8}
+                                    visibleSlides={2}
+                                    currentSlide={0}
+                                >
+                                    <Slider>
+                                        {app.attributes.screenshots.data.map((screenshot, index) => {
+                                            return (
+                                                <React.Fragment key={index}>
+                                                    <Slide className={cx('carousel-slide')}><img src={`http://localhost:1337${screenshot.attributes.url}`}/></Slide>
+                                                </React.Fragment>
+                                            )
+                                        })}
+                                    </Slider>
+            
+                                    <div className={cx('btn-container')}>
+                                        <ButtonBack className={cx('carousel-left-btn')}>Back</ButtonBack>
+                                        <ButtonNext className={cx('carousel-right-btn')}>Next</ButtonNext>
+                                    </div>
+                                </CarouselProvider>
+                            ) : (
+                                <div>Chưa có ảnh minh họa nào cho ứng dụng này</div>
+                            )}
+                        </div>
                     </div>
     
                     <div className={cx('developer')}>
@@ -194,9 +296,9 @@ function AppDetails({apps, appId, comments, users, app}) {
                     <h5 className={cx('related-apps__title')}>Các apps liên quan:</h5>
                     
                     {app.attributes.category.data != null ? (
-                        <React.Fragment>
+                        <div className={cx('related-apps__container')}>
                             {apps.map((relatedApp, index) => {
-                                if(relatedApp.id != appId) {
+                                if(relatedApp.id != appId && relatedApp.attributes.category.data) {
                                     if(app.attributes.category.data.attributes.name === relatedApp.attributes.category.data.attributes.name && app.attributes.name != relatedApp.attributes.name) {
                                         relatedApps = relatedApps + 1
                                     }
@@ -204,32 +306,36 @@ function AppDetails({apps, appId, comments, users, app}) {
 
                                 return (
                                     <React.Fragment key={index}>
-                                        {app.attributes.category.data.attributes.name === relatedApp.attributes.category.data.attributes.name && app.attributes.name != relatedApp.attributes.name && (
-                                        <Link to={`/app-details-${relatedApp.id}`}>
-                                                <Card border="dark" className={cx('app-container')}>
-                                                    <Card.Body className='d-flex'>
-                                                        <Card.Img className={cx('image')} src={`http://localhost:1337${relatedApp.attributes.logo.data.attributes.url}`}></Card.Img>
-                                                        
-                                                        <Card.Text>
-                                                            <div className={cx('name')}>
-                                                                {relatedApp.attributes.name}
-                                                            </div>
-                    
-                                                            <div className={cx('description')}>
-                                                                {relatedApp.attributes.description}
-                                                            </div>
-                                                        </Card.Text>
-                                                    </Card.Body>
-                                                </Card>
-                                                </Link>
+                                        {relatedApp.attributes.category.data && (
+                                            <React.Fragment>
+                                                {app.attributes.category.data.attributes.name === relatedApp.attributes.category.data.attributes.name && app.attributes.name != relatedApp.attributes.name && (
+                                                    <Link to={`/app-details-${relatedApp.id}`}>
+                                                        <Card border="dark" className={cx('app-container')}>
+                                                            <Card.Body className='d-flex'>
+                                                                <Card.Img className={cx('image')} src={`http://localhost:1337${relatedApp.attributes.logo.data.attributes.url}`}></Card.Img>
+                                                                
+                                                                <Card.Text>
+                                                                    <div className={cx('name')}>
+                                                                        {relatedApp.attributes.name}
+                                                                    </div>
+                            
+                                                                    <div className={cx('description')}>
+                                                                        {relatedApp.attributes.description}
+                                                                    </div>
+                                                                </Card.Text>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    </Link>
                                                 )}
+                                            </React.Fragment>
+                                        )}
                                     </React.Fragment>
                                 )
                             })}
                         
                             {/* ==============check if there's no app related to the app shown, a message would be printed out================ */}
                             {relatedApps === 0 && <div className={cx('related-apps__message')}>Hiện tại thì {app.attributes.name} là ứng dụng duy nhất thuộc phân loại {app.attributes.category.data.attributes.name} tại trang web này!</div>}
-                        </React.Fragment>
+                        </div>
                     ) : (
                         <div className={cx('related-apps__message')}>
                             Chưa có ứng dụng nào liên quan đến phân loại này được thêm vào!
@@ -240,8 +346,6 @@ function AppDetails({apps, appId, comments, users, app}) {
 
             <div className={cx('comments-section')}>
                 <Comments
-                    comments={comments}
-                    app={app}
                     appId={appId}
                     users={users}
                 />

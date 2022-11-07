@@ -1,9 +1,10 @@
 .wrapper{
     min-height: 100vh;
-
+    margin-top: 7%;
+    // ===================submit comment secton=================
     .comment{
         width: 100%;
-        height: 350px;
+        min-height: 350px;
         position: relative;        
 
         .textarea{
@@ -32,22 +33,23 @@
             }
     
         }
-    
+        // ==================comments section=================
         .comments-shown{
             margin-top: 55px;
             width: 100%;
             border-radius: 5px;
-            height: 20%;
+            min-height: 150px;
             position: relative;
     
             .comments{
                 position: relative;
-
+                // ==========each comment==================
                 .each-comment{
                     width: 100%;
                     min-height: 100px;
                     border: 0px;
                     margin-bottom: 15px;
+                    padding-bottom: 35px;
     
                     .each-comment__header{
                         display: flex;
@@ -57,20 +59,70 @@
                             font-weight: bolder;
                         }
                     }
-        
-                    .each-comment__reply-btn{
-                        border: 0px;
-                        background-color: rgba($color: #ffffff, $alpha: 1.0);
-                        position: absolute;
-                        right: 2%;
-                        bottom: 10%;
+                    // ===================update section=================
+                    .each-comment__update-section{
+                        border: solid 1px rgba($color: #e6e2e2, $alpha: 1.0);
+                        margin: 0px 15px;
+                        display: none;
 
-                        &:hover{
-                            text-decoration: underline;
+                        textarea{
+                            border: 0px;
+                            outline: 0px;
+                            resize: none;
+                            width: 100%;
+                            height: 50px;
                         }
-        
-                        &:active{
-                            color: #ae7171;
+
+                        .update-btn{
+                            width: 10%;
+                            font-size: 15px;
+                        }
+                    }
+                    // ===================each comment buttons===============
+                    .each-comment__btn{
+                        position: absolute;
+                        bottom: 3%;
+                        right: 2%;
+
+                        .each-comment__delete-btn{
+                            border: 0px;
+                            background-color: rgba($color: #ffffff, $alpha: 1.0);
+                            color: red;
+    
+                            &:hover{
+                                text-decoration: underline;
+                            }
+            
+                            &:active{
+                                color: #ae7171;
+                            }
+                        }
+    
+                        .each-comment__update-btn{
+                            border: 0px;
+                            background-color: rgba($color: #ffffff, $alpha: 1.0);
+                            color: rgb(119, 156, 74);
+    
+                            &:hover{
+                                text-decoration: underline;
+                            }
+            
+                            &:active{
+                                color: #ae7171;
+                            }
+                        }
+            
+                        .each-comment__reply-btn{
+                            border: 0px;
+                            background-color: rgba($color: #ffffff, $alpha: 1.0);
+    
+                            &:hover{
+                                text-decoration: underline;
+                            }
+            
+                            &:active{
+                                color: #ae7171;
+                            }
                         }
                     }
                 }
@@ -89,6 +141,7 @@
                     right: 0px;
                     position: relative;
                     margin-bottom: 5px;
+                    padding-bottom: 35px;
 
                     .each-reply-comment__header{
                         display: flex;
@@ -105,29 +158,78 @@
                             }
                         }
                     }
-        
-                    .each-reply-comment__reply-btn{
-                        border: 0px;
-                        background-color: rgba($color: #ffffff, $alpha: 1.0);
-                        position: absolute;
-                        right: 2%;
-                        bottom: 10%;
-        
-                        &:hover{
-                            text-decoration: underline;
+                    // ===================update section=================
+                    .each-reply-comment__update-section{
+                        border: solid 1px rgba($color: #e6e2e2, $alpha: 1.0);
+                        margin: 0px 15px;
+                        display: none;
+
+                        textarea{
+                            border: 0px;
+                            outline: 0px;
+                            resize: none;
+                            width: 100%;
+                            height: 50px;
                         }
-        
-                        &:active{
-                            color: #ae7171;
+
+                        .update-btn{
+                            width: 14%;
+                            font-size: 15px;
+
+                        }
+                    }
+
+                    .each-reply-comment__btn{
+                        position: absolute;
+                        bottom: 3%;
+                        right: 2%;
+
+                        .each-reply-comment__delete-btn{
+                            border: 0px;
+                            background-color: rgba($color: #ffffff, $alpha: 1.0);
+                            color: red;
+            
+                            &:hover{
+                                text-decoration: underline;
+                            }
+            
+                            &:active{
+                                color: #ae7171;
+                            }
+                        }
+
+                        .each-reply-comment__update-btn{
+                            border: 0px;
+                            background-color: rgba($color: #ffffff, $alpha: 1.0);
+                            color: rgb(119, 156, 74);
+            
+                            &:hover{
+                                text-decoration: underline;
+                            }
+            
+                            &:active{
+                                color: #ae7171;
+                            }
+                        }
+            
+                        .each-reply-comment__reply-btn{
+                            border: 0px;
+                            background-color: rgba($color: #ffffff, $alpha: 1.0);
+            
+                            &:hover{
+                                text-decoration: underline;
+                            }
+            
+                            &:active{
+                                color: #ae7171;
+                            }
                         }
                     }
                 }
             }
 
             .reply-section{
-                right: 0px;
                 width: 100%;
-                display: flex;
                 height: 50px; 
                 margin-bottom: 10px;          
                 display: none;
@@ -172,10 +274,122 @@
                         background-color: rgba($color: #e7e7e7, $alpha: 1.0);
                     }
                 }
-            }
-
-            
+            } 
         }
     }
 }
 
+// ==============responsive for mobiles=======================
+@media only screen and (min-width: 320px) and (max-width: 599px) {
+    .wrapper{
+        .comment{
+            // ==================comments section=================
+            .comments-shown{
+                .comments{
+                    .each-comment{
+                        // ===================update section=================
+                        .each-comment__update-section{
+                            border: solid 1px rgba($color: #e6e2e2, $alpha: 1.0);
+                            margin: 0px 15px;
+                            display: none;
+    
+                            textarea{
+                                height: 50px;
+                            }
+    
+                            .update-btn{
+                                font-size: 15px;
+                                width: 25%;
+                            }
+                        } 
+                    }
+                }
+                
+                .reply-comments{
+                    .each-reply-comment{
+                        .each-reply-comment__header{
+                            .infor{
+                                .reply-to{
+                                    display: block;
+                                    margin-right: 10px;
+                                }
+    
+                                .published-at{
+                                    display: none;
+                                }
+                            }
+                        }
+                        // ===================update section=================
+                        .each-reply-comment__update-section{
+                            textarea{
+                                height: 50px;
+                            }
+    
+                            .update-btn{
+                                width: 30%;
+                                font-size: 15px;
+                            }
+                        }
+                    }
+                }    
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+    .wrapper{
+        .comment{
+            // ==================comments section=================
+            .comments-shown{
+                .comments{
+                    .each-comment{
+                        // ===================update section=================
+                        .each-comment__update-section{
+                            border: solid 1px rgba($color: #e6e2e2, $alpha: 1.0);
+                            margin: 0px 15px;
+                            display: none;
+    
+                            textarea{
+                                height: 50px;
+                            }
+    
+                            .update-btn{
+                                font-size: 15px;
+                                width: 25%;
+                            }
+                        } 
+                    }
+                }
+                
+                .reply-comments{
+                    .each-reply-comment{
+                        .each-reply-comment__header{
+                            .infor{
+                                .reply-to{
+                                    display: block;
+                                    margin-right: 10px;
+                                }
+    
+                                .published-at{
+                                    display: none;
+                                }
+                            }
+                        }
+                        // ===================update section=================
+                        .each-reply-comment__update-section{
+                            textarea{
+                                height: 50px;
+                            }
+
+                            .update-btn{
+                                width: 30%;
+                                font-size: 15px;
+                            }
+                        }
+                    }
+                }    
+            }
+        }
+    }
+}

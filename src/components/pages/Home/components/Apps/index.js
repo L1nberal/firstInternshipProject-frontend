@@ -17,8 +17,6 @@ import {
 const cx = classnames.bind(style)
 
 function Apps({apps, organisations, sortingCategory, sortingIndex}) {
-    // =========check if the document is loading============
-    const [loading, setLoading] = useState(true)
     // ===========apps and pages infor for pagination===========
     const [currentPage, setCurrentPage] = useState(1)
     const [appsPerPage, setAppsPerPage] = useState(4)
@@ -26,12 +24,10 @@ function Apps({apps, organisations, sortingCategory, sortingIndex}) {
     useEffect(() => {
         setCurrentPage(1)
     }, [sortingIndex])
-    
     //========================= get current posts===========================
     const indexOfLastApp = currentPage * appsPerPage
     const indexOfFirstApp = indexOfLastApp - appsPerPage
-    // sorting apps into categories
-
+    //================== sorting apps into categories==================
     let newArrayOfApps = []
     if(sortingCategory === "Tất cả") {
         apps.map(app => {
@@ -39,157 +35,149 @@ function Apps({apps, organisations, sortingCategory, sortingIndex}) {
         })
     }else(
         apps.filter(app => {
-            if(app.attributes.category.data.attributes.name === sortingCategory) {
+            if(app.attributes.category.data && app.attributes.category.data.attributes.name === sortingCategory) {
                 newArrayOfApps.push(app)
             }
         })
     )
-
+    // =====================current apps on a page===================
     const currentApps = newArrayOfApps.slice(indexOfFirstApp, indexOfLastApp)
-   
+    // ==================number of apps on a page=======================
     const  numberOfpages = Math.ceil(newArrayOfApps.length/appsPerPage)
     // ======================change page=====================
     const handlePageClick = (data) => {
         setCurrentPage(data.selected+1)
     }
-    // ===========check if the document is ready==========
-    $(document).ready(function() {
-        setLoading(false)
-    })
-    if(loading === true) {
-        return (
-            <Spinner animation="grow" variant="info" />
-        )
-    }else {
+   
+    return (
+        <div className={cx('wrapper')}>
+            <ListGroup as="ol" className={cx('list-group')}>
+                {currentApps.map(app => {
+                    // distinguishing new and old app
+                    const formatDate = Moment(app.attributes.publishedAt).format("MM/DD/YYYY") 
+                    const now = new Date()
+                    const date = new Date(formatDate)
+                    const amountOfDays1 = Math.ceil((now.getTime() -  date.getTime())/(1000*60*60*24))
+                    return (
+                        <React.Fragment key={app.id}> 
+                            {app.attributes.owner.data != null ? (
+                                <React.Fragment>
+                                    {organisations.map((organisation) => {
+                                        return (
+                                            <React.Fragment key={organisation.id}>
+                                                    <React.Fragment>
+                                                        {app.attributes.owner.data.attributes.name === organisation.attributes.name && (
+                                                            <Link to={`/app-details-${app.id}`} state={{app: app}}>
+                                                                <ListGroup.Item
+                                                                    as="li"
+                                                                    className={cx('list-item')}
+                                                                    key={organisation.id}
+                    
+                                                                >
+                                                                    <div className={cx('list-item__name')}>
+                                                                        {app.attributes.name}
+                                                                    </div>
+                    
+                                                                    <div className={cx('list-item__owner-infor')}>
+                                                                        {organisation.attributes.logo.data != null ? (
+                                                                            <img 
+                                                                                className={cx('logo')}
+                                                                                src={`http://localhost:1337${organisation.attributes.logo.data.attributes.url}`}
+                                                                            />
+                                                                        ) : (
+                                                                            <img 
+                                                                                className={cx('logo')}
+                                                                                src=""
+                                                                            />
+                                                                        )}
+                    
+                                                                        <div className={cx('name')}>
+                                                                            {organisation.attributes.name}
+                                                                        </div>
+                                                                    </div>
+                    
+                                                                    <div className={cx('list-item__status')}>
+                                                                        {amountOfDays1 < 25 ? (
+                                                                            <Badge 
+                                                                                bg="primary"
+                                                                                className={cx('new')} 
+                                                                                pill 
+                                                                            >
+                                                                                new
+                                                                            </Badge>
+                                                                        ) : (
+                                                                            <Badge 
+                                                                                bg="primary"
+                                                                                className={cx('old')} 
+                                                                                pill 
+                                                                            >
+                                                                                old
+                                                                            </Badge>
+                                                                        )}
+                                                                    </div>
+                                        
+                                                                </ListGroup.Item>
+                                                            </Link>
+                                                        )}
+                                                    </React.Fragment>
+                                            </React.Fragment>
+                                        )
+                                    })}
+                                </React.Fragment>
+                            ) : (
+                                <Link to={`/app-details-${app.id}`} state={{app: app}}>
+                                    <ListGroup.Item
+                                        as="li"
+                                        className={cx('list-item')}
+                                        key={app.id}
+                                    >
+                                        <div className={cx('list-item__name')}>
+                                            {app.attributes.name}
+                                        </div>
 
-        return (
-            <div className={cx('wrapper')}>
-                <ListGroup as="ol" className={cx('list-group')}>
-                    {currentApps.map(app => {
-                        // distinguishing new and old apps
-                        const formatDate = Moment(app.attributes.publishedAt).format("MM/DD/YYYY") 
-                        const now = new Date()
-                        const date = new Date(formatDate)
-                        const amountOfDays1 = Math.ceil((now.getTime() -  date.getTime())/(1000*60*60*24))
-                        return (
-                            <React.Fragment key={app.id}> 
-                                {app.attributes.owner.data != null ? (
-                                    <React.Fragment>
-                                        {organisations.map((organisation) => {
-                                            return (
-                                                <React.Fragment key={organisation.id}>
-                                                        <React.Fragment>
-                                                            {app.attributes.owner.data.attributes.name === organisation.attributes.name && (
-                                                                <Link to={`/app-details-${app.id}`} state={{app: app}}>
-                                                                    <ListGroup.Item
-                                                                        as="li"
-                                                                        className={cx('list-item')}
-                                                                        key={organisation.id}
-                        
-                                                                    >
-                                                                        <div className={cx('list-item__name')}>
-                                                                            {app.attributes.name}
-                                                                        </div>
-                        
-                                                                        <div className={cx('list-item__owner-infor')}>
-                                                                            {organisation.attributes.logo.data != null ? (
-                                                                                <img 
-                                                                                    className={cx('logo')}
-                                                                                    src={`http://localhost:1337${organisation.attributes.logo.data.attributes.url}`}
-                                                                                />
-                                                                            ) : (
-                                                                                <img 
-                                                                                    className={cx('logo')}
-                                                                                    src=""
-                                                                                />
-                                                                            )}
-                        
-                                                                            <div className={cx('name')}>
-                                                                                {organisation.attributes.name}
-                                                                            </div>
-                                                                        </div>
-                        
-                                                                        <div className={cx('list-item__status')}>
-                                                                            {amountOfDays1 < 25 ? (
-                                                                                <Badge 
-                                                                                    bg="primary"
-                                                                                    className={cx('new')} 
-                                                                                    pill 
-                                                                                >
-                                                                                    new
-                                                                                </Badge>
-                                                                            ) : (
-                                                                                <Badge 
-                                                                                    bg="primary"
-                                                                                    className={cx('old')} 
-                                                                                    pill 
-                                                                                >
-                                                                                    old
-                                                                                </Badge>
-                                                                            )}
-                                                                        </div>
-                                            
-                                                                    </ListGroup.Item>
-                                                                </Link>
-                                                            )}
-                                                        </React.Fragment>
-                                                </React.Fragment>
-                                            )
-                                        })}
-                                    </React.Fragment>
-                                ) : (
-                                    <Link to={`/app-details-${app.id}`} state={{app: app}}>
-                                        <ListGroup.Item
-                                            as="li"
-                                            className={cx('list-item')}
-                                            key={app.id}
-                                        >
-                                            <div className={cx('list-item__name')}>
-                                                {app.attributes.name}
-                                            </div>
-    
-                                            <div className={cx('list-item__status')}>
-                                                {amountOfDays1 < 25 ? (
-                                                    <Badge 
-                                                        bg="primary"
-                                                        className={cx('new')} 
-                                                        pill 
-                                                    >
-                                                        new
-                                                    </Badge>
-                                                ) : (
-                                                    <Badge 
-                                                        bg="primary"
-                                                        className={cx('old')} 
-                                                        pill 
-                                                    >
-                                                        old
-                                                    </Badge>
-                                                )}
-                                            </div>
-                
-                                        </ListGroup.Item>
-                                    </Link>
-                                )}
-                            </React.Fragment>
-                        )
-                    })}
-                </ListGroup>
-    
-                <div className={cx('Pagination')}>
-                    <ReactPaginate
-                        nextLabel={<FontAwesomeIcon icon={icons.faAngleRight}/>}
-                        previousLabel={<FontAwesomeIcon icon={icons.faAngleLeft}/>}
-                        pageCount={numberOfpages}
-                        marginPagesDisplayed={2}
-                        onPageChange={handlePageClick}
-                        pageClassName={'page-item'}
-                        renderOnZeroPageCount={null}
-                    />
-                </div>
+                                        <div className={cx('list-item__status')}>
+                                            {amountOfDays1 < 25 ? (
+                                                <Badge 
+                                                    bg="primary"
+                                                    className={cx('new')} 
+                                                    pill 
+                                                >
+                                                    new
+                                                </Badge>
+                                            ) : (
+                                                <Badge 
+                                                    bg="primary"
+                                                    className={cx('old')} 
+                                                    pill 
+                                                >
+                                                    old
+                                                </Badge>
+                                            )}
+                                        </div>
+            
+                                    </ListGroup.Item>
+                                </Link>
+                            )}
+                        </React.Fragment>
+                    )
+                })}
+            </ListGroup>
+
+            <div className={cx('Pagination')}>
+                <ReactPaginate
+                    nextLabel={<FontAwesomeIcon icon={icons.faAngleRight}/>}
+                    previousLabel={<FontAwesomeIcon icon={icons.faAngleLeft}/>}
+                    pageCount={numberOfpages}
+                    marginPagesDisplayed={2}
+                    onPageChange={handlePageClick}
+                    pageClassName={'page-item'}
+                    renderOnZeroPageCount={null}
+                />
             </div>
-        )
-    }
+        </div>
+    )
+
+    
 }
 
 export default Apps

@@ -1,27 +1,89 @@
 .wrapper{
-    background-color: rgba($color: #ffffff, $alpha: 1.0);
-    border: solid 1px rgba($color: #cfcece, $alpha: 1.0);
-    border-radius: 3px;
-    min-width: 140px;
+    height: 100%;
 
-    .option{
-        display: block;
-        background-color: transparent;
-        text-decoration: none;
-        color: rgba($color: #2c2c2c, $alpha: 1.0);
-        border: none;
-        padding: 10px;
-        width: 100%;
-        text-align: start;
-        height: 40px;
-        cursor: pointer;
-        // position: relative;
+    .options-container{
+        background-color: rgba($color: #ffffff, $alpha: 1.0);
+        border: solid 1px rgba($color: #cfcece, $alpha: 1.0);
+        border-radius: 3px;
+        min-width: 140px;
 
-        &:hover{
-            background-color: rgba($color: #9085a9, $alpha: 1.0);
-
+        .option{
+            display: block;
+            background-color: transparent;
+            text-decoration: none;
+            color: rgba($color: #2c2c2c, $alpha: 1.0);
+            border: none;
+            padding: 10px;
+            width: 100%;
+            text-align: start;
+            height: 40px;
+            cursor: pointer;
+    
+            &:hover{
+                background-color: rgba($color: #9085a9, $alpha: 1.0);
+            }
         }
-
     }
 }
+// ============= wrapper for tablets and mobiles use===========
+.sidebar-wrapper{
+    display: none;
+}
+// =====================responsive for both mobiles and  tablets=======================
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .wrapper{
+        display: none;
+    }
+    // ============= wrapper for tablets and mobiles use===========
+    .sidebar-wrapper{
+        display: block;
 
+        &:hover{  
+            .option-menu{
+                overflow: unset;
+                max-height: 1000px;
+                transition: 0.8s;
+            }
+        } 
+
+        .option-menu{
+            position: relative;
+            background-color: rgba($color: #ffffff, $alpha: 1.0);
+            max-height: 0px;
+            overflow: hidden;
+            z-index: 15;
+            transition: 0.8s;
+            font-size: 15px;
+            
+            .option{
+                padding-left: 15%;
+                display: block;
+                text-decoration: none;
+                color: #000000;
+                height: 50px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                text-indent: 3px;
+    
+                &:hover{
+                    background-color: rgba($color: #444444, $alpha: 1.0);
+                    color: rgba($color: #ffffff, $alpha: 1.0);
+                }
+            }
+        }
+    }
+}
+// ==========responsive for mobiles only=============
+@media only screen and (min-width: 320px) and (max-width: 600px) {
+    // ============= wrapper for tablets and mobiles use===========
+    .sidebar-wrapper{
+        .option-menu{
+            font-size: 12px;
+            
+            .option{
+                padding-left: 25%;
+            }
+        }
+    }
+}

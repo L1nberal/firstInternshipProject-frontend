@@ -9,13 +9,11 @@
         margin: 20px 0px;
         padding: 25px;
         position: relative;
-        min-height: 180px;
 
         .image-container{
             display: flex;
             align-items: center;
             margin-right: 35px;
-
 
             .head__image{
                 width: 200px;
@@ -39,18 +37,22 @@
                 }
             }
         }
-
-        .head__update-popup-btn{
+        
+        .head__btn-group{
             position: absolute;
             right: 5%;
             bottom: 10%;
+            min-width: 21%;
+        
+            .head__delete-btn{
+                margin-left: 3%;
+            }
         }
     }
 
     .carousel{
         img{
-            height: 365px;
-            
+            height: 400px;
         }
     }
 
@@ -76,7 +78,6 @@
     .apps-developed {        
         margin-top: 20px;
         background-color: white;
-        // padding: 15px;
         padding: 20px 0px 35px 0px;
         position: relative;
 
@@ -204,3 +205,172 @@
         }
     }
 }
+// ======responsive for both mobiles and tablets===================
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .wrapper{
+        width: 100%;
+        padding: 0px 10px;
+
+        .head{
+            padding: 10px;
+            display: block;
+            position: unset;
+
+            .image-container{
+                margin: 0px;
+                margin-bottom: 20px;
+
+                .head__image{
+                    width: 120px;
+                }
+            }
+
+            .head__infor{
+                display: block;
+                text-align: center;
+                
+                div{
+                    margin: 0px;
+                    margin-bottom: 5px;
+                    word-wrap: break-word;
+                    font-size: 15px;
+
+                    &:last-child{
+                        margin: 0px;
+                    }
+                }
+            }
+
+            .head__btn-group{
+                width: 90%;
+                margin: 0px auto;
+                margin-top: 30px;
+                display: flex;
+                justify-content: center;
+                position: unset;
+                
+                .head__delete-btn{
+                    font-size: 15px;
+                }
+
+                .head__update-btn{
+                    margin-right: 5px;
+                    font-size: 15px;
+                }
+            }
+        }
+        
+        .carousel{
+            img{
+                height: 200px;
+            }
+        }
+
+        .general-infor{
+            font-size: 15px;
+            height: 200px;
+            overflow-y: scroll;
+
+            .title{
+                font-size: 15px;
+                padding: 0px;
+            }
+        }
+
+        .apps-developed{
+            .title{
+                font-size: 15px;
+            }
+
+            .app-container{
+                padding: 10px 0px 0px 0px;
+
+                a{
+                    .app-image{
+                        width: 120px;
+                    }
+    
+                    .app-name{
+                        padding: 0px;
+                        margin-top: 5px;
+                        
+                        div{
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .apps-owned{
+            .title{
+                font-size: 15px;
+            }
+
+            .apps-wrapper{
+                .app-container{
+                    padding: 10px 0px 0px 0px;
+    
+                    a{
+                        .app-image{
+                            width: 120px;
+                        }
+        
+                        .app-name{
+                            padding: 0px;
+                            margin-top: 5px;
+
+                            div{
+                                font-size: 15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1155px) {
+    .wrapper{
+        .head{
+            .head__btn-group{
+                min-width: 25%;
+            }
+        }
+    }
+}   
+
+@media only screen and (min-width: 576px) and (max-width: 1024px) {
+    .wrapper{
+        .carousel{
+            img{
+                height: 350px;
+            }
+        }
+    }
+
+}
+// ================responsive for mobiles============================
+@media only screen and (min-width: 336px) and (max-width: 426px) {
+    .wrapper{
+        .carousel{
+            img{
+                height: 200px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 427px) and (max-width: 576px) {
+    .wrapper{
+        .carousel{
+            img{
+                height: 250px;
+            }
+        }
+    }
+}
+
+
+

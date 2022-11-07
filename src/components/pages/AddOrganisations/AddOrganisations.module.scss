@@ -1,3 +1,23 @@
+.warning-wrapper{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .warning{
+        margin: 10px 0px;
+        color: red;
+        font-size: 25px;
+    }
+
+    .message{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
+
 .wrapper{
     min-height: 100vh;
     width: 1250px;
@@ -43,9 +63,6 @@
             }
         }
     }
-
-
-
 }
 
 .modal-btn{
@@ -58,5 +75,12 @@
     &:hover{
         background-color: rgba($color: #e2bb4f, $alpha: 1.0);
         color: white;
+    }
+}
+
+// ======responsive for both mobiles and tablets===================
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .wrapper{
+        width: 100%;
     }
 }

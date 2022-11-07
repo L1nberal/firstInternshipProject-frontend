@@ -1,5 +1,5 @@
 import classnames from "classnames/bind"
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useContext } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -17,9 +17,17 @@ import {faX } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classnames.bind(style)
 
-
-function Header() {
+function Header() { 
+    // ===========get current logged user=============
     const { user } = useContext(AuthContext)
+    // ============== get current logged user id for accessing private page =====0
+    const [currentUser, setCurrentUser] = useState(0)
+    useMemo(() => {
+        if(user) {
+            setCurrentUser(user.id)
+        }
+    }, [user])
+    // =============get infor from api================
     const [organisations, setOrganisations] = useState([])
     const [categories, setCategories] = useState([])
     const [apps, setApps] = useState([])
@@ -27,8 +35,8 @@ function Header() {
     let newCategories = []
     let newApps = []
     // for searching
-    const [query, setQuery] = useState(true) 
-    
+    const [query, setQuery] = useState('') 
+
     useEffect(() => {
     // =============get organisations from strapi API=============
         fetch('http://localhost:1337/api/apps?populate=*')
@@ -40,7 +48,6 @@ function Header() {
                         return newApps
                     })
                 })
-
             }) 
 
     // =============get apps from strapi API=============
@@ -100,93 +107,70 @@ function Header() {
         {
             title: 'Liên hệ',
         },  
-        {
-            title: 'Tìm kiếm',
-        }, 
-
     ]   
 
     // User list of options
     const userOptions = [
         {
-            title: "Language",
+            title: "Ngôn ngữ",
             icon: icons.faEarthAsia,
-            reset: "not-reset",
             submenu: [
                 {
                     title: "Tiếng Việt",
-                    reset: "reset"
                 },
                 {
                     title: "English",
-                    reset: "reset"
                 },
             ]
         },
         {
-            title: "management",
-            icon: icons.faListCheck,
-            reset: "not-reset",
+            title: "Quản lý",
+            icon: icons.faFileInvoice,
+            for: "admin",
             submenu: [
                 {
                     title: "Thêm cơ quan",
                     to: "/add-organisations",
-                    reset: "reset"
                 },
                 {
                     title: "Thêm ứng dụng",
                     to: "/add-apps",
-                    reset: "reset"                
                 },
                 {
                     title: "Thêm thể loại",
                     to: "/add-categories",
-                    reset: "reset"
                 }
             ]
         },
         {
-            title: "Log out",
+            title: "Trang cá nhân",
+            icon: icons.faListCheck,
+            to: `/private-page-${currentUser}`
+        },
+        {
+            title: "Đăng xuất",
             function: "logout",
             icon: icons.faRightToBracket,
-            reset: "not-reset"
         }
     ]
 
     // ================Search feature=================
     // search results are displayed when typing
-    const searchResults = document.getElementById('search-results')
     
-    if(query != true){
-        searchResults.style.display = "block"
-            
-        if(!query) {
-            searchResults.style.display = "none"
-        }  
-    } 
-    //================= search bar handler=================
-    $('#list-option-4').click(() => {
-        document.getElementById('search-container').style.width = "400px"
-        document.getElementById('search-container').style.opacity = "1"
-        document.getElementById('popup').style.visibility = "visible"
-    })
-
-    $('#close-mark').click(() => {
-        document.getElementById('popup').style.visibility = "hidden"
-        document.getElementById('search-container').style.width = "0px"
-        document.getElementById('search-container').style.opacity = "0"
-        document.getElementById('search-input').value = ""
+    useEffect(() => {
+        const searchResults = document.getElementById('search-results')
+        if(query.length > 0 ){
+            searchResults.style.visibility = "visible"
+        }else if(query.length === 0) {
+            searchResults.style.visibility = "hidden"
+        }   
+    }, [query])
+    // search bar handler
+    const searchEngineHandler = () => {
+        const searchResults = document.getElementById('search-results')
         setQuery('')
-    })
-
-    $('.each-item').click(() => {
-        document.getElementById('popup').style.visibility = "hidden"
-        document.getElementById('search-container').style.width = "0px"
-        document.getElementById('search-container').style.opacity = "0"
-        document.getElementById('search-input').value = ""
-        setQuery('')
-    })
-
+        searchResults.style.visibility = "hidden"
+    }
     // ==============contact=================
     $('#list-option-3').hover(function() {
         document.getElementById('contact').style.visibility = "visible"
@@ -204,8 +188,7 @@ function Header() {
         document.getElementById('contact').style.opacity = "0"
     }) 
 
-    // gg map
-    // console.log(process.env.KEY)   
+    // ===============gg map===================
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: `AIzaSyCe2LvWG408VgKLfrd_p01eOZo-DFJTo8s`    
     })
@@ -221,12 +204,20 @@ function Header() {
             <div className={cx('wrapper__left')}>
                 {/* ================logo=============== */}
                 <img className={cx('logo')} src="https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK"/>
-                {/* ===============navbar============= */}
-                <nav>
-                    <ul>
+                {/* ===============navbar for computers============= */}
+                <nav className={cx('nav-bar')}>
+                    <FontAwesomeIcon 
+                        icon={icons.faBars} 
+                        className={cx('nav-bar__icon')}
+                    />
+
+                    <ul className={cx('nav-bar__container')}>
+                        {/* ================nav-bar logo=============== */}
+                        <img className={cx('nav-bar__container-logo')} src="https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK"/>
+                        
                         {navBarList.map((listOption, index) => {
                             return(
-                                <span key={index} id={`list-option-${index}`}>
+                                <span key={index} id={`list-option-${index}`} className={cx('list-option-container')}>
                                     {listOption.submenu ? (
                                         <NavbarDropdownMenu data={listOption} to={listOption.to}>
                                             <Button key={index} className={cx('list-option')}>{listOption.title}</Button>
@@ -239,7 +230,7 @@ function Header() {
                                 </span>
                             ) 
                         })}
-                        
+                        {/* ===============contact infor of the management of the website========== */}
                         <div className={cx('contact')} id="contact">
                             <div className={cx('wrapper')}>
                                 <div className={cx('wrapper__left')}>
@@ -282,54 +273,52 @@ function Header() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* ===============search-container============== */}
-                        <div className={cx('popup')} id="popup">
-                            <div className={cx('search-container')} id="search-container">
-                                <div className={cx('search-bar')} id='search-bar'>
-                                    <input 
-                                        className={cx('search__input')} 
-                                        id="search-input"
-                                        type="text" 
-                                        placeholder="type something..." 
-                                        onChange={(e) => setQuery(e.target.value)}
-                                    />
-                                </div>
-                                {/* ====================search results==================== */}
-                                <div className={cx('search-results')} id="search-results">
-                                    {apps.map(app => {
-                                        return(
-                                            <React.Fragment key={app.id}>
-                                                {/* =============search by lower case letters============= */}
-                                                {app.attributes.name.toLowerCase().includes(query) && 
-                                                    <ListGroup variant="flush" className="each-item">
-                                                        <Link to={`/app-details-${app.id}`} state={{app: app}}><ListGroup.Item>{app.attributes.name}</ListGroup.Item></Link>
-                                                    </ListGroup>
-                                                }
-                                                {/* ===========search by upper case letters================== */}
-                                                {app.attributes.name.toUpperCase().includes(query) && 
-                                                    <ListGroup variant="flush" className="each-item">
-                                                        <Link to={`/app-details-${app.id}`} state={{app: app}}><ListGroup.Item>{app.attributes.name}</ListGroup.Item></Link>
-                                                    </ListGroup>
-                                                }
-                                            </React.Fragment>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                            
-                            <div className={cx('close-mark')} id="close-mark"><FontAwesomeIcon icon={faX}/></div>
-                        </div>
                     </ul>
                 </nav>
             </div>
             {/* ================= left part of the header ============== */}
             <div className={cx('wrapper__right')}>
+                {/* ===============search-container============== */}
+                <div className={cx('search-engine')} id="search-engine">
+                    <div className={cx('search-container')} id="search-container">
+                        <div className={cx('search-bar')} id='search-bar'>
+                            <input 
+                                value={query}
+                                className={cx('search__input')} 
+                                id="search-input"
+                                type="text" 
+                                placeholder="type something..." 
+                                onChange={(e) => setQuery(e.target.value)}
+                            />
+                        </div>
+                        {/* ====================search results==================== */}
+                        <div className={cx('search-results')} id="search-results">
+                            {apps.map(app => {
+                                return(
+                                    <React.Fragment key={app.id}>
+                                        {/* =============search by lower case letters============= */}
+                                        {app.attributes.name.toLowerCase().includes(query) && 
+                                            <ListGroup variant="flush" className="each-item">
+                                                <Link to={`/app-details-${app.id}`} onClick={() => searchEngineHandler()}><ListGroup.Item>{app.attributes.name}</ListGroup.Item></Link>
+                                            </ListGroup>
+                                        }
+                                        {/* ===========search by upper case letters================== */}
+                                        {app.attributes.name.toUpperCase().includes(query) && 
+                                            <ListGroup variant="flush" className="each-item">
+                                                <Link to={`/app-details-${app.id}`} onClick={() => searchEngineHandler()}><ListGroup.Item>{app.attributes.name}</ListGroup.Item></Link>
+                                            </ListGroup>
+                                        }
+                                    </React.Fragment>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
                 {/* ==================user-container============= */}
                 <div className={cx('user')}>
                     {/* ======================user, after logging in============= */}
                     {user ? (
-                        <div className={cx('user__container')}>
+                        <div className={cx('user__container')} id="user-container">
                             <UserMenu isAdmin={user.isAdmin} data={userOptions}>
                                 <div className={cx('user__container')}>
                                     <img src={user.avatar} className={cx('avatar')}/>

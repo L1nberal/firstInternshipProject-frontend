@@ -9,12 +9,18 @@ import {
 import axios from 'axios';
 
 import { auth } from "../firebase";
-import { async } from "@firebase/util";
 
 export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
+    // =================store user email ===============
+    const [from, setFrom] = useState('')
+    // =================store user email ===============
+    const [userEmail, setUserEmail] = useState()
+    // =====================user storage================
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    // =====================check if the user exists for other login methods=========
+    const [emailExist, setEmailExist] = useState()
     //=================login with google================
     const googleSignIn = async () => {
         const provider = new GoogleAuthProvider()
@@ -23,100 +29,36 @@ export const AuthContextProvider = ({children}) => {
         
         //============authorize user=====================
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            let numberOfUsers = 0
-            console.log(currentUser)
             // ==========post the infor to databse==========
-            axios.get("http://localhost:1337/api/other-login-methods-users",{
+            axios.get("http://localhost:1337/api/users?populate=*",{
                 headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
             }) 
                 .then(async(respond) => {
-                    await respond.data.data.map(user => {
-                        if(user.attributes.email ===  currentUser.email) {
-                            if(user.attributes.username != currentUser.displayName) {
-                                console.log('submitted')
-                                axios.put(`http://localhost:1337/api/other-login-methods-users/${user.id}`, {
-                                    data: {
-                                        username: currentUser.displayName
-                                    }
-                                }, {
-                                    headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
-                                })
-                                    .then(respond => console.log(respond))
-                                    .catch(error => console.log(error))
+                    await respond.data.map(user => {
+                        if(user.email === currentUser.email) {
+                            setEmailExist(true)
+                            const userInfor = {
+                                id: user.id,
+                                username: user.username,
+                                isAdmin: user.isAdmin,
+                                email: user.email,
+                                avatar: `http://localhost:1337${user.avatar.url}`,
                             }
-                            if(user.attributes.avatarLink != currentUser.photoURL) {
-                                console.log('submitted')
-
-                                axios.put(`http://localhost:1337/api/other-login-methods-users/${user.id}`, {
-                                    data: {
-                                        avatarLink: currentUser.photoURL
-                                    }
-                                }, {
-                                    headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
-                                })              
-                                    .then(respond => console.log(respond))
-                                    .catch(error => console.log(error))             
-                            }
-                            numberOfUsers++
+                            setUser(userInfor)
+                            localStorage.setItem('user', JSON.stringify(userInfor))
+                        }else {
+                            setEmailExist(false)
+                            setUserEmail(
+                                currentUser.email
+                            )
+                            setFrom('Gmail')
                         }
                     })
-
-                    if(numberOfUsers === 0) {
-                        axios.post("http://localhost:1337/api/other-login-methods-users", {
-                            data: {
-                                username: currentUser.displayName,
-                                email: currentUser.email,
-                                avatarLink: currentUser.photoURL,
-                                isAdmin: false,
-                                fromDatabase: false,
-                            }
-                        }, {
-                            headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
-                        })
-                            .then(respond => {
-                                const userInfor= {
-                                    id: respond.data.data.id,
-                                    username: respond.data.data.attributes.username,
-                                    isAdmin: respond.data.data.attributes.isAdmin,
-                                    email: respond.data.data.attributes.email,
-                                    avatar: `${respond.data.data.attributes.avatarLink}`,
-                                    fromDatabase: respond.data.data.attributes.fromDatabase
-                                }
-                                setUser(userInfor)
-                                localStorage.setItem('user', JSON.stringify(userInfor))
-                            })
-                            .catch(error => console.log(error))
-                    }else if(numberOfUsers > 0) {
-                        axios.get("http://localhost:1337/api/other-login-methods-users",{
-                            headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
-                        }) 
-                            .then(respond => {
-                                respond.data.data.map(user => {
-                                    if(user.attributes.email === currentUser.email) {
-                                        const userInfor= {
-                                            id: user.id,
-                                            username: user.attributes.username,
-                                            isAdmin: user.attributes.isAdmin,
-                                            email: user.attributes.email,
-                                            avatar: `${user.attributes.avatarLink}`,
-                                            fromDatabase: user.attributes.fromDatabase
-                                        }
-                                        setUser(userInfor)
-                                        localStorage.setItem('user', JSON.stringify(userInfor))
-                                    }
-                                })
-                            })
-                            
-                          
-                        
-
-                    }
                 })
                 .catch(error => console.log(error))
         })
-        return () => {
-            unsubscribe()
-        } 
+
+        unsubscribe()
     }
     //login with facebook
     const facebookSignIn = () => {
@@ -125,7 +67,7 @@ export const AuthContextProvider = ({children}) => {
 
         // signInWithPopup(auth, provider)
         signInWithPopup(auth, provider)
-            .then(respond => console.log(respond))
+            .then(respond => {})
             .catch(error => console.log(error))
     }
 
@@ -136,7 +78,6 @@ export const AuthContextProvider = ({children}) => {
     }
 
     // logOut()         
-
     //database login handler
     const dataBaseLogin = (respond) => {
         axios.get(
@@ -150,17 +91,27 @@ export const AuthContextProvider = ({children}) => {
                     username: respond.data.username,
                     isAdmin: respond.data.isAdmin,
                     email: respond.data.email,
-                    fromDatabase: true,
                     avatar: `http://localhost:1337${respond.data.avatar.url}`,
                 }
                 setUser(userInfor)
                 localStorage.setItem('user', JSON.stringify(userInfor))
+                window.location.reload()
             })
             .catch(error => console.log(error))
     } 
-
+    
     return (
-        <AuthContext.Provider value={{dataBaseLogin, googleSignIn, facebookSignIn, logOut, user}}>
+        <AuthContext.Provider value={{
+            dataBaseLogin, 
+            googleSignIn, 
+            facebookSignIn, 
+            logOut, 
+            user,
+            emailExist,
+            userEmail,
+            setEmailExist,
+            from
+        }}>
             {children}
         </AuthContext.Provider>  
     )

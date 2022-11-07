@@ -1,3 +1,23 @@
+.warning-wrapper{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .warning{
+        margin: 10px 0px;
+        color: red;
+        font-size: 25px;
+    }
+
+    .message{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
+
 .wrapper{
     min-height: 100vh;
     width: 1250px;
@@ -7,6 +27,12 @@
         padding: 20px 20px;
         border-radius: 15px;
         background-color: rgba($color: #ffffff, $alpha: 1.0);
+
+        .categories-dropdown{
+            .categories-dropdown__btn{
+                margin-left: 5px;
+            }
+        }
 
         .logo{
             margin: 10px 0px;
@@ -72,6 +98,96 @@
                     }
                 }
             }
+        }
+    }
+}
+
+// ======responsive for both mobiles and tablets===================
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .wrapper{
+        padding: 10px;
+        width: 100%;
+
+        .form{
+            font-size: 15px;
+
+            .form-input{
+                font-size: 15px;
+            }
+
+            .categories-dropdown{
+                .categories-dropdown__btn{
+                    font-size: 15px;
+                    margin-left: 5px;
+                }
+            }
+
+            .logo{
+                margin: 10px 0px;
+    
+                img{
+                    width: 150px;
+                }    
+            }
+    
+            .screenshots{
+                img{
+                    width: 150px;
+                    height: 280px;
+                }
+            }
+    
+            .checkboxes{
+                padding: 10px 0px;
+                display: flex;
+                overflow-x: scroll;
+                width: 100%;
+                
+                .checkbox-container{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+    
+                    .input{
+                        display: block;
+                        width: 20px;
+                    }
+    
+                    .organisation-container{
+    
+                        .name{
+                            font-size: 14px;
+                        }
+                        
+                        .image{
+                            img{
+                                width: 80px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .wrapper{
+        .form{
+            .form-btn{
+                margin: 0px auto;
+                display: block;
+            }
+        }
+    }
+}
+
+
+// =================responsive for mobiles only=================
+@media only screen and (min-width: 320px) and (max-width: 599px) {
+    .warning-wrapper{
+        .message{
+            text-align: center;
         }
     }
 }

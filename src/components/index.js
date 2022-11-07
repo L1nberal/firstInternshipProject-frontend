@@ -1,6 +1,6 @@
 export {default as Home} from './pages/Home'
 export {default as Login} from './pages/Login'
-export {default as Account} from './pages/Account'
+export {default as PrivatePage} from './pages/PrivatePage'
 export {default as Signup} from  './pages/Signup'
 export {default as AppDetails} from  './pages/AppDetails'
 export {default as OrganisationDetails} from './pages/OrganisationDetails'

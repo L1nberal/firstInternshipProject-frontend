@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Toast from 'react-bootstrap/Toast';
-import Moment from 'moment';
 import classnames from 'classnames/bind'
-import moment from 'moment';
 import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,17 +13,20 @@ import { AuthContext } from "../../../../../context/AuthContext";
 
 const cx = classnames.bind(style)
 
-function Comments({app, appId, users}) {
-    // ===========navigating=============
+function Comments({appId, users}) {
+    // ===========navigating================================
     const navigate = useNavigate()
-    // =========the person we reply to============
+    // =========the person we reply to======================
     const [replyToWhom, setReplyToWhom] = useState('')
-    // =========getting comment============
+    // =========set reply comment to submit=============================
     const [replyComment, setReplyComment] = useState('')
-    // =========getting comment============
+    // =========set comment to submit=============================
     const [comment, setComment] = useState('')
-    // =============comments to show===========
+    // =========set comment to update=============================
+    const [commentUpdate, setCommentUpdate] = useState('')
+    // =============comments to show========================
     const [commentsToShow, setCommentsToShow] = useState([])
+
     let arrayOfComments = []
     useEffect(() => { //get comments from api
         axios.get("http://localhost:1337/api/comments?populate=*")
@@ -37,15 +38,12 @@ function Comments({app, appId, users}) {
                             return arrayOfComments
                         })
                     }
-
                 })
             })
             .catch(error => console.log(error))
     
         return setCommentsToShow([])
     }, [appId])  
-    // console.log(comment)
-    // console.log(replyComment)
 
     let temporaryComment
     for(let i = 0; i < commentsToShow.length-1; i++) {
@@ -60,15 +58,20 @@ function Comments({app, appId, users}) {
             }
         }
     }   
-    //============get current user============== 
+
+    //============get current user=======================
     const { user } = useContext(AuthContext)
-    // ============submit comments============
+    // ============submit comments=======================
     const submitHandler = () => {
+        if(user === null){
+            setShow(true)
+        }
+
         axios.post("http://localhost:1337/api/comments",
         {
             data: {
                 content: comment,
-                parentId: 0,
+                parent_Id: 0,
                 app: appId,
                 userId: user.id,
                 replyTo: "no one"
@@ -84,7 +87,7 @@ function Comments({app, appId, users}) {
             .catch(error => console.log(error))
         setComment('')
     }
-    // ============show reply section handler==========
+    // ============show reply section handler===================
     const showReplyHandler = (repliedComment, commentId) => {
         const replySection = $(`#reply-section-${commentId}`)[0]
         users.map(user => {
@@ -92,7 +95,12 @@ function Comments({app, appId, users}) {
                 setReplyToWhom(user.username) 
             }
         })
-        replySection.style.display = "flex"
+
+        if(replySection.style.display === "flex") {
+            replySection.style.display = "none"
+        }else {
+            replySection.style.display = "flex"
+        }
 
         for(let i = 0; i < $('div[name="reply-section"]').length; i++) {
             if($('div[name="reply-section"]')[i].id != replySection.id) {
@@ -101,7 +109,7 @@ function Comments({app, appId, users}) {
         }
     }
 
-    // ==============reply handler==============
+    // ==============reply handler=======================
     const replyHandler = (commentId, username) => {
         if(user === null){
             setShow(true)
@@ -126,18 +134,121 @@ function Comments({app, appId, users}) {
             .catch(error => console.log(error))
         
         setReplyComment('')
+
+        for(let i = 0; i < $('div[name="reply-section"]').length; i++) {
+            $('div[name="reply-section"]')[i].style.display = "none"
+        }
     }
-    
-    //a dialogue pops up when errors occur
+
+    // ============delete comment handler===========
+    const deleteCommentHandler = async (commentId) => {
+        await axios.delete(`http://localhost:1337/api/comments/${commentId}`, {
+            headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+            }
+        })
+            .then(respond => {
+                setCommentsToShow(commentsToShow.filter(commentFiltered => {
+                    return commentFiltered.id != commentId
+                }))
+            })
+            .catch(error => console.log(error))
+        commentsToShow.map(comment => {
+            if(comment.attributes.parent_Id === commentId) {
+                axios.delete(`http://localhost:1337/api/comments/${comment.id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                    }
+                })
+                    .then(respond => {
+                        setCommentsToShow(commentsToShow.filter(commentFiltered => {
+                            return commentFiltered.id != commentId
+                        }))
+                    })
+                    .catch(error => console.log(error))
+            }
+        })
+    }
+    // ============== show comment update section==================
+    const showUpdateSection = (commentId) => {
+        if($(`#each-comment__update-section-${commentId}`)[0].style.display === "flex") {
+            $(`#each-comment__update-section-${commentId}`)[0].style.display = "none"
+        }else {
+            $(`#each-comment__update-section-${commentId}`)[0].style.display = "flex"
+        }
+        
+        for(let i = 0; i < $('div[name="each-comment__update-section"]').length; i++) {
+            if($('div[name="each-comment__update-section"]')[i].id != $(`#each-comment__update-section-${commentId}`)[0].id) {
+                $('div[name="each-comment__update-section"]')[i].style.display = "none"
+            }
+        }
+
+        for(let i = 0; i < $('div[name="each-reply-comment__update-section"]').length; i++) {
+            $('div[name="each-reply-comment__update-section"]')[i].style.display = "none"
+        }
+    }
+    let array = []
+    // ===========update comment hanlder===========
+    const updateCommentHandler = (commentId) => {
+        axios.put(`http://localhost:1337/api/comments/${commentId}`, {
+            data:{
+                content: commentUpdate
+            }
+        }, {
+            headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+            }
+        })
+            .then(respond => {
+                commentsToShow.map(comment => {
+                    if(comment.id === commentId) {
+                        comment.attributes.content = commentUpdate
+                    }
+
+                    setCommentsToShow(() => {
+                        array = [...array, comment]
+                        return array
+                    })
+                })
+
+                setCommentUpdate('')
+            })
+
+            if($(`#each-comment__update-section-${commentId}`)[0]) {
+                $(`#each-comment__update-section-${commentId}`)[0].style.display = "none"
+            }else {
+                $(`#each-reply-comment__update-section-${commentId}`)[0].style.display = "none"
+            }
+    }
+
+    //======== show Reply Comment Update Section============
+    const showReplyCommentUpdateSection = (commentId) => {        
+        if($(`#each-reply-comment__update-section-${commentId}`)[0].style.display === "flex") {
+            $(`#each-reply-comment__update-section-${commentId}`)[0].style.display = "none"
+        }else {
+            $(`#each-reply-comment__update-section-${commentId}`)[0].style.display = "flex"
+        }
+
+        for(let i = 0; i < $('div[name="each-reply-comment__update-section"]').length; i++) {
+            if($('div[name="each-reply-comment__update-section"]')[i].id != $(`#each-reply-comment__update-section-${commentId}`)[0].id) {
+                $('div[name="each-reply-comment__update-section"]')[i].style.display = "none"
+            }
+        }
+
+        for(let i = 0; i < $('div[name="each-comment__update-section"]').length; i++) {
+            $('div[name="each-comment__update-section"]')[i].style.display = "none"
+        }
+    }
+    //===============a dialogue pops up when errors occur==================
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
 
     return(
         <div className={cx('wrapper')}>
-            {/* =============popup dialogue============== */}
+            {/* ========================popup dialogue====================== */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Có lỗi xảy ra!</Modal.Title>
+                    <Modal.Title>Bạn không thể bình luận</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Bạn cần đăng nhập để bình luận!</Modal.Body>
                 <Modal.Footer>
@@ -195,7 +306,7 @@ function Comments({app, appId, users}) {
                                                 className={cx('each-comment__header')}
                                             >
                                                 <small className={cx('commentator')}>
-                                                    {users.map(user  => {
+                                                    {users.map(user => {
                                                         if(user.id === comment.attributes.userId) {
                                                             return (
                                                                 <React.Fragment key={user.id}>{user.username}</React.Fragment>
@@ -213,16 +324,61 @@ function Comments({app, appId, users}) {
                                             >
                                                 {comment.attributes.content}
                                             </Toast.Body>
-                                            {/* =========open reply comment submit section================= */}
-                                            <button 
-                                                onClick={() => showReplyHandler(comment, comment.id)}
-                                                className={cx('each-comment__reply-btn')}
+                                            {/* ============comment update section=========== */}
+                                            <div 
+                                                className={cx('each-comment__update-section')}
+                                                id={`each-comment__update-section-${comment.id}`}
+                                                name="each-comment__update-section"
                                             >
-                                                reply
-                                            </button>
+                                                <textarea 
+                                                    value={commentUpdate} 
+                                                    type="text"
+                                                    onChange={e => setCommentUpdate(e.target.value)}
+                                                />
+                                                <Button 
+                                                    className={cx('update-btn')}
+                                                    onClick={() => updateCommentHandler(comment.id)}
+                                                >
+                                                    Cập Nhật
+                                                </Button>
+                                            </div>
+
+                                           <div className={cx('each-comment__btn')}>
+                                                {user != null && (
+                                                    <React.Fragment>
+                                                        {/* =============delete comment feature============ */}
+                                                        {(user.id === comment.attributes.userId || user.isAdmin === true) && 
+                                                            <button 
+                                                                onClick={() => deleteCommentHandler(comment.id)}
+                                                                className={cx('each-comment__delete-btn')}
+                                                            >
+                                                                delete
+                                                            </button>
+                                                        }
+            
+                                                        {/* =============update comment feature============ */}
+                                                        {user.id === comment.attributes.userId && 
+                                                            <button 
+                                                                onClick={() => showUpdateSection(comment.id)}
+                                                                className={cx('each-comment__update-btn')}
+                                                            >
+                                                                update
+                                                            </button>
+                                                        }
+            
+                                                        {/* =========open reply comment submit section================= */}
+                                                        <button 
+                                                            onClick={() => showReplyHandler(comment, comment.id)}
+                                                            className={cx('each-comment__reply-btn')}
+                                                        >
+                                                            reply
+                                                        </button>
+                                                    </React.Fragment>
+                                                )}
+                                           </div>
                                         </Toast>
                                     </div>
-                                {/* =====================all reply comments ==================== */}
+                                    {/* =====================all reply comments ==================== */}
                                     <div
                                         className={cx('reply-comments')}
                                     >
@@ -259,13 +415,57 @@ function Comments({app, appId, users}) {
                                                         >
                                                             {replyComment.attributes.content}
                                                         </Toast.Body>
-                                                        {/* =========open reply comment submit section================= */}
-                                                        <button 
-                                                            onClick={() => showReplyHandler(replyComment, comment.id)}
-                                                            className={cx('each-reply-comment__reply-btn')}
+
+                                                        {/* ============reply comment update section=========== */}
+                                                        <div 
+                                                            className={cx('each-reply-comment__update-section')}
+                                                            id={`each-reply-comment__update-section-${replyComment.id}`}
+                                                            name="each-reply-comment__update-section"
                                                         >
-                                                            reply
-                                                        </button>
+                                                            <textarea 
+                                                                value={commentUpdate} 
+                                                                type="text"
+                                                                onChange={e => setCommentUpdate(e.target.value)}
+                                                            />
+                                                            <Button 
+                                                                className={cx('update-btn')}
+                                                                onClick={() => updateCommentHandler(replyComment.id)}
+                                                            >Cập Nhật</Button>
+                                                        </div>
+
+                                                        <div className={cx('each-reply-comment__btn')}>
+                                                            {user != null && (
+                                                                <React.Fragment>
+                                                                    {/* =============delete feature============ */}
+                                                                    {(user.id === replyComment.attributes.userId || user.isAdmin === true) && 
+                                                                        <button 
+                                                                            onClick={() => deleteCommentHandler(replyComment.id)}
+                                                                            className={cx('each-reply-comment__delete-btn')}
+                                                                        >
+                                                                            delete
+                                                                        </button>
+                                                                    }
+            
+                                                                    {/* =============update comment feature============ */}
+                                                                    {user.id === replyComment.attributes.userId && 
+                                                                        <button 
+                                                                            onClick={() => showReplyCommentUpdateSection(replyComment.id)}
+                                                                            className={cx('each-reply-comment__update-btn')}
+                                                                        >
+                                                                            update
+                                                                        </button>
+                                                                    }
+            
+                                                                    {/* =========open reply comment submit section================= */}
+                                                                    <button 
+                                                                        onClick={() => showReplyHandler(replyComment, comment.id)}
+                                                                        className={cx('each-reply-comment__reply-btn')}
+                                                                    >
+                                                                        reply
+                                                                    </button>
+                                                                </React.Fragment>
+                                                            )}
+                                                        </div>
                                                     </Toast>
                                                 )
                                             }
@@ -306,7 +506,7 @@ function Comments({app, appId, users}) {
                         }
                        })
                     }
-                         
+                    {/* ==============this message is shown when no comment exists=========== */}
                     {commentsToShow.length === 0 && (
                         <div className={cx('message')}>Chưa có bình luận nào về ứng dụng này!</div>
                     )}

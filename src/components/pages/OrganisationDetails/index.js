@@ -7,14 +7,16 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal';
 
 import style from './OrganisationDetails.module.scss'
 import { icons } from '../../../assets'
 import { UserAuth } from '../../../context/AuthContext';
+import axios from 'axios';
 
 const cx = classnames.bind(style)
 
-function OrganisationDetails({apps, organisations, organisationId}) {
+function OrganisationDetails({apps, organisations, organisationId, users, organisation}) {
     const { user } = UserAuth()
     //================ the amount of owned apps===================
     let amountOfOwnedApps = 0
@@ -23,9 +25,68 @@ function OrganisationDetails({apps, organisations, organisationId}) {
     // ==========navigate==================
     const navigate = useNavigate()
 
+    // =============delete organisation handler=========
+    const deleteHandler = async (organisationId) => {
+        await axios.delete(`http://localhost:1337/api/upload/files/${organisation.attributes.logo.data.id}`, {
+            headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+            }
+        })
+            .then(respond => {})
+            .catch(error => console.log(error))
+        organisation.attributes.photos.data.map(async (photo) => {
+            await axios.delete(`http://localhost:1337/api/upload/files/${photo.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+                }
+            })
+                .then(respond => {})
+                .catch(error => console.log(error))
+        })
+        axios.delete(`http://localhost:1337/api/organisations/${organisationId}`,{
+            headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+            }
+        })
+            .then(respond => {
+                navigate('/')
+                window.location.reload()
+            })
+            .catch(error => console.log(error))
+    }
+    //=================a dialogue pops up when a delete request exists============
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
     
     return (
         <div className={cx('wrapper')}>
+            {/* =============a dialogue pops up whenever a delete request exists============== */}
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xóa Cơ quan</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Bạn có thực sự muốn xóa cơ quan này không?</Modal.Body>
+                <Modal.Footer>
+                    <Button 
+                        variant="secondary" 
+                        onClick={() => handleClose()}
+                        className={cx('modal-btn')}
+                    >
+                        Hủy
+                    </Button>
+                    <Button 
+                        variant="danger" 
+                        onClick={() => {
+                            handleClose()
+                            deleteHandler(organisationId)
+                        }}
+                        className={cx('modal-btn')}
+                    >
+                        Xóa
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             {organisations.map((organisation, index) => {
                 return (
                     // organisations' details
@@ -56,13 +117,25 @@ function OrganisationDetails({apps, organisations, organisationId}) {
                                     {/* ============ organisation update button ============== */}
                                     {user && (
                                         <React.Fragment>
-                                            {user.isAdmin && <Button 
-                                                variant="outline-primary"
-                                                className={cx('head__update-popup-btn')}
-                                                onClick={() => navigate(`/organisation-update-${organisation.id}`)}
-                                            >
-                                                Cập nhật 
-                                            </Button>}
+                                            {user.isAdmin && (
+                                                <div className={cx('head__btn-group')}>
+                                                    <Button 
+                                                        variant="outline-primary"
+                                                        className={cx('head__update-btn')}
+                                                        onClick={() => navigate(`/organisation-update-${organisation.id}`)}
+                                                    >
+                                                        Cập nhật 
+                                                    </Button>
+
+                                                    <Button 
+                                                        variant="outline-danger"
+                                                        className={cx('head__delete-btn')}
+                                                        onClick={() => setShow(true)}
+                                                    >
+                                                        Xóa cơ quan
+                                                    </Button>
+                                                </div>
+                                            )}
                                         </React.Fragment>
                                     )}
                                 </div>

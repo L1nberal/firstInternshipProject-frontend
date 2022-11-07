@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import { useEffect, useState } from 'react'
 import classnames from 'classnames/bind'
@@ -16,14 +16,22 @@ import {
 import style from './Signup.module.scss'
 import {UserAuth} from '../../../context/AuthContext'
 import Button from '../../Button';
+import SignupPopup from '../SignupPopup/SignupPopup';
 
 const cx = classnames.bind(style)
 
 function Signup() {
-    const { googleSignIn, facebookSignIn} = UserAuth()
+    //=========used to redirect where is necessary==================
     const navigate = useNavigate()
-
-    //login with google
+    // ============destructring from UserAuth()===============
+    const { googleSignIn, facebookSignIn, user, emailExist} = UserAuth()
+    //=========== check if user has logged in, then redirect=================
+    useEffect(() => {
+        if(user != null) {
+            navigate('/')
+        }
+    }, [user]) 
+    //============login with google====================
     const handleGoogleSignIn = async (e) => {
         e.preventDefault()
         try{
@@ -32,7 +40,7 @@ function Signup() {
             console.log(error)
         }
     }
-    //login with facebook
+    //=============login with facebook=================
     const handleFacebookSignIn = async (e) => {
         e.preventDefault()
         try{
@@ -42,7 +50,7 @@ function Signup() {
         }
     }
 
-    //confirm password form handler
+    //==========confirm password form handler==============
     const formSchema = Yup.object().shape({
         username: Yup.string()
             .required('Bạn chưa nhập tên người dùng'),
@@ -60,26 +68,49 @@ function Signup() {
     const {register, handleSubmit, reset, formState} = useForm(formOptions)
     const { errors } = formState
 
-    //submit handler
+    //===============submit handler===============
     function onSubmit(data) {
-        //axios submit by POST method to register a new account
-        axios.post('http://localhost:1337/api/auth/local/register', {  
-            username: data.username,
-            email: data.email,
-            isAdmin: false,
-            password: data.password,
+        // ==================get photo file to upload========
+        let file = new FormData()
+        let fileId
+        file.append('files', data.avatar[0])
+        // =============upload avatar==========
+        axios.post('http://localhost:1337/api/upload', file, {
+            headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
+            }
         })
             .then(respond => {
-                navigate('/log-in')})
-            .catch(error => {
-                setShow(true)
-            })
-    
+                fileId = respond.data[0].id
+                //=======axios submit by POST method to register a new account===========
+                axios.post('http://localhost:1337/api/auth/local/register', {  
+                    username: data.username,
+                    email: data.email,
+                    isAdmin: false,
+                    password: data.password,
+                    avatar: fileId
+                })
+                    .then(respond => {
+                        navigate('/log-in')})
+                    .catch(error => {
+                        setShow(true)
+                    })
+                    })
+            .catch(error => console.log(error))
     }
-    //a dialogue pops up when errors occur
+    //=============a dialogue pops up when errors occur==============
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
+    //================a dialogue pops up when an other login method signup request occur================
+    const [showSignup, setShowSignup] = useState(false);
+    const handleCloseShowSignup = () => setShowSignup(false);
     
+    useEffect(() => {
+        if(emailExist === false) {
+            setShowSignup(true)
+        }
+    }, [emailExist])
+
     return(
         <div className={cx('wrapper')}>
             {/* =============popup dialogue============== */}
@@ -98,93 +129,113 @@ function Signup() {
                     </ButtonBootstrap>
                 </Modal.Footer>
             </Modal>
+            {/* =============signup dialogue popup when the other login method user doesn't exist in the database============== */}
+            <Modal show={showSignup} onHide={handleCloseShowSignup} className={cx('other-login-method-signup')}>
+                <Modal.Header closeButton>
+                    <Modal.Title className={cx('other-login-method-signup__title')}>Nhập tên người dùng để đăng kí!</Modal.Title>
+                </Modal.Header>
+                
+                <SignupPopup/>
+            </Modal>
 
-            <h2>Sign up</h2>
-
-            <form method='' action='' onSubmit={handleSubmit(onSubmit)}>
-                <div className={cx('database-login')}>
-                    <div className={cx('database-login-infor-container')}>
-                        Tên người dùng:
-                        <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={icons.faUser}/>
-                            <input 
-                                type='text' 
-                                placeholder='username' 
-                                name='username' 
-                                {...register('username')}
-                            />
+            <div className={cx('signup-form-container')}>
+                <h2>Sign up</h2>
+    
+                <form method='' action='' onSubmit={handleSubmit(onSubmit)}>
+                    <div className={cx('database-login')}>
+                        <div className={cx('database-login-infor-container')}>
+                            Tên người dùng:
+                            <div>
+                                <FontAwesomeIcon className={cx('icon')} icon={icons.faUser}/>
+                                <input 
+                                    type='text' 
+                                    placeholder='username' 
+                                    name='username' 
+                                    {...register('username')}
+                                />
+                            </div>
+                            <div className={cx('invalid-feedback')}>{errors.username?.message}</div>
+    
+                            Email:
+                            <div>
+                                <FontAwesomeIcon className={cx('icon')} icon={icons.faUser}/>
+                                <input 
+                                    type='email' 
+                                    placeholder='username' 
+                                    name='email' 
+                                    {...register('email')}
+    
+                                />
+                            </div>
+                            <div className={cx('invalid-feedback')}>{errors.email?.message}</div>
+    
+                            Mật khẩu
+                            <div>
+                                <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
+                                <input 
+                                    type='password' 
+                                    placeholder='password' 
+                                    name='password'
+                                    {...register('password')}
+                                />
+                            </div>
+                            <div className={cx('invalid-feedback')}>{errors.password?.message}</div>
+                            
+                            Nhập lại mật khẩu:
+                            <div>
+                                <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
+                                <input 
+                                    type='password' 
+                                    placeholder='password' 
+                                    name='password'
+                                    {...register('confirmPwd')}
+                                />
+                            </div>
+                            <div className={cx('invalid-feedback')}>{errors.confirmPwd?.message}</div>
+    
+                            Ảnh đại diện:
+                            <div>
+                                <input 
+                                    required
+                                    type='file' 
+                                    name='avatar'
+                                    className={cx('avatar-input')}
+                                    {...register('avatar')}
+                                />
+                            </div>
                         </div>
-                        <div className={cx('invalid-feedback')}>{errors.username?.message}</div>
-
-                        Email:
-                        <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={icons.faUser}/>
-                            <input 
-                                type='email' 
-                                placeholder='username' 
-                                name='email' 
-                                {...register('email')}
-
-                            />
-                        </div>
-                        <div className={cx('invalid-feedback')}>{errors.email?.message}</div>
-
-                        Mật khẩu
-                        <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
-                            <input 
-                                type='password' 
-                                placeholder='password' 
-                                name='password'
-                                {...register('password')}
-                            />
-                        </div>
-                        <div className={cx('invalid-feedback')}>{errors.password?.message}</div>
-                        
-                        Nhập lại mật khẩu:
-                        <div>
-                            <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
-                            <input 
-                                type='password' 
-                                placeholder='password' 
-                                name='password'
-                                {...register('confirmPwd')}
-                            />
-                        </div>
-                        <div className={cx('invalid-feedback')}>{errors.confirmPwd?.message}</div>
+    
+                        <button className={cx('database-login__submit-btn')}>Submit</button>
                     </div>
+    
+                    <span className={cx('barrier')}></span>
+    
+                    <div className={cx('other-login-methods')}>
+                        <button
+                            className={cx('other-login-methods__google-login')}
+                            onClick={handleGoogleSignIn}
+                        >
+                            <img src='https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK'/>
+                            Login with google
+                        </button>
+            
+                        <button 
+                            className={cx('other-login-methods__facebook')}   
+                            onClick={handleFacebookSignIn}
+                        >
+                            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png'/>
+                            Login with Facebook
+                        </button>
+                    </div>
+    
+                    <Button className={cx('user__login-btn')} to='/log-in'>
+                        <FontAwesomeIcon className={cx('icon')} icon={icons.faRightToBracket}/>
+                        Log in
+                    </Button>  
+                </form>
+            </div> 
 
-                    <button className={cx('database-login__submit-btn')}>Submit</button>
-                </div>
-
-                <span className={cx('barrier')}></span>
-
-                <div className={cx('other-login-methods')}>
-                    <button
-                        className={cx('other-login-methods__google-login')}
-                        onClick={handleGoogleSignIn}
-                    >
-                        <img src='https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK'/>
-                        Login with google
-                    </button>
-        
-                    <button 
-                        className={cx('other-login-methods__facebook')}   
-                        onClick={handleFacebookSignIn}
-                    >
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png'/>
-                        Login with Facebook
-                    </button>
-                    {/* {user?.displayName ? <button onClick={handleSignOut}>logout</button> : <Link to='/login'>Signin</Link>} */}
-                </div>
-
-                <Button to='/' className={cx('home-btn')}>Home</Button> 
-                <Button className={cx('user__login-btn')} to='/log-in'>
-                    <FontAwesomeIcon className={cx('icon')} icon={icons.faRightToBracket}/>
-                    Log in
-                </Button>  
-            </form>
-
+            <Button to='/' className={cx('home-btn')}>Home</Button> 
         </div>
     )
 }

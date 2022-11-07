@@ -25,7 +25,6 @@
                 .head__infor{
                     font-weight: bolder;
                     margin-left: 15px;
-                    position: relative;
                     
                     .name{
                         margin-bottom: 10px;
@@ -50,18 +49,23 @@
     
                 }
 
-                .head__update-btn{
+                .head__btn-group{
                     position: absolute;
                     bottom: 0%;
-                    left: 23.5%;
+                    left: 23.5%;   
+
+                    .head__update-btn{
+                        margin-right: 10px;
+                    }
                 }
+
     
                 .download-container{
                     height: 70px;
                     display: flex;
                     width: 200px;
                     justify-content: center;
-                    align-items: center;
+                    align-items: end;
                     position: absolute;
                     bottom: 0px;
                     right: 15px;
@@ -69,9 +73,6 @@
     
                     .head__download-link{
                         font-size: 35px;
-                        position: absolute;
-                        bottom: 0px;
-                        right: 15px;
     
                         &:hover{
                             color: rgba($color: #c88f8f, $alpha: 1.0);
@@ -82,14 +83,17 @@
                         text-align: center;
                     }
                 }
-    
             }
     
             .general-infor{
+                h6{
+                    font-weight: bold;
+                }
+
                 margin-top: 35px;
                 text-indent: 50px;
             }
-    
+            
             .carousel{
                 margin: 30px 0px;
                 height: 500px;
@@ -98,15 +102,22 @@
                     margin-bottom: 15px;
                     font-weight: bolder;
                 }
-              
-                .carousel-slide{
-                    height: 400px;
-    
-                    img{
-                        width: 200px;
+                
+                .carousel-provider{
+                    .carousel-slide{
                         height: 400px;
-
+        
+                        img{
+                            width: 200px;
+                            height: 400px;
+    
+                        }
                     }
+
+                }
+                
+                .carousel-provider-mobile-tablet{
+                    display: none;
                 }
     
                 .btn-container{
@@ -143,7 +154,8 @@
                     }
                 }
             }
-    
+           
+
             .developer{
                 .developer__title{
                     font-weight: bolder;
@@ -166,8 +178,6 @@
                             font-size: 18px;
                             width: 100%;
                         }
-    
-                       
                     }
                 }
             }
@@ -230,16 +240,510 @@
                     }
                 }
             }
-    
             // message is shown when there are no related apps
             .related-apps__message{
                 font-size: 17px;
+            }
+        }
+    }
+}
+// ======responsive for both mobiles and tablets===================
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .wrapper{
+        width: 100%;
+        padding: 0px 10px;
+
+        .infor{
+            margin-bottom: 10px;
+
+            .app-details{
+                padding: 5px;
+
+                .head{
+                    min-height: 220px;
+
+                    img{
+                        width: 100px;
+                        height: 100px;
+                    }
+
+                    .head__infor{
+                        .name{
+                            font-size: 15px;
+                        }
+                        
+                        .owner{
+                            font-size: 15px;
+                        }
+
+                        .category{
+                            font-size: 15px;
+                        }
+                    }
+
+                    .head__btn-group{
+                        position: absolute;
+                        display: flex;
+                        flex-direction: column;
+                        left: 0%;
+
+                        .head__update-btn{
+                            margin-right: 0px;
+                            min-width: 100px;
+                            font-size: 15px;
+                            margin-bottom: 5px;
+                        }
+                    }
+
+                    .download-container{
+                        width: 40%;
+
+                        .head__download-link{
+                            img{
+                                width: 100%;
+                                height: auto;
+                            }
+                        }
+                    }
+                }
+
+                .general-infor{
+                    h6{
+                        font-weight: bold;
+                        font-size: 15px;
+                    }
+
+                    margin-top: 35px;
+                    text-indent: 50px;
+                    font-size: 15px;
+                }
+        
+                .carousel{
+                    margin: 30px 0px;
+                    height: 400px;
+        
+                    .carousel__title{
+                        margin-bottom: 15px;
+                        font-weight: bolder;
+                        font-size: 15px;
+                    }
+
+                    .carousel-provider{
+                        display: none;
+                    }
+                    
+                    .carousel-provider-mobile-tablet{
+                        display: block;
+
+                        .carousel-slide{
+                            height: 350px;
+            
+                            img{
+                                width: 95%;
+                                height: 350px;
+                            }
+                        }
+                    }
+
+                    .btn-container{
+                        width: 120px;
+        
+                        .carousel-left-btn{
+                            padding: 5px 8px;  
+                            font-size: 15px;
+                        }
+            
+                        .carousel-right-btn{
+                            padding: 5px 8px;  
+                            font-size: 15px;
+                        }
+                    }
+                }
+
+                .developer{
+                    margin-top: 10%;
+
+                    .developer__title{
+                        font-weight: bolder;
+                        font-size: 15px;
+                    }
+        
+                    .developer__contact{
+                        margin-top: 20px;
+        
+                        .title{
+                            font-weight: bolder;
+                            font-size: 15px;
+                        }
+        
+                        .infor{
+                            font-weight: bolder;
+                            padding-left: 15px;
+                            display: flex;
+                            flex-direction: column;
+        
+                            div{
+                                font-weight: bolder;
+                                margin: 10px 20px 0px 0px;
+                                font-size: 18px;
+                                
+                                div{
+                                    word-wrap: break-word;
+                                    font-size: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .related-apps{
     
+            .related-apps__title{
+                font-size: 15px;
+                font-weight: bold;
+            }
+    
+            a{
+                .app-container{
+                    div{
+                        padding: 0px;
+
+                        .description{
+                            display: none;
+                        }
+                    }
+                }
+            }
+            // message is shown when there are no related apps
+            .related-apps__message{
+                font-size: 17px;
+            }
+        }
+    }
+}
+// ========repsonsive for tablets==========
+@media only screen and (min-width: 600px) and (max-width: 1023px) {
+    .wrapper{
+        .infor{
+            .app-details{
+                .head{
+                    .message{
+                        font-size: 15px;
+                    }
+                }
+
+                .general-infor{
+                    margin-top: 35px;
+                    text-indent: 50px;
+                }
+        
+                .carousel{
+                    margin: 30px 0px 60px 0px;
+                    height: 400px;
+                }
+
+                .developer{
+                    margin-top: 10%;
+
+                    .developer__title{
+                        font-weight: bolder;
+                    }
+        
+                    .developer__contact{
+                        margin-top: 20px;
+        
+                        .title{
+                            font-weight: bolder;
+                        }
+        
+                        .infor{
+                            font-weight: bolder;
+                            padding-left: 15px;
+                            display: flex;
+                            flex-direction: column;
+        
+                            div{
+                                font-weight: bolder;
+                                margin: 10px 20px 0px 0px;
+                                font-size: 18px;
+                                
+                                div{
+                                    word-wrap: break-word;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .related-apps{
+                a{
+                    .app-container{
+                        margin: 0px;
+    
+                        div{
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            .image{
+                                margin-right: 0px;
+                            }
+    
+                            p{
+                                display: none;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (min-width: 860px) and (max-width: 1024px) {
+    .wrapper{
+        .infor{
+            .app-details{
+                .head{
+                    .download-container{
+                        width: 35%;
+
+                        .head__download-link{
+                            img{
+                                width: 100%;
+                                height: auto;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1077px) {
+    .wrapper{
+        .infor{
+            .app-details{
+                .head{
+                    .head__btn-group{
+                        left: 28%;
+                    }
+                }
             }
         }
     }
 
-    // .comments-section{
+}
 
-    // }
+@media only screen and (min-width: 920px) and (max-width: 1050px) {
+    .wrapper{
+        .infor{
+            .app-details{
+                .head{
+                    .head__download-link{
+                        width: 90%;
+                    }
+                }
+                .carousel{
+                    .carousel-provider-mobile-tablet{
+                        display: block;
+
+                        .carousel-slide{
+                            img{
+                                width: 95%;
+                                height: 400px;
+                            }
+                        }
+                    }
+                }
+
+                .developer{
+                    margin-top: 20%;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1255px) {
+    .wrapper{
+        .infor{
+            .app-details{
+                .carousel{
+                    .carousel-provider{
+                        display: none;
+                    }
+
+                    .carousel-provider-mobile-tablet{
+                        display: block;
+
+                        .carousel-slide{
+                            img{
+                                width: 95%;
+                                height: 450px;
+                            }
+                        }
+                    }
+                }
+
+                .developer{
+                    margin-top: 20%;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1077px) and (max-width: 1236px) {
+    .wrapper{
+        .infor{
+            .app-details{
+                .head{
+                    .head__btn-group{
+                        left: 27%;
+                    }
+                }
+            }
+        }
+    }
+}
+// ==============responsive for mobiles=======================
+@media only screen and (min-width: 320px) and (max-width: 599px) {
+    .wrapper{
+        .infor{
+            display: unset;
+
+            .app-details{
+                margin-right: 0px;
+                width: 100%;
+
+                .head{
+                    height: 360px;
+                    display: flex;
+                    flex-direction: column;
+
+                    img{
+                        width: 100px;
+                        height: 100px;
+                        margin: 0px auto;
+                        margin-bottom: 20px;
+                    }
+
+                    .head__infor{
+                        margin: 0px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+
+                        .owner{
+                            text-align: center;
+                        }
+                    }
+
+                    .head__btn-group{
+                        .head__update-btn{
+                            width: 135px;
+                            font-size: 15px;
+                        }
+
+                        .head__delete-btn{
+                            width: 135px;
+                            font-size: 15px;
+                        }
+                    }
+
+                    .download-container{
+                        .head__download-link{
+                            height: 100%;
+
+                            img{
+                                margin: 0px;
+                            }
+                        }
+
+                        .message{
+                            font-size: 13px;
+                        }
+                    }
+                }
+
+                .general-infor{
+                    margin-top: 35px;
+                    text-indent: 50px;
+                    height: 200px;
+                    overflow-y: scroll;
+
+                }
+                
+                .carousel{
+                    margin: 30px 0px 60px 0px;
+                    height: 300px;
+
+                    .carousel-provider{
+                        display: none;
+                    }
+
+                    .carousel-provider-mobile-tablet{
+                        display: block;
+
+                        .carousel-slide{
+                            img{
+                                width: 95%;
+                                height: 250px;
+                            }
+                        }
+                    }
+
+                    .btn-container{
+                        position: absolute;
+                        top: 74%;
+                        right: 50%;
+                        transform: translateX(50%);
+                    }
+                }
+            }
+
+            .related-apps{
+                margin-top: 10px;
+                width: 100%;
+                overflow-x: scroll;
+                overflow-y: unset;
+                padding: 5px;
+
+                .related-apps__title{
+                    margin-bottom: 0px;
+                }
+
+                .related-apps__container{
+                    display: flex;
+
+                    a{
+                        .app-container{
+                            margin: 0px;
+                            margin-right: 10px;
+        
+                            div{
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+    
+                                .image{
+                                    margin-right: 0px;
+                                }
+        
+                                p{
+                                    display: none;
+                                }
+                            }
+    
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

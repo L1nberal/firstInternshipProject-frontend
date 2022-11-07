@@ -6,18 +6,9 @@ import style from './Pagination.module.scss'
 
 const cx = classnames.bind(style)
 
-function PaginationComponent({ totalSortedApps, sortingCategory, appsPerPage, totalApps, paginate }) {
+function PaginationComponent({ appsPerPage, totalApps }) {
     const  numberOfpages = Math.ceil(totalApps.length/appsPerPage)
 
-    console.log(numberOfpages)
-
-    const handlePageClick = (data) => {
-        console.log(data.selected)
-    }
-  
-    // apps
-    const [apps, setApps] = useState(totalApps)
-   
     return(  
         <React.Fragment>
             <ReactPaginate
