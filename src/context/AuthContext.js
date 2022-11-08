@@ -13,20 +13,13 @@ import { auth } from "../firebase";
 export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
-    // =================store user email ===============
-    const [from, setFrom] = useState('')
-    // =================store user email ===============
-    const [userEmail, setUserEmail] = useState()
     // =====================user storage================
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-    // =====================check if the user exists for other login methods=========
-    const [emailExist, setEmailExist] = useState()
     //=================login with google================
     const googleSignIn = async () => {
         const provider = new GoogleAuthProvider()
         
         await signInWithPopup(auth, provider)
-        
         //============authorize user=====================
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             // ==========post the infor to databse==========
@@ -34,52 +27,77 @@ export const AuthContextProvider = ({children}) => {
                 headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
             }) 
                 .then(async(respond) => {
+                    let exist = false
                     await respond.data.map(user => {
                         if(user.email === currentUser.email) {
-                            setEmailExist(true)
+                            exist = true
+                            //==============update gmail infor==============
+                            axios.put(`http://localhost:1337/api/users/${user.id}`, {  
+                                username: currentUser.displayName,
+                            }, {
+                                headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
+                            })
+                                .then(respond => {})
+                                .catch(error => console.log(error))
+
                             const userInfor = {
                                 id: user.id,
-                                username: user.username,
+                                username: currentUser.displayName,
                                 isAdmin: user.isAdmin,
                                 email: user.email,
-                                avatar: `http://localhost:1337${user.avatar.url}`,
+                                avatar: currentUser.photoURL,
+                                from: user.from
                             }
                             setUser(userInfor)
                             localStorage.setItem('user', JSON.stringify(userInfor))
-                        }else {
-                            setEmailExist(false)
-                            setUserEmail(
-                                currentUser.email
-                            )
-                            setFrom('Gmail')
                         }
                     })
+                    if(exist === false) {
+                        axios.post('http://localhost:1337/api/auth/local/register', {  
+                            username: currentUser.displayName,
+                            email: currentUser.email,
+                            isAdmin: false,
+                            password: "ljdas5d4a5sd56456",
+                            from: "Gmail",
+                        })
+                            .then((respond) => {
+                                const userInfor = {
+                                    id: respond.data.user.id,
+                                    username: respond.data.user.username,
+                                    isAdmin: respond.data.user.isAdmin,
+                                    email: respond.data.user.email,
+                                    avatar: currentUser.photoURL,
+                                    from: "Gmail"
+                                }
+                                setUser(userInfor)
+                                localStorage.setItem('user', JSON.stringify(userInfor))
+                                window.location.reload()
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                    }
                 })
                 .catch(error => console.log(error))
         })
-
         unsubscribe()
     }
     //login with facebook
     const facebookSignIn = () => {
-        
         const provider = new FacebookAuthProvider();
 
-        // signInWithPopup(auth, provider)
         signInWithPopup(auth, provider)
             .then(respond => {})
             .catch(error => console.log(error))
     }
-
    //logout function
     const logOut = () => {
         signOut(auth)
         localStorage.removeItem("user")
     }
-
-    // logOut()         
     //database login handler
     const dataBaseLogin = (respond) => {
+        // console.log(respond)
         axios.get(
             `http://localhost:1337/api/users/${respond.data.user.id}?populate=*`, {
                 headers: { Authorization: `Bearer ${respond.data.jwt}` }
@@ -92,10 +110,11 @@ export const AuthContextProvider = ({children}) => {
                     isAdmin: respond.data.isAdmin,
                     email: respond.data.email,
                     avatar: `http://localhost:1337${respond.data.avatar.url}`,
+                    from: respond.data.from
                 }
                 setUser(userInfor)
                 localStorage.setItem('user', JSON.stringify(userInfor))
-                window.location.reload()
+                // window.location.reload()
             })
             .catch(error => console.log(error))
     } 
@@ -107,10 +126,6 @@ export const AuthContextProvider = ({children}) => {
             facebookSignIn, 
             logOut, 
             user,
-            emailExist,
-            userEmail,
-            setEmailExist,
-            from
         }}>
             {children}
         </AuthContext.Provider>  
@@ -120,4 +135,3 @@ export const AuthContextProvider = ({children}) => {
 export const UserAuth = () => {
     return useContext(AuthContext)
 }
-

@@ -16,7 +16,6 @@ import {
 import style from './Signup.module.scss'
 import {UserAuth} from '../../../context/AuthContext'
 import Button from '../../Button';
-import SignupPopup from '../SignupPopup/SignupPopup';
 
 const cx = classnames.bind(style)
 
@@ -24,7 +23,7 @@ function Signup() {
     //=========used to redirect where is necessary==================
     const navigate = useNavigate()
     // ============destructring from UserAuth()===============
-    const { googleSignIn, facebookSignIn, user, emailExist} = UserAuth()
+    const { googleSignIn, facebookSignIn, user} = UserAuth()
     //=========== check if user has logged in, then redirect=================
     useEffect(() => {
         if(user != null) {
@@ -88,7 +87,7 @@ function Signup() {
                     email: data.email,
                     isAdmin: false,
                     password: data.password,
-                    avatar: fileId
+                    avatar: fileId,
                 })
                     .then(respond => {
                         navigate('/log-in')})
@@ -102,14 +101,10 @@ function Signup() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     //================a dialogue pops up when an other login method signup request occur================
-    const [showSignup, setShowSignup] = useState(false);
-    const handleCloseShowSignup = () => setShowSignup(false);
+    // const [showSignup, setShowSignup] = useState(false);
+    // const handleCloseShowSignup = () => setShowSignup(false);
     
-    useEffect(() => {
-        if(emailExist === false) {
-            setShowSignup(true)
-        }
-    }, [emailExist])
+    
 
     return(
         <div className={cx('wrapper')}>
@@ -130,13 +125,13 @@ function Signup() {
                 </Modal.Footer>
             </Modal>
             {/* =============signup dialogue popup when the other login method user doesn't exist in the database============== */}
-            <Modal show={showSignup} onHide={handleCloseShowSignup} className={cx('other-login-method-signup')}>
+            {/* <Modal show={showSignup} onHide={handleCloseShowSignup} className={cx('other-login-method-signup')}>
                 <Modal.Header closeButton>
                     <Modal.Title className={cx('other-login-method-signup__title')}>Nhập tên người dùng để đăng kí!</Modal.Title>
-                </Modal.Header>
+                </Modal.Header> */}
                 
-                <SignupPopup/>
-            </Modal>
+                {/* <SignupPopup/> */}
+            {/* </Modal> */}
 
             <div className={cx('signup-form-container')}>
                 <h2>Sign up</h2>

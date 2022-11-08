@@ -16,7 +16,9 @@ import { UserAuth } from "../../../context/AuthContext"
 const cx = classnames.bind(style)
 
 function SignupPopup () {
-    const { userEmail, dataBaseLogin, from} = UserAuth()
+    const { userEmail, dataBaseLogin, from, isUsed} = UserAuth()
+    console.log(from)
+    console.log(isUsed)
     //===========confirm password form handler==============
     const formSchema = Yup.object().shape({
         username: Yup.string()
@@ -34,8 +36,6 @@ function SignupPopup () {
     const { errors } = formState
     // ===============navigate============
     const navigate = useNavigate()
-
-
     //==============submit handler==================
     async function onSubmit(data) {
         let avatar = new FormData()
@@ -60,7 +60,7 @@ function SignupPopup () {
             email: userEmail,
             isAdmin: false,
             password: data.password,
-            From: from,
+            from: from,
             avatar: avatarId
         })
             .then(async(respond) => {
@@ -70,7 +70,6 @@ function SignupPopup () {
             .catch(error => {
                 setShow(true)
             })
-    
     }
 
     //a dialogue pops up when errors occur

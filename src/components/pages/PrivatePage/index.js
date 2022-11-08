@@ -48,17 +48,18 @@ function PrivatePage({userId, userInfor, apps, users}) {
     // ==========hide and show update section========
     const [update, setUpdate] = useState(false)
     // ============set infor for updating=================
-    const [username, setUsername] = useState(userInfor.username)
-    const [avatarId, setAvatarId] = useState(userInfor.username)
-    
-    // ===============find the avatar id to remove if we want to update it=============
+    const [username, setUsername] = useState(user.username)
+    // ======================avatar Id for deleting the avatar later===========
+    const [avatarId, setAvatarId] = useState('')
+
+    // ===========add avatar id for deleting it later==========
     useEffect(() => {
         users.map(userMapped => {
-            if(userMapped.id === user.id){
+            if(userMapped.id === user.id && userMapped.from === "Database") {
                 setAvatarId(userMapped.avatar.id)
             }
         })
-    }, [])
+    }, [user])
     // ===================infor update==================
     const inforUpdateHandler = () => {
         if(avatar === null) {
@@ -159,7 +160,6 @@ function PrivatePage({userId, userInfor, apps, users}) {
             })
         }
     })
-
     // ==============user delete handler=========
     const userDeleteHandler = async (userId) => {
         // ==============delete comments of the user=======
@@ -222,7 +222,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
         await axios.get('http://localhost:1337/api/comments?populate=*')
             .then(respond => {
                 respond.data.data.map(comment => {
-                    if(comment.attributes.userId === userInfor.id) {
+                    if(comment.attributes.userId === userId) {
                         respond.data.data.map(async(commentMapped) => {
                             if(commentMapped.attributes.parent_Id === comment.id) {
                                 await axios.delete(`http://localhost:1337/api/comments/${commentMapped.id}`, {
@@ -268,8 +268,6 @@ function PrivatePage({userId, userInfor, apps, users}) {
         logOut()
         window.location.reload()
     }
-
-
     // ==========check if the current logged user is allowed to access the feature==========
     if(user.id != userId) {
         return(
@@ -375,7 +373,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
                                             type="file"
                                             onChange={e => setAvatar(e.target.files[0])}
                                         />
-                                        <img src={`http://localhost:1337${userInfor.avatar.url}`}/>
+                                        <img src={user.avatar}/>
                                     </div>
         
                                     <div className={cx('form__username')}>
@@ -390,45 +388,47 @@ function PrivatePage({userId, userInfor, apps, users}) {
                                     <Button onClick={() => inforUpdateHandler()}>Cập nhật</Button>
                                 </form>
                                 {/* =========================password update form ==================== */}
-                                <form className={cx('change-password-form')} onSubmit={handleSubmit(passwordUpdateHandler)}>
-                                    <div className={cx('form__password')}>
-                                        <h6> 
-                                            <span>Đổi mật khẩu: </span>
-                                        </h6> 
-                                        
-                                        <div>
-                                            mật khẩu hiện tại: 
-                                            <input 
-                                                type="text" 
-                                                {...register('currentPassword')}
-                                            />
-                                            <div className={cx('invalid-feedback')}>{errors.currentPassword?.message}</div>
-                                        </div>
-                                        <div>
-                                            Mật khẩu mới:
-                                            <input 
-                                                type="text" 
-                                                {...register('newPassword')}
+                                {user.from === "Database" && (
+                                    <form className={cx('change-password-form')} onSubmit={handleSubmit(passwordUpdateHandler)}>
+                                        <div className={cx('form__password')}>
+                                            <h6> 
+                                                <span>Đổi mật khẩu: </span>
+                                            </h6> 
+                                            
+                                            <div>
+                                                mật khẩu hiện tại: 
+                                                <input 
+                                                    type="text" 
+                                                    {...register('currentPassword')}
+                                                />
+                                                <div className={cx('invalid-feedback')}>{errors.currentPassword?.message}</div>
+                                            </div>
+                                            <div>
+                                                Mật khẩu mới:
+                                                <input 
+                                                    type="text" 
+                                                    {...register('newPassword')}
 
-                                            />
-                                            <div className={cx('invalid-feedback')}>{errors.newPassword?.message}</div>
-                                        </div>
-                                        <div>
-                                            Nhập lại mật khẩu mới: 
-                                            <input 
-                                                type="text"
-                                                {...register('confirmNewPasword')}
+                                                />
+                                                <div className={cx('invalid-feedback')}>{errors.newPassword?.message}</div>
+                                            </div>
+                                            <div>
+                                                Nhập lại mật khẩu mới: 
+                                                <input 
+                                                    type="text"
+                                                    {...register('confirmNewPasword')}
 
-                                            />
-                                            <div className={cx('invalid-feedback')}>{errors.confirmNewPasword?.message}</div>
+                                                />
+                                                <div className={cx('invalid-feedback')}>{errors.confirmNewPasword?.message}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <button className={cx('change-password-btn')}>Đổi mật khẩu</button>
-                                </form>
+                                        <button className={cx('change-password-btn')}>Đổi mật khẩu</button>
+                                    </form>
+                                )}
                             </div>
                         ) : (
                             <div className={cx('private-infor')}>
-                                <img className={cx('image')} src={`http://localhost:1337${userInfor.avatar.url}`}/>
+                                <img className={cx('image')} src={user.avatar}/>
                                 <div className={cx('infor-container')}>
                                     <div>Tên người dùng: <span>{userInfor.username}</span></div>
                                     <div>Email: <span>{userInfor.email}</span></div>
@@ -439,13 +439,15 @@ function PrivatePage({userId, userInfor, apps, users}) {
     
                         {update === false && (
                             <div className={cx('buttons')}>
-                                <Button 
-                                    variant="secondary"
-                                    className={cx('update-btn')}
-                                    onClick={() => setUpdate(true)}
-                                >
-                                    cập nhật thông tin
-                                </Button>
+                                {user.from === "Database" && (
+                                    <Button 
+                                        variant="secondary"
+                                        className={cx('update-btn')}
+                                        onClick={() => setUpdate(true)}
+                                    >
+                                        cập nhật thông tin
+                                    </Button>
+                                )}
 
                                 {user.isAdmin === false && (
                                     <Button

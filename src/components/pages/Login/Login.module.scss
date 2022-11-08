@@ -1,8 +1,9 @@
 .wrapper{
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     background-color: rgba($color: #756d67, $alpha: 1.0);
 
@@ -115,26 +116,6 @@
                     }
                 }
             }
-            // ==================go to home page button=============
-            .home-btn{
-                position: absolute;
-                right: 10%;
-                bottom: 10%;
-                text-decoration: none;
-                color: rgb(255, 255, 255);
-                text-transform: uppercase;
-                width: 80px;
-                height: 35px;
-                background-color: rgba($color: #151516, $alpha: 1.0);
-                border-radius: 3px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                
-                &:hover{
-                    background-color: rgba($color: #525151, $alpha: 1.0);
-                }
-            }
             //=================Go to sign up button==================
             .user__signup-btn{
                 text-decoration: none;
@@ -158,6 +139,26 @@
                     font-size: 25px;
                 }
             }
+        }
+    }
+    // ==================go to home page button=============
+    .home-btn{
+        position: absolute;
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+        text-transform: uppercase;
+        width: 80px;
+        height: 35px;
+        background-color: rgba($color: #151516, $alpha: 1.0);
+        border-radius: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 10%;
+        bottom: 5%;
+        
+        &:hover{
+            background-color: rgba($color: #525151, $alpha: 1.0);
         }
     }
 }
@@ -227,12 +228,12 @@
                     min-height: 40px;
                 }
     
-                // ==================go to home page button=============
-                .home-btn{
-                    right: 0%;//-------------------
-                    bottom: -20%;//------------------
-                }
             }
+        }
+        // ==================go to home page button=============
+        .home-btn{
+            position: unset;
+            margin: 15px 0px;
         }
     }
     
@@ -308,6 +309,11 @@
                     min-height: 50px;
                 }
             }
+        }
+        // ==================go to home page button=============
+        .home-btn{
+            position: unset;
+            margin: 15px 0px;
         }
     }
 }

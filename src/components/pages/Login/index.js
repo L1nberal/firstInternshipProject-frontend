@@ -16,7 +16,6 @@ import {
 import style from './Login.module.scss'
 import {AuthContext} from '../../../context/AuthContext'
 import Button from '../../Button';
-import SignupPopup from '../SignupPopup/SignupPopup';
 
 const cx = classnames.bind(style)
 
@@ -26,8 +25,7 @@ function Login() {
         user, 
         googleSignIn, 
         facebookSignIn, 
-        dataBaseLogin,
-        emailExist
+        dataBaseLogin
     } = useContext(AuthContext)
     //=========used to redirect where is necessary==================
     const navigate = useNavigate()
@@ -43,7 +41,6 @@ function Login() {
     const formOptions = { resolver: yupResolver(formSchema)}
     const { register, handleSubmit, reset, formState } = useForm(formOptions)
     const { errors } = formState
-
     //====================login with google=================
     const handleGoogleSignIn = async (e) => {
         e.preventDefault()
@@ -53,7 +50,6 @@ function Login() {
             console.log(error)
         }
     }
-
     //==========login with facebook=================
     const handleFacebookSignIn = async (e) => {
         e.preventDefault()
@@ -80,28 +76,25 @@ function Login() {
             .catch(error => {
                 setShow(true)  
             })      
-        
     }
-
     //=========== check if user has logged in, then redirect=================
     useEffect(() => {
         if(user != null) {
             navigate('/')
         }
     }, [user])
-
     //================a dialogue pops up when errors occur================
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     //================a dialogue pops up when an other login method signup request occur================
-    const [showSignup, setShowSignup] = useState(false);
-    const handleCloseShowSignup = () => setShowSignup(false);
+    // const [showSignup, setShowSignup] = useState(false);
+    // const handleCloseShowSignup = () => setShowSignup(false);
 
-    useEffect(() => {
-        if(emailExist === false) {
-            setShowSignup(true)
-        }
-    }, [emailExist])
+    // useEffect(() => {
+    //     if(emailExist === false) {
+    //         setShowSignup(true)
+    //     }
+    // }, [emailExist])
 
     return(
         <div className={cx('wrapper')}>
@@ -122,13 +115,13 @@ function Login() {
                 </Modal.Footer>
             </Modal>
             {/* =============signup dialogue popup when the other login method user doesn't exist in the database============== */}
-            <Modal show={showSignup} onHide={handleCloseShowSignup} className={cx('other-login-method-signup')}>
+            {/* <Modal show={showSignup} onHide={handleCloseShowSignup} className={cx('other-login-method-signup')}>
                 <Modal.Header closeButton>
                     <Modal.Title className={cx('other-login-method-signup__title')}>Nhập tên người dùng để đăng kí!</Modal.Title>
-                </Modal.Header>
+                </Modal.Header> */}
                 
-                <SignupPopup/>
-            </Modal>
+                {/* <SignupPopup/> */}
+            {/* </Modal> */}
 
             <div className={cx('login-form-container')}>
                 <h2>Log in</h2>
@@ -186,7 +179,6 @@ function Login() {
                         {/* {user?.displayName ? <button onClick={handleSignOut}>logout</button> : <Link to='/login'>Signin</Link>} */}
                     </div>
     
-                    <Button to='/' className={cx('home-btn')}>Home</Button> 
                     <Button className={cx('user__signup-btn')} to='/sign-up'>
                         <FontAwesomeIcon className={cx('icon')} icon={icons.faFeather}/>
                         Sign up
@@ -195,6 +187,7 @@ function Login() {
                 </form>
             </div>
 
+            <Button to='/' className={cx('home-btn')}>Home</Button> 
         </div>
     )
 }

@@ -120,9 +120,6 @@ function AddApps(data) {
                         )
                             .then((response) => {  
                                 window.location.reload()
-
-                                // ===========set input value to be empty================
-                                // $('.form-control').val("")
                             }, (error) => {
                                 console.log(error);
                     });
