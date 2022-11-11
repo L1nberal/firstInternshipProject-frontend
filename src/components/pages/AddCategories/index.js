@@ -42,6 +42,17 @@ function AddCategories(data) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(schema),
     })
+    // ==================ordering categories to prioritize some scrucial ones============
+    let categoriesTemporary
+    for(let i = 0; i < arrayOfCategories.length-1; i++) {
+        for(let j = i + 1; j < arrayOfCategories.length; j++) {
+            if(arrayOfCategories[i].attributes.ordered > arrayOfCategories[j].attributes.ordered) {
+                categoriesTemporary = arrayOfCategories[i]
+                arrayOfCategories[i] = arrayOfCategories[j]
+                arrayOfCategories[j] = categoriesTemporary
+            }
+        }
+    }    
     
     async function submitHandler(data) {  
         let error = false
@@ -80,7 +91,6 @@ function AddCategories(data) {
             setShow(true)
         }
     }
-
     // ==============category delete handler===========
     const deleteHandler = (categoryId) => {
         axios.delete(`http://localhost:1337/api/categories/${categoryId}`, {
@@ -93,16 +103,14 @@ function AddCategories(data) {
                 setArrayOfCategories(array)
             })
     }
-
     //===========a dialogue pops up when deleteHandler is called ===========
     const [deleteCategory, setDeleteCategory] = useState(false);
     const handleCloseDelete = () => setDeleteCategory(false);
-
     //===========a dialogue pops up when errors occur===========
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     // ==========check if the current logged user is admin to offer the feature==========
-    if(user.isAdmin === false) {
+    if(user && user.isAdmin === false) {
         return(
             <div className={cx('warning-wrapper')}>
                 <Spinner animation="border" variant="danger" />
@@ -161,9 +169,10 @@ function AddCategories(data) {
                     </Modal>
         
                     <Form className={cx('form')} onSubmit={handleSubmit(submitHandler)}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                             <Form.Label>Tên phân loại</Form.Label>
                             <Form.Control 
+                                className={cx('infor-input')}
                                 type="text" 
                                 placeholder="Enter name" 
                                 name="name" 
@@ -176,9 +185,10 @@ function AddCategories(data) {
                             }
                         </Form.Group>
         
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                             <Form.Label>Thứ tự sắp xếp</Form.Label>
                             <Form.Control 
+                                className={cx('infor-input')}
                                 type="text" 
                                 placeholder="Enter ordered number" 
                                 name="ordered" 
@@ -191,7 +201,11 @@ function AddCategories(data) {
                             }
                         </Form.Group>
         
-                        <Button variant="primary" type="submit">
+                        <Button 
+                            variant="primary" 
+                            type="submit"
+                            className={cx('submit-btn')}
+                        >
                             Submit
                         </Button>
                     </Form>
@@ -207,8 +221,10 @@ function AddCategories(data) {
                                     <div className={cx('name')}>{category.attributes.name}:</div>
                                     <div className={cx('ordered')}>{category.attributes.ordered}</div>
                                 </div>
+
                                 <Button 
                                     variant="secondary"
+                                    className={cx('delete-btn')}
                                     onClick={() => {
                                         setDeleteCategory(true)
                                         setCategoryId(category.id)

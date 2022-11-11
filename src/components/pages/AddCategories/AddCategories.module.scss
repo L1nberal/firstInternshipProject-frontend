@@ -61,14 +61,109 @@
             }
 
             .category-infor{
+                width: 100%;
+                margin-right: 5px;
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: space-between;
 
                 .name{
+                    width: 80%;
                     margin-right: 5px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .ordered{
+                    width: 20%;
                 }
                 
             }
+
+            .delete-btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 35px;
+                height: 35px;
+            }
         }
+    }
+}
+// ==============responsive for both tablets and mobiles===========
+@media only screen and (min-width: 320px) and (max-width: 1023px) {
+    .wrapper{
+        width: 100%;
+        padding: 0px 10px; 
+        display: unset;
+        justify-content: unset;
+    
+        .content{
+            width: 100%;
+            margin-bottom: 10px;
+    
+            .form{
+                padding: 10px;
+                font-size: 15px;
+
+                .form-group{
+                    .infor-input{
+                        font-size: 15px;
+                    }
+                }
+
+                .submit-btn{
+                    font-size: 15px;
+                    margin: 0px auto;
+                    display: block;
+                }
+            }
+        }
+    
+        .sidebar{
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 9px;
+    
+            .sidebar__title{
+                font-size: 15px;
+            }
+    
+            .sidebar__container{
+                font-size: 15px;
+    
+                .delete-btn{
+                    width: 25px;
+                    height: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 699px) {
+    .wrapper{
+        padding: 0px 40px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1023px) {
+    .wrapper{
+        padding: 0px 80px;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1023px) {
+    .wrapper{
+        padding: 0px 120px;
+    }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1023px) {
+    .wrapper{
+        padding: 0px 150px;
     }
 }

@@ -9,6 +9,7 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import ButtonBootstrap from 'react-bootstrap/esm/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import $ from 'jquery'
 
 import {
     icons
@@ -20,6 +21,12 @@ import Button from '../../Button';
 const cx = classnames.bind(style)
 
 function Signup() {
+    // =====show and hide password============
+    const [eye, setEye] = useState(icons.faEye)
+    const [type, setType] = useState("password")
+
+    const [confirmEye, setConfirmEye] = useState(icons.faEye)
+    const [confirmType, setConfirmType] = useState("password")
     //=========used to redirect where is necessary==================
     const navigate = useNavigate()
     // ============destructring from UserAuth()===============
@@ -71,7 +78,7 @@ function Signup() {
     function onSubmit(data) {
         // ==================get photo file to upload========
         let file = new FormData()
-        let fileId
+        let fileId 
         file.append('files', data.avatar[0])
         // =============upload avatar==========
         axios.post('http://localhost:1337/api/upload', file, {
@@ -94,17 +101,13 @@ function Signup() {
                     .catch(error => {
                         setShow(true)
                     })
-                    })
+            })
             .catch(error => console.log(error))
+        
     }
     //=============a dialogue pops up when errors occur==============
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    //================a dialogue pops up when an other login method signup request occur================
-    // const [showSignup, setShowSignup] = useState(false);
-    // const handleCloseShowSignup = () => setShowSignup(false);
-    
-    
 
     return(
         <div className={cx('wrapper')}>
@@ -113,7 +116,7 @@ function Signup() {
                 <Modal.Header closeButton>
                     <Modal.Title>Có lỗi xảy ra!</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Thông tin bạn nhập không khả dụng, mời bạn thử lại!</Modal.Body>
+                <Modal.Body>Tên người dùng hoặc email đã tồn tại, mời bạn thử lại!</Modal.Body>
                 <Modal.Footer>
                     <ButtonBootstrap 
                         variant="secondary" 
@@ -124,14 +127,6 @@ function Signup() {
                     </ButtonBootstrap>
                 </Modal.Footer>
             </Modal>
-            {/* =============signup dialogue popup when the other login method user doesn't exist in the database============== */}
-            {/* <Modal show={showSignup} onHide={handleCloseShowSignup} className={cx('other-login-method-signup')}>
-                <Modal.Header closeButton>
-                    <Modal.Title className={cx('other-login-method-signup__title')}>Nhập tên người dùng để đăng kí!</Modal.Title>
-                </Modal.Header> */}
-                
-                {/* <SignupPopup/> */}
-            {/* </Modal> */}
 
             <div className={cx('signup-form-container')}>
                 <h2>Sign up</h2>
@@ -168,11 +163,27 @@ function Signup() {
                             <div>
                                 <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
                                 <input 
-                                    type='password' 
+                                    type={type} 
                                     placeholder='password' 
                                     name='password'
+                                    id='password'
                                     {...register('password')}
                                 />
+
+                                <button 
+                                    type='button'
+                                    className={cx('show-password')}
+                                    onClick={() => {
+                                        if($("#password").attr('type') === "password") {
+                                            setEye(icons.faEyeSlash)
+                                            setType("text")
+                                        }else{
+                                            setEye(icons.faEye)
+                                            setType("password")
+                                        }
+                                }}>
+                                    <FontAwesomeIcon icon={eye}/>
+                                </button>
                             </div>
                             <div className={cx('invalid-feedback')}>{errors.password?.message}</div>
                             
@@ -180,11 +191,27 @@ function Signup() {
                             <div>
                                 <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
                                 <input 
-                                    type='password' 
+                                    type={confirmType}
                                     placeholder='password' 
-                                    name='password'
+                                    name='confirmPwd'
+                                    id='confirmPwd'
                                     {...register('confirmPwd')}
                                 />
+
+                                <button 
+                                    type='button'
+                                    className={cx('show-password')}
+                                    onClick={() => {
+                                        if($("#confirmPwd").attr('type') === "password") {
+                                            setConfirmEye(icons.faEyeSlash)
+                                            setConfirmType("text")
+                                        }else{
+                                            setConfirmEye(icons.faEye)
+                                            setConfirmType("password")
+                                        }
+                                }}>
+                                    <FontAwesomeIcon icon={confirmEye}/>
+                                </button>
                             </div>
                             <div className={cx('invalid-feedback')}>{errors.confirmPwd?.message}</div>
     

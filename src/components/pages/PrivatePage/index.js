@@ -17,7 +17,6 @@ import * as Yup from 'yup'
 import style from './PrivatePage.module.scss'
 import { UserAuth } from "../../../context/AuthContext";
 import { icons } from "../../../assets"
-import { async } from "@firebase/util";
 
 const cx = classnames.bind(style)
 
@@ -37,7 +36,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
             .oneOf([Yup.ref('newPassword')], 'Mật khẩu không khớp'),        
     })
     const formOptions = { resolver: yupResolver(formSchema)}
-    const { register, handleSubmit, reset, formState } = useForm(formOptions)
+    const { register, handleSubmit, formState } = useForm(formOptions)
     const { errors } = formState
     // ============destructring from UserAuth()=============
     const { user, logOut } = UserAuth()
@@ -51,12 +50,13 @@ function PrivatePage({userId, userInfor, apps, users}) {
     const [username, setUsername] = useState(user.username)
     // ======================avatar Id for deleting the avatar later===========
     const [avatarId, setAvatarId] = useState('')
-
     // ===========add avatar id for deleting it later==========
     useEffect(() => {
         users.map(userMapped => {
-            if(userMapped.id === user.id && userMapped.from === "Database") {
-                setAvatarId(userMapped.avatar.id)
+            if(user) {
+                if(userMapped.id === user.id && userMapped.from === "Database") {
+                    setAvatarId(userMapped.avatar.id)
+                }
             }
         })
     }, [user])
@@ -70,7 +70,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
                     'Authorization': `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` 
                 }
             })
-                .then(async (respond) => {    
+                .then((respond) => {    
                     window.location.reload()           
                 })
                 .catch(error => console.log(error))
@@ -93,7 +93,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
                     })
 
                     fileId = respond.data[0].id
-                    axios.put(`http://localhost:1337/api/users/${userId}`, {
+                    axios.put(`http://localhost:1337/api/users/${user.id}`, {
                         username: username,
                         avatar: fileId
                     }, {
@@ -105,37 +105,24 @@ function PrivatePage({userId, userInfor, apps, users}) {
                             window.location.reload()           
                         })
                         .catch(error => console.log(error))
-                   
                 })
         }
     }
     // ===============update password===============
     const passwordUpdateHandler = async (data) => {
-        let jwt
-        await axios.post('http://localhost:1337/api/auth/local', {
-            identifier: username,
-            password: data.currentPassword
-        })
-            .then(respond => {
-                jwt = respond.data.jwt
-            })
-            .catch(error => {
-                alert('Mật khẩu sai, mời nhập lại')
-            }) 
-            
         axios.post(`http://localhost:1337/api/auth/change-password`, {
             currentPassword: data.currentPassword,
             password: data.newPassword,
             passwordConfirmation: data.confirmNewPasword
         }, {
             headers: {
-                'Authorization': `Bearer ${jwt}` 
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}` 
             }
         })
             .then(respond => {
                 window.location.reload()
             })
-            .catch(error => console.log(error))
+            .catch(error => alert("Mật khẩu bạn nhập không đúng, mời bạn thử lại"))
         
     }
     // =========pop up when errors exists=============
@@ -150,7 +137,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
     // =============get apps which have been posted by the user if it's admin=====
     let postedApps = []
     users.map(userMapped => {
-        if(userMapped.id === user.id) {
+        if(userMapped.id === userId) {
             userMapped.apps.map(app => {
                 apps.map(appMapped => {
                     if(appMapped.id === app.id) {
@@ -293,7 +280,6 @@ function PrivatePage({userId, userInfor, apps, users}) {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-
                 {/* =============this dialogue pops up when a disable request is made========= */}
                 <Modal show={userDisableModal} onHide={handleCloseDisableModal}>
                     <Modal.Header closeButton>
@@ -312,8 +298,6 @@ function PrivatePage({userId, userInfor, apps, users}) {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-
-                
                 {/* =============this dialogue pops up when a delete request is made========= */}
                 <Modal show={userDeleteModal} onHide={handleCloseDeleteModal}>
                     <Modal.Header closeButton>
@@ -351,7 +335,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
                         className={cx('private-infor-container', 'tab')}
     
                     >
-                        {update ? (
+                        {update === true ? (
                             <div className={cx('update-section')}>
                                 {/* =================back-btn================= */}
                                 <Button 
@@ -398,27 +382,58 @@ function PrivatePage({userId, userInfor, apps, users}) {
                                             <div>
                                                 mật khẩu hiện tại: 
                                                 <input 
-                                                    type="text" 
+                                                    type="password" 
                                                     {...register('currentPassword')}
+                                                    id="currentPassword"
                                                 />
+
+                                                <input type="checkbox" onClick={() => {
+                                                    var x = document.getElementById("currentPassword");
+                                                    if (x.type === "password") {
+                                                      x.type = "text";
+                                                    } else {
+                                                      x.type = "password";
+                                                    }
+                                                }}/>Show Password
+
                                                 <div className={cx('invalid-feedback')}>{errors.currentPassword?.message}</div>
                                             </div>
                                             <div>
                                                 Mật khẩu mới:
                                                 <input 
-                                                    type="text" 
+                                                    type="password" 
                                                     {...register('newPassword')}
-
+                                                    id="newPassword"
                                                 />
+
+                                                <input type="checkbox" onClick={() => {
+                                                    var x = document.getElementById("newPassword");
+                                                    if (x.type === "password") {
+                                                      x.type = "text";
+                                                    } else {
+                                                      x.type = "password";
+                                                    }
+                                                }}/>Show Password
+
                                                 <div className={cx('invalid-feedback')}>{errors.newPassword?.message}</div>
                                             </div>
                                             <div>
                                                 Nhập lại mật khẩu mới: 
                                                 <input 
-                                                    type="text"
+                                                    type="password"
                                                     {...register('confirmNewPasword')}
-
+                                                    id="confirmNewPasword"
                                                 />
+                                                
+                                                <input type="checkbox" onClick={() => {
+                                                    var x = document.getElementById("confirmNewPasword");
+                                                    if (x.type === "password") {
+                                                      x.type = "text";
+                                                    } else {
+                                                      x.type = "password";
+                                                    }
+                                                }}/>Show Password
+
                                                 <div className={cx('invalid-feedback')}>{errors.confirmNewPasword?.message}</div>
                                             </div>
                                         </div>
@@ -512,6 +527,7 @@ function PrivatePage({userId, userInfor, apps, users}) {
                             <div className={cx('users')}>
                                 {users.map(user => {
                                     if(user.id != userInfor.id) {
+                                        console.log(user)
                                         return(
                                             <Card 
                                                 key={user.id}
@@ -523,11 +539,17 @@ function PrivatePage({userId, userInfor, apps, users}) {
                                                     <span className={cx('from')}>From: {user.from}</span>
                                                 </Card.Header>
                                                 <Card.Body className="d-flex">
-                                                    <Card.Img
-                                                        src="https://i.pinimg.com/280x280_RS/2e/45/66/2e4566fd829bcf9eb11ccdb5f252b02f.jpg"
-                                                        // src={`http://localhost:1337${user.avatar.url}`}
-                                                        className={cx('each-user__avatar')}
-                                                    />
+                                                    {user.avatar != null ? (
+                                                        <Card.Img
+                                                            src={`http://localhost:1337${user.avatar.url}`}
+                                                            className={cx('each-user__avatar')}
+                                                        />
+                                                    ) : (
+                                                        <Card.Img
+                                                            src={user.avatarLink}
+                                                            className={cx('each-user__avatar')}
+                                                        />
+                                                    )}  
                                                     <Card.Text className={cx('each-user__email')}>
                                                         {user.email}
                                                     </Card.Text>

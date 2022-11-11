@@ -24,10 +24,6 @@ function OrganisationUpdate({
 }) {
     // =================get curent logged user===================
     const { user } = UserAuth()
-    // ==============check all owned apps===============
-    organisation.attributes.appsOwned.data.map(app => {
-        $(`#owned-apps-checkbox-${app.id}`).prop("checked", true)
-    })
     // ===============get apps' ids=============
     let developedIds = []
     let ownedIds = []

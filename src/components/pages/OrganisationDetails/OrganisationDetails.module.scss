@@ -3,49 +3,52 @@
     min-height: 100vh;
 
     .head{
-        display: flex;
         background-color: rgba($color: #ffffff, $alpha: 1.0);
         border-radius: 7px;
         margin: 20px 0px;
         padding: 25px;
-        position: relative;
 
-        .image-container{
+        .above{
             display: flex;
-            align-items: center;
-            margin-right: 35px;
 
-            .head__image{
-                width: 200px;
-                margin: 0px auto;
-                height: auto;
+            .image-container{
+                display: flex;
+                align-items: center;
+                margin-right: 35px;
+    
+                .head__image{
+                    width: 200px;
+                    margin: 0px auto;
+                    height: auto;
+                }
             }
-        }
-
-        .head__infor{
-            display: flex;
-            justify-content: space-evenly;
-            width: 100%;
-
-            div{
-                font-size: 18px;
-                margin-right: 25px;
+    
+            .head__infor{
+                display: flex;
+                justify-content: space-evenly;
+                width: 100%;
+    
                 div{
-                    span{
-                        color: rgba($color: #c88f8f, $alpha: 1.0);
+                    font-size: 18px;
+                    margin-right: 25px;
+                    div{
+                        span{
+                            color: rgba($color: #c88f8f, $alpha: 1.0);
+                        }
                     }
                 }
             }
         }
         
         .head__btn-group{
-            position: absolute;
-            right: 5%;
-            bottom: 10%;
-            min-width: 21%;
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            margin-top: 10px;
         
             .head__delete-btn{
-                margin-left: 3%;
+                margin-left: 1%;
+                margin-right: 2%;
             }
         }
     }
@@ -118,7 +121,6 @@
                 text-align: center;
             }
         }
-
         //  a message is prined out when there is no app 
         .message{
             text-indent: 50px;
@@ -185,12 +187,10 @@
 
             }
         }
-
         //  a message is prined out when there is no app 
         .message{
             text-indent: 50px;
         }
-
         // go to more apps button
         .more-apps{
             height: auto;
@@ -214,40 +214,45 @@
         .head{
             padding: 10px;
             display: block;
-            position: unset;
 
-            .image-container{
-                margin: 0px;
-                margin-bottom: 20px;
+            .above{
+                display: flex;
+                flex-direction: column;
 
-                .head__image{
-                    width: 120px;
-                }
-            }
-
-            .head__infor{
-                display: block;
-                text-align: center;
-                
-                div{
+                .image-container{
                     margin: 0px;
-                    margin-bottom: 5px;
-                    word-wrap: break-word;
-                    font-size: 15px;
+                    margin-bottom: 20px;
+    
+                    .head__image{
+                        width: 120px;
+                    }
+                }
+    
+                .head__infor{
+                    text-align: center;
+                    margin-top: 10px;
+                    display: flex;
+                    flex-direction: column;
 
-                    &:last-child{
+                    div{
                         margin: 0px;
+                        margin-bottom: 5px;
+                        word-wrap: break-word;
+                        font-size: 15px;
+    
+                        &:last-child{
+                            margin: 0px;
+                        }
                     }
                 }
             }
-
+            
             .head__btn-group{
                 width: 90%;
                 margin: 0px auto;
                 margin-top: 30px;
                 display: flex;
                 justify-content: center;
-                position: unset;
                 
                 .head__delete-btn{
                     font-size: 15px;
@@ -268,7 +273,7 @@
 
         .general-infor{
             font-size: 15px;
-            height: 200px;
+            max-height: 200px;
             overflow-y: scroll;
 
             .title{

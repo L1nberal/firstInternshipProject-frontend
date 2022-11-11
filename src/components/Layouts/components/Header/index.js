@@ -21,10 +21,10 @@ function Header() {
     // ===========get current logged user=============
     const { user } = useContext(AuthContext)
     // ============== get current logged user id for accessing private page =====0
-    const [currentUser, setCurrentUser] = useState(0)
+    const [currentUserId, setCurrentUserId] = useState()
     useMemo(() => {
         if(user) {
-            setCurrentUser(user.id)
+            setCurrentUserId(user.id)
         }
     }, [user])
     // =============get infor from api================
@@ -145,7 +145,7 @@ function Header() {
         {
             title: "Trang cá nhân",
             icon: icons.faListCheck,
-            to: `/private-page-${currentUser}`
+            to: `/private-page-${currentUserId}`
         },
         {
             title: "Đăng xuất",

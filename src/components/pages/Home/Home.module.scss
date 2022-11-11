@@ -148,6 +148,8 @@
         justify-content: space-between;
 
         .categories{
+            // width: 17%; ==========================here
+
             .title{
                 font-size: 22px;
                 font-weight: bolder;
@@ -155,6 +157,17 @@
             }
             .each-category{
                 margin-bottom: 10px;
+                
+                div{
+                    margin: 0px;
+
+                    label{
+                        width: 100%;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
             }
         }
 
@@ -393,6 +406,28 @@
         .spinner{
             width: 70px;
             height: 70px;
+        }
+    }
+
+    .wrapper{
+        // ==============apps in categories===========
+        .categories-container{
+            margin: 40px 0px;
+            display: unset;
+
+            .categories{
+                .each-category{
+                    div{
+                        padding-left: 5px;
+
+                        label{
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
         }
     }
 }   

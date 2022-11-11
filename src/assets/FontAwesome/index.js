@@ -10,7 +10,9 @@ import {
     faRotateLeft,
     faFileInvoice,
     faKey,
-    faBars
+    faBars,
+    faEye,
+    faEyeSlash
 } from '@fortawesome/free-solid-svg-icons'
 
 
@@ -26,6 +28,8 @@ export {
     faFileInvoice,
     faRotateLeft,
     faKey,
-    faBars
+    faBars,
+    faEye,
+    faEyeSlash
 }
 

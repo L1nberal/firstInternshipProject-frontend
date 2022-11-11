@@ -111,91 +111,95 @@ function AppDetails({apps, appId, comments, users, app}) {
             <div className={cx('infor')}>
                 <div className={cx('app-details')}>
                     <div className={cx('head')}>
-                        <img 
-                            src={`http://localhost:1337${app.attributes.logo.data.attributes.url}`} 
-                            alt={app.attributes.name}
-                        />
-
-                        <div className={cx('head__infor')}>
-                            <div className={cx('name')}>{app.attributes.name}</div>
-                            <div className={cx('owner')}>Thuộc sở hữu của: 
-                                {app.attributes.owner.data != null && 
-                                    <Link 
-                                        to={`/organisation-details-${app.attributes.owner.data.id}`} 
-                                        state={app.attributes.owner}
-                                        className={cx('owner__name')}
-                                    >
-                                        {app.attributes.owner.data.attributes.name}
-                                    </Link>
-                                }
-                            </div>
-                            <div className={cx('category')}>Phân loại: 
-                                {app.attributes.category.data != null &&
-                                    <Link 
-                                        to={`/category-${app.attributes.category.data.id}`}
-                                        className={cx('category__name')}
-                                    >
-                                        {app.attributes.category.data.attributes.name}
-                                    </Link>
-                                }
+                        <div className={cx('above')}>
+                            <img 
+                                src={`http://localhost:1337${app.attributes.logo.data.attributes.url}`} 
+                                alt={app.attributes.name}
+                            />
+    
+                            <div className={cx('head__infor')}>
+                                <div className={cx('name')}>{app.attributes.name}</div>
+                                <div className={cx('owner')}>Thuộc sở hữu của: 
+                                    {app.attributes.owner.data != null && 
+                                        <Link 
+                                            to={`/organisation-details-${app.attributes.owner.data.id}`} 
+                                            state={app.attributes.owner}
+                                            className={cx('owner__name')}
+                                        >
+                                            {app.attributes.owner.data.attributes.name}
+                                        </Link>
+                                    }
+                                </div>
+                                <div className={cx('category')}>Phân loại: 
+                                    {app.attributes.category.data != null &&
+                                        <Link 
+                                            to={`/category-${app.attributes.category.data.id}`}
+                                            className={cx('category__name')}
+                                        >
+                                            {app.attributes.category.data.attributes.name}
+                                        </Link>
+                                    }
+                                </div>
                             </div>
                         </div>
                         
-                        {user && (
-                            <React.Fragment>
-                                {user.isAdmin &&( 
-                                    <div className={cx('head__btn-group')}>
-                                        {/* =============app update button==============  */}
-                                        <Button
-                                            variant='outline-primary'
-                                            className={cx('head__update-btn')}
-                                            onClick={() => navigate(`/app-update-${appId}`)}
-                                        >
-                                            Cập nhật
-                                        </Button>
-
-                                        <Button
-                                            variant='outline-danger'
-                                            className={cx('head__delete-btn')}
-                                            onClick={() => setShow(true)}
-                                        >
-                                            Xóa ứng dụng
-                                        </Button>
-                                    </div>
-                                )}
-                            </React.Fragment>
-                        )}
-                       
+                        <div className={cx('below')}>
+                            {user && (
+                                <React.Fragment>
+                                    {user.isAdmin &&( 
+                                        <div className={cx('head__btn-group')}>
+                                            {/* =============app update button==============  */}
+                                            <Button
+                                                variant='outline-primary'
+                                                className={cx('head__update-btn')}
+                                                onClick={() => navigate(`/app-update-${appId}`)}
+                                            >
+                                                Cập nhật
+                                            </Button>
     
-                        <div className={cx('download-container')}>
-                            {getMobileOperatingSystem() === 'Android' && (
-                                <React.Fragment>
-                                    {app.attributes.androidLink != null ? (
-                                        <a className={cx('head__download-link')} href={app.attributes.androidLink} target="blank">
-                                            <img src='/pictures/android-download.png'/>
-                                        </a>
-                                    ) : (
-                                        <div>Chưa có liên kết tải xuống cho android</div>
+                                            <Button
+                                                variant='outline-danger'
+                                                className={cx('head__delete-btn')}
+                                                onClick={() => setShow(true)}
+                                            >
+                                                Xóa ứng dụng
+                                            </Button>
+                                        </div>
                                     )}
                                 </React.Fragment>
                             )}
-                            {getMobileOperatingSystem() === 'IOS' && (
-                                <React.Fragment>
-                                    {app.attributes.iosLink ? (
-                                        <a className={cx('head__download-link')} href={app.attributes.iosLink} target="blank">
-                                            <img src='/pictures/Apple-ios-download.png'/>
-                                        </a>
-                                    ) : (
-                                        <div>Chưa có liên kết tải xuống cho IOS</div>
-                                    )}
-                                </React.Fragment>
-                            )}
-                            {getMobileOperatingSystem() === 'WindowPhone' && (
-                                <span className={cx('message')}>Hiện tại ứng dụng này vẫn chưa có trên nền tảng Window phone</span>
-                            )}
-                            {getMobileOperatingSystem() != 'Android' && getMobileOperatingSystem() != 'IOS' && getMobileOperatingSystem() != 'WindowPhone' && (
-                                <span className={cx('message')}>Ứng dụng không khả dụng trên thiết bị của bạn</span>
-                            )}
+                           
+        
+                            <div className={cx('download-container')}>
+                                {getMobileOperatingSystem() === 'Android' && (
+                                    <React.Fragment>
+                                        {app.attributes.androidLink != null ? (
+                                            <a className={cx('head__download-link')} href={app.attributes.androidLink} target="blank">
+                                                <img src='/pictures/android-download.png'/>
+                                            </a>
+                                        ) : (
+                                            <div>Chưa có liên kết tải xuống cho android</div>
+                                        )}
+                                    </React.Fragment>
+                                )}
+                                {getMobileOperatingSystem() === 'IOS' && (
+                                    <React.Fragment>
+                                        {app.attributes.iosLink ? (
+                                            <a className={cx('head__download-link')} href={app.attributes.iosLink} target="blank">
+                                                <img src='/pictures/Apple-ios-download.png'/>
+                                            </a>
+                                        ) : (
+                                            <div>Chưa có liên kết tải xuống cho IOS</div>
+                                        )}
+                                    </React.Fragment>
+                                )}
+                                {getMobileOperatingSystem() === 'WindowPhone' && (
+                                    <span className={cx('message')}>Hiện tại ứng dụng này vẫn chưa có trên nền tảng Window phone</span>
+                                )}
+                                {getMobileOperatingSystem() != 'Android' && getMobileOperatingSystem() != 'IOS' && getMobileOperatingSystem() != 'WindowPhone' && (
+                                    <span className={cx('message')}>Ứng dụng không khả dụng trên thiết bị của bạn</span>
+                                )}
+                            </div>
                         </div>
                     </div>
 

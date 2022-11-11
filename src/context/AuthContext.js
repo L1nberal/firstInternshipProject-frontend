@@ -1,4 +1,4 @@
-import { useContext, createContext, useMemo, useState } from "react";
+import { useContext, createContext, useMemo, useState, useEffect } from "react";
 import { 
     GoogleAuthProvider,
     signInWithPopup, 
@@ -9,13 +9,29 @@ import {
 import axios from 'axios';
 
 import { auth } from "../firebase";
+import { decode } from "@firebase/util";
 
 export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
     // =====================user storage================
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const [passwordToken, setPasswordToken] = useState()
+    // =====================user storage================
+    const [user, setUser] = useState()
+    // ===================check if user has logged in yet================
+    const [isLogged, setIsLogged] = useState()
+    // ===================check if user has logged in yet================
+    const [error, setError] = useState(false)
     //=================login with google================
+    // function generateToken(n) {
+    //     var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    //     var token = '';
+    //     for(var i = 0; i < n; i++) {
+    //         token += chars[Math.floor(Math.random() * chars.length)];
+    //     }
+    //     setPasswordToken(token)
+    // }
+
     const googleSignIn = async () => {
         const provider = new GoogleAuthProvider()
         
@@ -31,27 +47,24 @@ export const AuthContextProvider = ({children}) => {
                     await respond.data.map(user => {
                         if(user.email === currentUser.email) {
                             exist = true
-                            //==============update gmail infor==============
+                            //==============update username ==============
                             axios.put(`http://localhost:1337/api/users/${user.id}`, {  
                                 username: currentUser.displayName,
+                                avatarLink: currentUser.photoURL
                             }, {
                                 headers: { Authorization: `Bearer ${process.env.REACT_APP_FULL_ACCESS_TOKEN}` }
                             })
                                 .then(respond => {})
                                 .catch(error => console.log(error))
-
-                            const userInfor = {
-                                id: user.id,
+                            // ============login with database==============
+                            const data = {
                                 username: currentUser.displayName,
-                                isAdmin: user.isAdmin,
-                                email: user.email,
-                                avatar: currentUser.photoURL,
-                                from: user.from
+                                password: "ljdas5d4a5sd56456"
                             }
-                            setUser(userInfor)
-                            localStorage.setItem('user', JSON.stringify(userInfor))
+                            dataBaseLogin(data)
                         }
                     })
+
                     if(exist === false) {
                         axios.post('http://localhost:1337/api/auth/local/register', {  
                             username: currentUser.displayName,
@@ -59,18 +72,11 @@ export const AuthContextProvider = ({children}) => {
                             isAdmin: false,
                             password: "ljdas5d4a5sd56456",
                             from: "Gmail",
+                            avatarLink: currentUser.photoURL
                         })
-                            .then((respond) => {
-                                const userInfor = {
-                                    id: respond.data.user.id,
-                                    username: respond.data.user.username,
-                                    isAdmin: respond.data.user.isAdmin,
-                                    email: respond.data.user.email,
-                                    avatar: currentUser.photoURL,
-                                    from: "Gmail"
-                                }
-                                setUser(userInfor)
-                                localStorage.setItem('user', JSON.stringify(userInfor))
+                            .then(async (respond) => {
+                                localStorage.setItem('accessToken', respond.data.jwt)
+                                setIsLogged(true)
                                 window.location.reload()
                             })
                             .catch(error => {
@@ -93,32 +99,65 @@ export const AuthContextProvider = ({children}) => {
    //logout function
     const logOut = () => {
         signOut(auth)
-        localStorage.removeItem("user")
+        localStorage.removeItem("accessToken")
+        setIsLogged(false)
     }
     //database login handler
-    const dataBaseLogin = (respond) => {
-        // console.log(respond)
-        axios.get(
-            `http://localhost:1337/api/users/${respond.data.user.id}?populate=*`, {
-                headers: { Authorization: `Bearer ${respond.data.jwt}` }
-            }
-        )   
+    const dataBaseLogin = async (data) => {
+        await axios.post('http://localhost:1337/api/auth/local', {
+            identifier: data.username,
+            password: data.password
+        })
             .then(respond => {
-                const userInfor = {
-                    id: respond.data.id,
-                    username: respond.data.username,
-                    isAdmin: respond.data.isAdmin,
-                    email: respond.data.email,
-                    avatar: `http://localhost:1337${respond.data.avatar.url}`,
-                    from: respond.data.from
+                try{
+                    localStorage.setItem('accessToken', respond.data.jwt)
+                    setIsLogged(true)
+                    window.location.reload()
+                }catch(error) {
+                    console.log(error)
                 }
-                setUser(userInfor)
-                localStorage.setItem('user', JSON.stringify(userInfor))
-                // window.location.reload()
             })
-            .catch(error => console.log(error))
-    } 
-    
+            .catch(error => {
+                setError(true)  
+            })
+    }     
+        
+    useMemo(() => {
+        if(localStorage.getItem("accessToken")) {
+            const jwt = localStorage.getItem('accessToken')
+            const userId = decode(localStorage.getItem('accessToken')).claims.id
+            axios.get(`http://localhost:1337/api/users/${userId}?populate=*`, {
+                    headers: { Authorization: `Bearer ${jwt}` }
+                }
+            )   
+                .then(respond => { 
+                    if(respond.data.avatar === null) {
+                        setUser({
+                            id: respond.data.id,
+                            username: respond.data.username,
+                            isAdmin: respond.data.isAdmin,
+                            email: respond.data.email,
+                            avatar: respond.data.avatarLink,
+                            from: respond.data.from
+                        })
+                    }else {
+                        setUser({
+                            id: respond.data.id,
+                            username: respond.data.username,
+                            isAdmin: respond.data.isAdmin,
+                            email: respond.data.email,
+                            avatar: `http://localhost:1337${respond.data.avatar.url}`,
+                            from: respond.data.from
+                        })
+                    }
+                })
+                .catch(error => console.log(error))
+        }else if(localStorage.getItem("accessToken") === null){
+            setUser()
+        }
+    }, [isLogged])
+
+
     return (
         <AuthContext.Provider value={{
             dataBaseLogin, 
@@ -126,6 +165,8 @@ export const AuthContextProvider = ({children}) => {
             facebookSignIn, 
             logOut, 
             user,
+            error,
+            setError
         }}>
             {children}
         </AuthContext.Provider>  

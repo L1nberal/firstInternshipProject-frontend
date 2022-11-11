@@ -12,3 +12,4 @@ export {default as DevelopedApps} from './pages/OrganisationDetails/Components/D
 export {default as Categories} from './pages/Categories'
 export {default as OrganisationUpdate} from './pages/OrganisationUpdate'
 export {default as AppUpdate} from './pages/AppUpdate'
+export {default as NoMatch} from './pages/NoMatch'

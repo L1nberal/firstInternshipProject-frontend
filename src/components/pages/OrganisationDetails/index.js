@@ -95,22 +95,24 @@ function OrganisationDetails({apps, organisations, organisationId, users, organi
                         {organisation.id === organisationId && (
                             <React.Fragment>
                                 <div className={cx('head')}>
-                                    <div className={cx('image-container')}>
-                                        <img 
-                                            className={cx('head__image')} 
-                                            src={`http://localhost:1337${organisation.attributes.logo.data.attributes.url}`}
-                                        />
-                                    </div>
-
-                                    <div className={cx('head__infor')}>
-                                        <div>
-                                            <div>{organisation.attributes.name} | {organisation.attributes.ownedBy}</div>
-                                            <div>Số điện thoại: <span>{organisation.attributes.phoneNumber}</span></div>
-                                            <div>Địa chỉ: <span>{organisation.attributes.address}</span></div>
+                                    <div className={cx('above')}>
+                                        <div className={cx('image-container')}>
+                                            <img 
+                                                className={cx('head__image')} 
+                                                src={`http://localhost:1337${organisation.attributes.logo.data.attributes.url}`}
+                                            />
                                         </div>
-                                        <div>
-                                            <div>Email: <span>{organisation.attributes.email}</span></div>
-                                            <div>Website: <span><a href={organisation.attributes.website} target="blank">{organisation.attributes.website}</a></span></div>
+    
+                                        <div className={cx('head__infor')}>
+                                            <div>
+                                                <div>{organisation.attributes.name} | {organisation.attributes.ownedBy}</div>
+                                                <div>Số điện thoại: <span>{organisation.attributes.phoneNumber}</span></div>
+                                                <div>Địa chỉ: <span>{organisation.attributes.address}</span></div>
+                                            </div>
+                                            <div>
+                                                <div>Email: <span>{organisation.attributes.email}</span></div>
+                                                <div>Website: <span><a href={organisation.attributes.website} target="blank">{organisation.attributes.website}</a></span></div>
+                                            </div>
                                         </div>
                                     </div>
 

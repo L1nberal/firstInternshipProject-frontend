@@ -37,20 +37,26 @@
                         display: flex;
                         align-items: center;
                         border-radius: 3px;
-                        // margin-bottom: 30px;
                         border: solid 1px white;
     
                         &:focus-within{
                             border: solid 1px black;
                         }
     
-                        input{
+                        .username-input, .password-input{
                             border: none;
                             outline: none;
                             height: 80%;
                             font-size: 100%;
                             width: 100%;
                             background-color: transparent;
+                        }
+
+                        .show-password{
+                            font-size: 18px;
+                            background-color: transparent;
+                            border: 0px;
+                            color: rgba($color: #ffffff, $alpha: 1.0);
                         }
     
                         .icon{

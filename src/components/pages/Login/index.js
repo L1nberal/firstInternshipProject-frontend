@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import axios from 'axios';
+import $ from "jquery"
 import { useContext } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import ButtonBootstrap from 'react-bootstrap/esm/Button';
@@ -25,8 +25,13 @@ function Login() {
         user, 
         googleSignIn, 
         facebookSignIn, 
-        dataBaseLogin
+        dataBaseLogin,
+        error,
+         setError
     } = useContext(AuthContext)
+    // =====show and hide password============
+    const [eye, setEye] = useState(icons.faEye)
+    const [type, setType] = useState("password")
     //=========used to redirect where is necessary==================
     const navigate = useNavigate()
     //===============checking errors for logging in with database ===============
@@ -59,23 +64,9 @@ function Login() {
             console.log(error)
         }
     }
-
     // ============login with database================
     function onSubmit(data) {
-        axios.post('http://localhost:1337/api/auth/local', {
-            identifier: data.username,
-            password: data.password
-        })
-            .then(respond => {
-                try{
-                    dataBaseLogin(respond)
-                }catch(error) {
-                    console.log(error)
-                }
-            })
-            .catch(error => {
-                setShow(true)  
-            })      
+        dataBaseLogin(data)
     }
     //=========== check if user has logged in, then redirect=================
     useEffect(() => {
@@ -83,18 +74,15 @@ function Login() {
             navigate('/')
         }
     }, [user])
+    // =============check if error exists==============
+    useEffect(() => {
+        if(error === true) {
+            setShow(true)
+        }
+    }, [error])
     //================a dialogue pops up when errors occur================
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    //================a dialogue pops up when an other login method signup request occur================
-    // const [showSignup, setShowSignup] = useState(false);
-    // const handleCloseShowSignup = () => setShowSignup(false);
-
-    // useEffect(() => {
-    //     if(emailExist === false) {
-    //         setShowSignup(true)
-    //     }
-    // }, [emailExist])
 
     return(
         <div className={cx('wrapper')}>
@@ -107,21 +95,16 @@ function Login() {
                 <Modal.Footer>
                     <ButtonBootstrap 
                         variant="secondary" 
-                        onClick={handleClose}
+                        onClick={() => {
+                            handleClose()
+                            setError(false)
+                        }}
                         className={cx('modal-btn')}
                     >
                         Đã hiểu
                     </ButtonBootstrap>
                 </Modal.Footer>
             </Modal>
-            {/* =============signup dialogue popup when the other login method user doesn't exist in the database============== */}
-            {/* <Modal show={showSignup} onHide={handleCloseShowSignup} className={cx('other-login-method-signup')}>
-                <Modal.Header closeButton>
-                    <Modal.Title className={cx('other-login-method-signup__title')}>Nhập tên người dùng để đăng kí!</Modal.Title>
-                </Modal.Header> */}
-                
-                {/* <SignupPopup/> */}
-            {/* </Modal> */}
 
             <div className={cx('login-form-container')}>
                 <h2>Log in</h2>
@@ -137,6 +120,7 @@ function Login() {
                                     type='text' 
                                     placeholder='email or username' 
                                     name='username'
+                                    className={cx('username-input')}
                                     {...register('username')}
                                     />
                             </div>
@@ -146,11 +130,27 @@ function Login() {
                             <div>
                                 <FontAwesomeIcon className={cx('icon')} icon={icons.faKey}/>
                                 <input 
-                                    type='password' 
+                                    type={type}
                                     placeholder='password' 
                                     name='password'
+                                    id='password'
+                                    className={cx('password-input')}
                                     {...register('password')}
                                 />
+                                <button 
+                                    type='button'
+                                    className={cx('show-password')}
+                                    onClick={() => {
+                                        if($("#password").attr('type') === "password") {
+                                            setEye(icons.faEyeSlash)
+                                            setType("text")
+                                        }else{
+                                            setEye(icons.faEye)
+                                            setType("password")
+                                        }
+                                }}>
+                                    <FontAwesomeIcon icon={eye}/>
+                                </button>
                             </div>
                             <div className={cx('invalid-feedback')}>{errors.password?.message}</div>
                         </div>

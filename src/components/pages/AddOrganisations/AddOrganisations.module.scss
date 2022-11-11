@@ -49,8 +49,11 @@
                     padding: 0px 20px;
 
                     .name{
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                         height: 50px;
-                        width: 100%;
+                        width: 120px;
                         text-align: center;
                         color: rgba($color: #e39696, $alpha: 1.0);
                     }
@@ -80,7 +83,73 @@
 
 // ======responsive for both mobiles and tablets===================
 @media only screen and (min-width: 320px) and (max-width: 1024px) {
+    .warning-wrapper{
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        .warning{
+            margin: 10px 0px;
+            color: red;
+            font-size: 25px;
+        }
+    
+        .message{
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    }
+    
     .wrapper{
         width: 100%;
+        padding: 0px 10px;
+    
+        .form{
+            width: 100%;
+            font-size: 15px;
+
+            .form-group{
+                .infor-input{
+                    font-size: 15px;
+                }
+            }
+    
+            .checkboxes{
+                .checkbox-container{
+                    .app-container{
+                        .name{
+                            font-size: 14px;
+
+                        }
+                        
+                        img{
+                            width: 100px;
+                        }
+                    }
+                }
+            }
+
+            .submit-btn{
+                margin: 0px auto;
+                display: block;
+                font-size: 14px;
+            }
+        }
+    }
+    
+    .modal-btn{
+        border: solid 1px rgba($color: #e2bb4f, $alpha: 1.0);
+        border-radius: 5px;
+        color: rgba($color: #e2bb4f, $alpha: 1.0);
+        background-color: #ffffff;
+        padding: 3px;
+    
+        &:hover{
+            background-color: rgba($color: #e2bb4f, $alpha: 1.0);
+            color: white;
+        }
     }
 }

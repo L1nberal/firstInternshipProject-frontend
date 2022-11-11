@@ -136,7 +136,7 @@ function AddOrganisations(data) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     // ==========check if the current logged user is admin to offer the feature==========
-    if(user.isAdmin === false) {
+    if(user && user.isAdmin === false) {
         return(
             <div className={cx('warning-wrapper')}>
                 <Spinner animation="border" variant="danger" />
@@ -168,12 +168,13 @@ function AddOrganisations(data) {
                 {/* ===============form submit====================== */}
                 <Form className={cx('form')} onSubmit={handleSubmit(submitHandler)}>
                     {/* =============== name ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Tên cơ quan</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter name" 
                             name="name" 
+                            className={cx('infor-input')}
                             {...register("name")}
                         />
                         {errors.name && 
@@ -183,12 +184,13 @@ function AddOrganisations(data) {
                         }
                     </Form.Group>
                     {/* =============== email ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>email</Form.Label>
                         <Form.Control 
                             type="email" 
                             placeholder="Enter email" 
                             name="email" 
+                            className={cx('infor-input')}
                             {...register("email")}
                         />
                         {errors.email && 
@@ -198,12 +200,13 @@ function AddOrganisations(data) {
                         }
                     </Form.Group>
                     {/* =============== address ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Address</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter address" 
                             name="address" 
+                            className={cx('infor-input')}
                             {...register("address")}
                         />
                         {errors.address && 
@@ -213,12 +216,13 @@ function AddOrganisations(data) {
                         }
                     </Form.Group>
                     {/* =============== website ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Website</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter website" 
                             name="website"
+                            className={cx('infor-input')}
                             {...register("website")}
                         />
                         {errors.website && 
@@ -228,12 +232,13 @@ function AddOrganisations(data) {
                         }
                     </Form.Group>
                     {/* =============== owned by ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Thuộc sở hữu của</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter owner" 
                             name="ownedBy"
+                            className={cx('infor-input')}
                             {...register("ownedBy")}
                         />
                         {errors.ownedBy && 
@@ -243,12 +248,14 @@ function AddOrganisations(data) {
                         }
                     </Form.Group>
                     {/* =============== phone number ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Số điện thoại</Form.Label>
                         <Form.Control 
                             type="text" 
-                            placeholder="Enter phone number" 
+                            placeholder="Enter phone num
+                            ber" 
                             name="phone number" 
+                            className={cx('infor-input')}
                             {...register("phoneNumber")}
                         />
                         {errors.phoneNumber && 
@@ -258,12 +265,13 @@ function AddOrganisations(data) {
                         }
                     </Form.Group>
                     {/* =============== about ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Giới thiệu về cơ quan</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter about" 
                             name="about" 
+                            className={cx('infor-input')}
                             {...register("about")}
                         />
                         {errors.about && 
@@ -273,30 +281,32 @@ function AddOrganisations(data) {
                         }
                     </Form.Group>
                     {/* =============== logo ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Ảnh Logo</Form.Label>
                         <Form.Control 
                             type="file" 
                             placeholder="Enter email" 
                             name="logo"
+                            className={cx('infor-input')}
                             {...register("logo")}
                             required
                         />
                     </Form.Group>
                     {/* =============== illustrating photos ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Các ảnh minh họa khác:</Form.Label>
                         <Form.Control 
                             type="file" 
                             placeholder="Enter photos" 
                             name="files[]" 
+                            className={cx('infor-input')}
                             multiple
                             {...register("photos")}
                             required
                         />
                     </Form.Group>
                     {/* =============== apps developed ====================== */}
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className={cx('form-group', 'mb-3')} controlId="formBasicEmail">
                         <Form.Label>Các ứng dụng đã phát triển:</Form.Label>
                         
                         <div className={cx('checkboxes')}>
@@ -360,7 +370,11 @@ function AddOrganisations(data) {
                         </div>
                     </Form.Group>
                     
-                    <Button variant="primary" type="submit">
+                    <Button 
+                        variant="primary" 
+                        type="submit"
+                        className={cx('submit-btn')}
+                    >
                         Submit
                     </Button>
                 </Form>

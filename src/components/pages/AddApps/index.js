@@ -29,7 +29,6 @@ function AddApps(data) {
     const [developerId, setDeveloperId] = useState()
     // =============set owner================
     const [ownerId, setOwnerId] = useState()
-
     // ===========set category choice============
     const [category, setCategory] = useState('Chọn phân loại')
     const [categoryId, setCategoryId] = useState(null)
@@ -134,7 +133,7 @@ function AddApps(data) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     // ==========check if the current logged user is admin to offer the feature==========
-    if(user.isAdmin === false) {
+    if(user && user.isAdmin === false) {
         return(
             <div className={cx('warning-wrapper')}>
                 <Spinner animation="border" variant="danger" />
@@ -164,11 +163,12 @@ function AddApps(data) {
                 </Modal>
     
                 <Form className={cx('form')} onSubmit={handleSubmit(submitHandler)}>
-                    <Form.Group className="mb-3 formBasic" controlId="formBasic">
+                    <Form.Group controlId="formBasic" className={cx('form-group', 'mb-3', 'formBasic')}>
                         <Form.Label>Tên ứng dụng</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter name" 
+                            className={cx('infor-input')}
                             name="name" 
                             {...register("name")}
                         />
@@ -179,15 +179,14 @@ function AddApps(data) {
                         }
                     </Form.Group>
     
-                    <Form.Group className="mb-3 formBasic" controlId="formBasic">
+                    <Form.Group className={cx('form-group', 'mb-3', 'formBasic')} controlId="formBasic">
                         <Form.Label>Mô tả</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter description" 
                             name="description" 
                             {...register("description")}
-    
-    
+                            className={cx('infor-input')}
                         />
                         {errors.description && 
                             <Form.Text className="text-muted">
@@ -196,14 +195,14 @@ function AddApps(data) {
                         }
                     </Form.Group>
     
-                    <Form.Group className="mb-3 formBasic"  controlId="formBasic">
+                    <Form.Group className={cx('form-group', 'mb-3', 'formBasic')}  controlId="formBasic">
                         <Form.Label>Liên kết tải ứng dụng cho thiết bị android</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter android link" 
                             name="androidLink" 
                             {...register("androidLink")}
-    
+                            className={cx('infor-input')}
                         />
                         {errors.androidLink && 
                             <Form.Text className="text-muted">
@@ -212,14 +211,14 @@ function AddApps(data) {
                         }
                     </Form.Group>
     
-                    <Form.Group className="mb-3 formBasic"  controlId="formBasic">
+                    <Form.Group className={cx('form-group', 'mb-3', 'formBasic')}  controlId="formBasic">
                         <Form.Label>Liên kết tải ứng dụng cho thiết bị IOS</Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter ios link" 
                             name="iosLink" 
                             {...register("iosLink")}
-    
+                            className={cx('infor-input')}
                         />
                         {errors.iosLink && 
                             <Form.Text className="text-muted">
@@ -228,7 +227,7 @@ function AddApps(data) {
                         }
                     </Form.Group>
     
-                    <Form.Group className="mb-3 formBasic" controlId="formBasic">
+                    <Form.Group className={cx('form-group', 'mb-3', 'formBasic')} controlId="formBasic">
                         <Form.Label>Logo</Form.Label>
                         <Form.Control 
                             type="file" 
@@ -236,10 +235,11 @@ function AddApps(data) {
                             name="logo" 
                             {...register("logo")}
                             required
+                            className={cx('infor-input')}
                         />
                     </Form.Group>
     
-                    <Form.Group className="mb-3 formBasic" controlId="formBasic">
+                    <Form.Group className={cx('form-group', 'mb-3', 'formBasic')} controlId="formBasic">
                         <Form.Label>Screenshots</Form.Label>
                         <Form.Control 
                             type="file" 
@@ -248,6 +248,7 @@ function AddApps(data) {
                             {...register("screenshots")}
                             multiple
                             required
+                            className={cx('infor-input')}
                         />
                     </Form.Group>
     
@@ -281,17 +282,17 @@ function AddApps(data) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Nhà phát triển:</Form.Label>
                         
-                        <div className={cx('checkboxes')}>
+                        <div className={cx('radios')}>
                             {organisations.map(organisation => {
                                 return (
-                                    <div key={organisation.id} className={cx('checkbox-container')}>
+                                    <div key={organisation.id} className={cx('radio-container')}>
                                         <input
-                                            id={`developer-checkbox-${organisation.id}`}
-                                            type="checkbox" 
+                                            id={`developer-radio-${organisation.id}`}
+                                            type="radio" 
                                             className={cx('input')}
-                                            name="checkbox" 
+                                            name="developer" 
                                             onChange={() => {
-                                                const isChecked = $(`#developer-checkbox-${organisation.id}`).is(":checked")
+                                                const isChecked = $(`#developer-radio-${organisation.id}`).is(":checked")
                                                 if(isChecked) {
                                                     setDeveloperId(organisation.id)
                                                 }else if(!isChecked) {
@@ -314,17 +315,17 @@ function AddApps(data) {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Cơ quan sở hữu ứng dụng:</Form.Label>
                         
-                        <div className={cx('checkboxes')}>
+                        <div className={cx('radios')}>
                             {organisations.map(organisation => {
                                 return (
-                                    <div key={organisation.id} className={cx('checkbox-container')}>
+                                    <div key={organisation.id} className={cx('radio-container')}>
                                         <input
-                                            id={`owner-checkbox-${organisation.id}`}
-                                            type="checkbox" 
+                                            id={`owner-radio-${organisation.id}`}
+                                            type="radio" 
                                             className={cx('input')}
-                                            name="checkbox" 
+                                            name="owner" 
                                             onChange={() => {
-                                                const isChecked = $(`#owner-checkbox-${organisation.id}`).is(":checked")
+                                                const isChecked = $(`#owner-radio-${organisation.id}`).is(":checked")
                                                 if(isChecked) {
                                                     setOwnerId(organisation.id)
                                                 }else if(!isChecked) {
@@ -344,7 +345,11 @@ function AddApps(data) {
                         </div>
                     </Form.Group>
     
-                    <Button variant="primary" type="submit">
+                    <Button 
+                        variant="primary" 
+                        type="submit"
+                        className={cx('submit-btn')}
+                    >
                         Submit
                     </Button>
                 </Form>

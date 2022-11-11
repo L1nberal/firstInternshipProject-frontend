@@ -129,6 +129,8 @@
                 }
         
                 .body__download-link{
+                    padding: 10px;
+
                     img{
                         width: 100px;
                     }
@@ -154,6 +156,17 @@
         
         .apps-container{
             width: 90%;
+            
+            .body{
+                .body__download-link{
+                    padding: 10px;
+
+                    img{
+                        width: 150px;
+                    }
+        
+                }
+            }
         }
     }
 }

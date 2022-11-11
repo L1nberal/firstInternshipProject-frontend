@@ -18,7 +18,6 @@
     }
 }
 
-
 .wrapper{
     min-height: 100vh;
     width: 1250px;
@@ -38,13 +37,13 @@
             }
         }
 
-        .checkboxes{
+        .radios{
             padding: 10px 0px;
             display: flex;
             overflow-x: scroll;
             width: 100%;
             
-            .checkbox-container{
+            .radio-container{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -63,6 +62,9 @@
                     .name{
                         height: 50px;
                         width: 100%;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                         text-align: center;
                         color: rgba($color: #e39696, $alpha: 1.0);
                     }
@@ -79,6 +81,116 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+//=========responsive for mobiles=======
+@media only screen and (min-width: 320px) and (max-width: 599px) {
+    .warning-wrapper{
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        .warning{
+            margin: 10px 0px;
+            color: red;
+            font-size: 25px;
+        }
+    
+        .message{
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    }
+    
+    .wrapper{
+        width: 100%;
+        padding: 0px 10px;
+    
+        .form{
+            font-size: 14px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+
+            .form-group{
+                .infor-input{
+                    font-size: 13px;
+                }
+            }
+    
+            .categories-dropdown{
+                button{
+                    font-size: 14px;
+                }
+
+                div{
+                    a{
+                        font-size: 14px;
+                    }
+                }
+            }
+    
+            .radios{
+                .radio-container{
+                    .organisation-container{
+                        .name{
+                            font-size: 13px;
+                        }
+                        
+                        .image{
+                            img{
+                                width: 80px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .submit-btn{
+                margin: 0px auto;
+                display: block;
+                font-size: 15px;
+            }
+        }
+    }
+}
+// =======responsive for tablets=======
+@media only screen and (min-width: 600px) and (max-width: 1024px) {
+    .warning-wrapper{
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        .warning{
+            margin: 10px 0px;
+            color: red;
+            font-size: 25px;
+        }
+    
+        .message{
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    }
+    
+    .wrapper{
+        width: 100%;
+        padding: 0px 10px;
+    
+        .form{
+            width: 100%;
+            .submit-btn{
+                margin: 0px auto;
+                display: block;
             }
         }
     }

@@ -56,13 +56,13 @@
             }
         }
 
-        .checkboxes{
+        .radios{
             padding: 10px 0px;
             display: flex;
             overflow-x: scroll;
             width: 100%;
             
-            .checkbox-container{
+            .radio-container{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -137,13 +137,13 @@
                 }
             }
     
-            .checkboxes{
+            .radios{
                 padding: 10px 0px;
                 display: flex;
                 overflow-x: scroll;
                 width: 100%;
                 
-                .checkbox-container{
+                .radio-container{
                     display: flex;
                     flex-direction: column;
                     align-items: center;

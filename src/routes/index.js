@@ -17,6 +17,8 @@ import {
     Categories,
     OrganisationUpdate,
     AppUpdate,
+    NoMatch,
+    Test
 } from '../components'
 import {DefaultLayout, NoHeaderLayout} from '../components/Layouts'
 
@@ -92,15 +94,6 @@ function TotalRoutes() {
             .then(respond => setUsers(respond.data))
             .catch(error => console.log(error))
     }, []) 
-    // routes that show pages
-    const PagesRoutes = [
-        {path:'/', Component: Home},
-        {path:'/log-in', Component: Login, Layout: NoHeaderLayout},
-        {path:'/sign-up', Component: Signup, Layout: NoHeaderLayout},
-        {path:'/add-organisations', Component: AddOrganisations, data: organisations, apps: apps},
-        {path:'/add-categories', Component: AddCategories, data: categories},
-        {path:'/add-apps', Component: AddApps, data: apps, categories: categories, organisations: organisations, users: users},
-    ] 
     // routes that show individual app
     const AppDetailsRoutes = apps.map((app) => {
         return {path: `/app-details-${app.id}`, Component: AppDetails, appId: app.id, app: app, comments: comments, users: users}
@@ -131,40 +124,21 @@ function TotalRoutes() {
     })
     // routes that show each individual user's infor
     const privatePageRoutes = users.map((user) => {
-        return {path: `/private-page-${user.id}`, Component: PrivatePage, userId: user.id, users: users, userInfor: user, apps: apps}
+        return {path: `/private-page-${user.id}`, Component: PrivatePage, userId: user.id, userInfor: user, users: users, apps: apps}
     })
 
+    // routes that show pages
+    const PagesRoutes = [
+        {path:'/log-in', Component: Login, Layout: NoHeaderLayout},
+        {path:'/sign-up', Component: Signup, Layout: NoHeaderLayout},
+        {path:'/add-organisations', Component: AddOrganisations, data: organisations, apps: apps},
+        {path:'/add-categories', Component: AddCategories, data: categories},
+        {path:'/add-apps', Component: AddApps, data: apps, categories: categories, organisations: organisations, users: users},
+        {path:'/', Component: Home},
+        {path:'*', Component: NoMatch, Layout: NoHeaderLayout},
+    ] 
     return(
         <Routes>
-            {/* ==============routes that show pages================= */}
-            {PagesRoutes.map((route, index) => {
-                const Component = route.Component
-                let Layout = DefaultLayout
-
-                if(route.Layout) {
-                    Layout = route.Layout
-                }
-
-                return(
-                    <Route 
-                        key={index} 
-                        path={route.path} 
-                        element={
-                            <Layout>
-                                <Component 
-                                    data={route.data}
-                                    apps={route.apps}
-                                    categories={route.categories}
-                                    organisations={route.organisations}
-                                    users={route.users}
-                                />
-                            </Layout>
-                    }
-                    />
-
-                )
-            })}
-
             {/* ==============routes that show individual app================= */}
             {AppDetailsRoutes.map((route, index) => {
                 const Component = route.Component
@@ -378,13 +352,40 @@ function TotalRoutes() {
                             <Layout>
                                 <Component 
                                     userId = {route.userId}
-                                    userInfor = {route.userInfor}
                                     apps = {route.apps}
-                                    comments={comments}
                                     users = {route.users}
+                                    userInfor= {route.userInfor}
                                 />
                             </Layout>
                         }
+                    />
+                )
+            })}
+
+            {/* ==============routes that show pages================= */}
+            {PagesRoutes.map((route, index) => {
+                const Component = route.Component
+                let Layout = DefaultLayout
+
+                if(route.Layout) {
+                    Layout = route.Layout
+                }
+
+                return(
+                    <Route 
+                        key={index} 
+                        path={route.path} 
+                        element={
+                            <Layout>
+                                <Component 
+                                    data={route.data}
+                                    apps={route.apps}
+                                    categories={route.categories}
+                                    organisations={route.organisations}
+                                    users={route.users}
+                                />
+                            </Layout>
+                    }
                     />
 
                 )

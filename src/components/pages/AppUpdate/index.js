@@ -35,10 +35,10 @@ function AppUpdate(
     const [developerId, setDeveloperId] = useState(app.attributes.developer.data && app.attributes.developer.data.id)
     // =============set owner================
     const [ownerId, setOwnerId] = useState(app.attributes.owner.data && app.attributes.owner.data.id)
-    // ==========check developer and owner checkboxes============
+    // ==========check developer and owner radios============
     useEffect(() => {
-        $(`#developer-checkbox-${developerId}`).prop("checked", true)
-        $(`#owner-checkbox-${ownerId}`).prop("checked", true)
+        $(`#developer-radio-${developerId}`).prop("checked", true)
+        $(`#owner-radio-${ownerId}`).prop("checked", true)
     }, [])
     //a dialogue pops up when errors occur
     const [show, setShow] = useState(false);
@@ -410,17 +410,17 @@ function AppUpdate(
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Nhà phát triển:</Form.Label>
                         
-                        <div className={cx('checkboxes')}>
+                        <div className={cx('radios')}>
                             {organisations.map(organisation => {
                                 return (
-                                    <div key={organisation.id} className={cx('checkbox-container')}>
+                                    <div key={organisation.id} className={cx('radio-container')}>
                                         <input
-                                            id={`developer-checkbox-${organisation.id}`}
-                                            type="checkbox" 
+                                            id={`developer-radio-${organisation.id}`}
+                                            type="radio" 
                                             className={cx('input')}
-                                            name="checkbox" 
+                                            name="developer" 
                                             onChange={() => {
-                                                const isChecked = $(`#developer-checkbox-${organisation.id}`).is(":checked")
+                                                const isChecked = $(`#developer-radio-${organisation.id}`).is(":checked")
                                                 if(isChecked) {
                                                     setDeveloperId(organisation.id)
                                                 }else if(!isChecked) {
@@ -443,17 +443,17 @@ function AppUpdate(
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Cơ quan sở hữu ứng dụng:</Form.Label>
                         
-                        <div className={cx('checkboxes')}>
+                        <div className={cx('radios')}>
                             {organisations.map(organisation => {
                                 return (
-                                    <div key={organisation.id} className={cx('checkbox-container')}>
+                                    <div key={organisation.id} className={cx('radio-container')}>
                                         <input
-                                            id={`owner-checkbox-${organisation.id}`}
-                                            type="checkbox" 
+                                            id={`owner-radio-${organisation.id}`}
+                                            type="radio" 
                                             className={cx('input')}
-                                            name="checkbox" 
+                                            name="owner" 
                                             onChange={() => {
-                                                const isChecked = $(`#owner-checkbox-${organisation.id}`).is(":checked")
+                                                const isChecked = $(`#owner-radio-${organisation.id}`).is(":checked")
                                                 if(isChecked) {
                                                     setOwnerId(organisation.id)
                                                 }else if(!isChecked) {

@@ -15,8 +15,9 @@ import {
 const cx = classnames.bind(style)
 
 const UserMenu = React.forwardRef((props, ref) => {
+    // ==================navigator==============
     const navigate = useNavigate()
-
+    // ===============get logOut function from UserAuth()============
     const {logOut} = UserAuth()
     // store menu
     const [history, setHistory] = useState([props.data])
@@ -27,8 +28,6 @@ const UserMenu = React.forwardRef((props, ref) => {
   
     return ( 
         <Tippy
-            // visible
-            id
             interactive
             delay={[0, 100]}
             offset={[0, 6]}
@@ -71,16 +70,8 @@ const UserMenu = React.forwardRef((props, ref) => {
                                                     setHistory(prev => [...prev, item.submenu])
                                                 }
                                                 if(item.function === "logout") {
-                                                    async function logout () {
-                                                        try {
-                                                            navigate('/')
-                                                            await logOut()
-                                                            window.location.reload(1); //reload page after logout to update login state
-                                                        }catch(error) {
-                                                            console.log(error)
-                                                        }
-                                                    }
-                                                    logout()
+                                                    logOut()
+                                                    navigate('/')
                                                 }
                                             }}
                                         >
@@ -121,16 +112,8 @@ const UserMenu = React.forwardRef((props, ref) => {
                                                     setHistory(prev => [...prev, item.submenu])
                                                 }
                                                 if(item.function === "logout") {
-                                                    async function logout () {
-                                                        try {
-                                                            navigate('/')
-                                                            await logOut()
-                                                            window.location.reload(); //reload page after logout to update login state
-                                                        }catch(error) {
-                                                            console.log(error)
-                                                        }
-                                                    }
-                                                    logout()
+                                                    logOut()
+                                                    navigate('/')
                                                 }
                                             }}
                                         >
