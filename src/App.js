@@ -1,10 +1,8 @@
 import './App.css';
-import TotalRoutes from './Routes'
+import TotalRoutes from './Routes';
 
 function App() {
-  return(
-    <TotalRoutes/>
-  )
+    return <TotalRoutes />;
 }
 
 export default App;

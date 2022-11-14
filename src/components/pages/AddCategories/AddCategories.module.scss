@@ -1,43 +1,43 @@
-.warning-wrapper{
+.warning-wrapper {
     height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    .warning{
+
+    .warning {
         margin: 10px 0px;
         color: red;
         font-size: 25px;
     }
 
-    .message{
+    .message {
         font-size: 20px;
         margin-bottom: 10px;
     }
 }
 
-.wrapper{
+.wrapper {
     min-height: 100vh;
     width: 1250px;
     display: flex;
     justify-content: space-evenly;
     margin: 20px 0px;
 
-    .content{
+    .content {
         display: inline-block;
         width: 65%;
 
-        .form{
-            background-color: rgba($color: #ffffff, $alpha: 1.0);
+        .form {
+            background-color: rgba($color: #ffffff, $alpha: 1);
             width: 100%;
             padding: 20px;
             border-radius: 12px;
         }
     }
 
-    .sidebar{
+    .sidebar {
         width: 30%;
         padding: 15px 20px;
         border-radius: 12px;
@@ -45,28 +45,28 @@
         height: 100vh;
         overflow: scroll;
 
-        .sidebar__title{
+        .sidebar__title {
             font-size: 18px;
             font-weight: bolder;
         }
 
-        .sidebar__container{
+        .sidebar__container {
             display: flex;
             width: 100%;
             justify-content: space-between;
             margin-bottom: 5px;
 
-            &:last-child{
+            &:last-child {
                 margin-bottom: 0px;
             }
 
-            .category-infor{
+            .category-infor {
                 width: 100%;
                 margin-right: 5px;
                 display: flex;
                 justify-content: space-between;
 
-                .name{
+                .name {
                     width: 80%;
                     margin-right: 5px;
                     white-space: nowrap;
@@ -74,13 +74,12 @@
                     text-overflow: ellipsis;
                 }
 
-                .ordered{
+                .ordered {
                     width: 20%;
                 }
-                
             }
 
-            .delete-btn{
+            .delete-btn {
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -92,47 +91,47 @@
 }
 // ==============responsive for both tablets and mobiles===========
 @media only screen and (min-width: 320px) and (max-width: 1023px) {
-    .wrapper{
+    .wrapper {
         width: 100%;
-        padding: 0px 10px; 
+        padding: 0px 10px;
         display: unset;
         justify-content: unset;
-    
-        .content{
+
+        .content {
             width: 100%;
             margin-bottom: 10px;
-    
-            .form{
+
+            .form {
                 padding: 10px;
                 font-size: 15px;
 
-                .form-group{
-                    .infor-input{
+                .form-group {
+                    .infor-input {
                         font-size: 15px;
                     }
                 }
 
-                .submit-btn{
+                .submit-btn {
                     font-size: 15px;
                     margin: 0px auto;
                     display: block;
                 }
             }
         }
-    
-        .sidebar{
+
+        .sidebar {
             width: 100%;
             padding: 8px 10px;
             border-radius: 9px;
-    
-            .sidebar__title{
+
+            .sidebar__title {
                 font-size: 15px;
             }
-    
-            .sidebar__container{
+
+            .sidebar__container {
                 font-size: 15px;
-    
-                .delete-btn{
+
+                .delete-btn {
                     width: 25px;
                     height: 25px;
                     display: flex;
@@ -145,25 +144,25 @@
 }
 
 @media only screen and (min-width: 600px) and (max-width: 699px) {
-    .wrapper{
+    .wrapper {
         padding: 0px 40px;
     }
 }
 
 @media only screen and (min-width: 700px) and (max-width: 1023px) {
-    .wrapper{
+    .wrapper {
         padding: 0px 80px;
     }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1023px) {
-    .wrapper{
+    .wrapper {
         padding: 0px 120px;
     }
 }
 
 @media only screen and (min-width: 900px) and (max-width: 1023px) {
-    .wrapper{
+    .wrapper {
         padding: 0px 150px;
     }
 }

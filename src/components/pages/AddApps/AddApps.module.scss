@@ -1,79 +1,79 @@
-.warning-wrapper{
+.warning-wrapper {
     height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    .warning{
+
+    .warning {
         margin: 10px 0px;
         color: red;
         font-size: 25px;
     }
 
-    .message{
+    .message {
         font-size: 20px;
         margin-bottom: 10px;
     }
 }
 
-.wrapper{
+.wrapper {
     min-height: 100vh;
     width: 1250px;
 
-    .form{
-        background-color: rgba($color: #ffffff, $alpha: 1.0);
+    .form {
+        background-color: rgba($color: #ffffff, $alpha: 1);
         width: 70%;
         margin: 20px auto;
         padding: 20px;
         border-radius: 12px;
 
-        .categories-dropdown{
+        .categories-dropdown {
             width: 100%;
 
-            label{
+            label {
                 margin-right: 15px;
             }
         }
 
-        .radios{
+        .radios {
             padding: 10px 0px;
             display: flex;
             overflow-x: scroll;
             width: 100%;
-            
-            .radio-container{
+
+            .radio-container {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
 
-                .input{
+                .input {
                     display: block;
                     width: 20px;
                 }
 
-                .organisation-container{
+                .organisation-container {
                     padding: 0px 20px;
                     width: 250px;
                     display: flex;
                     flex-direction: column;
 
-                    .name{
+                    .name {
                         height: 50px;
                         width: 100%;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         text-align: center;
-                        color: rgba($color: #e39696, $alpha: 1.0);
+                        color: rgba($color: #e39696, $alpha: 1);
                     }
-                    
-                    .image{
+
+                    .image {
                         height: 100px;
                         display: flex;
                         align-items: center;
-                        img{
+                        img {
                             display: block;
                             width: 100px;
                             margin: 0px auto;
@@ -88,63 +88,63 @@
 
 //=========responsive for mobiles=======
 @media only screen and (min-width: 320px) and (max-width: 599px) {
-    .warning-wrapper{
+    .warning-wrapper {
         height: 100vh;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        
-        .warning{
+
+        .warning {
             margin: 10px 0px;
             color: red;
             font-size: 25px;
         }
-    
-        .message{
+
+        .message {
             font-size: 20px;
             margin-bottom: 10px;
         }
     }
-    
-    .wrapper{
+
+    .wrapper {
         width: 100%;
         padding: 0px 10px;
-    
-        .form{
+
+        .form {
             font-size: 14px;
             width: 100%;
             padding: 10px;
             border-radius: 10px;
 
-            .form-group{
-                .infor-input{
+            .form-group {
+                .infor-input {
                     font-size: 13px;
                 }
             }
-    
-            .categories-dropdown{
-                button{
+
+            .categories-dropdown {
+                button {
                     font-size: 14px;
                 }
 
-                div{
-                    a{
+                div {
+                    a {
                         font-size: 14px;
                     }
                 }
             }
-    
-            .radios{
-                .radio-container{
-                    .organisation-container{
-                        .name{
+
+            .radios {
+                .radio-container {
+                    .organisation-container {
+                        .name {
                             font-size: 13px;
                         }
-                        
-                        .image{
-                            img{
+
+                        .image {
+                            img {
                                 width: 80px;
                             }
                         }
@@ -152,7 +152,7 @@
                 }
             }
 
-            .submit-btn{
+            .submit-btn {
                 margin: 0px auto;
                 display: block;
                 font-size: 15px;
@@ -162,33 +162,33 @@
 }
 // =======responsive for tablets=======
 @media only screen and (min-width: 600px) and (max-width: 1024px) {
-    .warning-wrapper{
+    .warning-wrapper {
         height: 100vh;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        
-        .warning{
+
+        .warning {
             margin: 10px 0px;
             color: red;
             font-size: 25px;
         }
-    
-        .message{
+
+        .message {
             font-size: 20px;
             margin-bottom: 10px;
         }
     }
-    
-    .wrapper{
+
+    .wrapper {
         width: 100%;
         padding: 0px 10px;
-    
-        .form{
+
+        .form {
             width: 100%;
-            .submit-btn{
+            .submit-btn {
                 margin: 0px auto;
                 display: block;
             }

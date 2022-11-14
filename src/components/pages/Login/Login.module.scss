@@ -1,49 +1,50 @@
-.wrapper{
+.wrapper {
     width: 100vw;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background-color: rgba($color: #756d67, $alpha: 1.0);
+    background-color: rgba($color: #756d67, $alpha: 1);
 
-    .login-form-container{
-        background-color:rgba(63, 65, 78, 0.449);
+    .login-form-container {
+        background-color: rgba(63, 65, 78, 0.449);
         width: var(--login-form-wrapper-width);
         min-height: var(--login-form-wrapper-height);
         border-radius: 3px;
-       
-        h2{
+
+        h2 {
             text-transform: uppercase;
             text-align: center;
             padding: 15px 0px;
-            color: rgba($color: #ffffff, $alpha: 1.0);
+            color: rgba($color: #ffffff, $alpha: 1);
         }
-    
-        form{
+
+        form {
             display: flex;
             align-items: center;
             justify-items: center;
             flex-direction: column;
             padding: 10px 15px;
-    
-            .database-login{
+
+            .database-login {
                 width: 100%;
                 // ==============container which stores user's infor for logging in===
-                .database-login-infor-container{
-                    div{
+                .database-login-infor-container {
+                    div {
                         background-color: transparent;
                         height: 60px;
                         display: flex;
                         align-items: center;
                         border-radius: 3px;
                         border: solid 1px white;
-    
-                        &:focus-within{
+
+                        &:focus-within {
                             border: solid 1px black;
                         }
-    
-                        .username-input, .password-input{
+
+                        .username-input,
+                        .password-input {
                             border: none;
                             outline: none;
                             height: 80%;
@@ -52,19 +53,19 @@
                             background-color: transparent;
                         }
 
-                        .show-password{
+                        .show-password {
                             font-size: 18px;
                             background-color: transparent;
                             border: 0px;
-                            color: rgba($color: #ffffff, $alpha: 1.0);
+                            color: rgba($color: #ffffff, $alpha: 1);
                         }
-    
-                        .icon{
+
+                        .icon {
                             padding: 10px;
                         }
                     }
-    
-                    .invalid-feedback{
+
+                    .invalid-feedback {
                         background-color: transparent;
                         display: flex;
                         align-items: center;
@@ -73,57 +74,55 @@
                         margin: 0;
                         color: rgb(189, 27, 27);
                     }
-    
                 }
                 // ==============login button===========
-                .database-login__submit-btn{
+                .database-login__submit-btn {
                     width: 100%;
                     height: 60px;
                     background-color: transparent;
                     cursor: pointer;
                     text-transform: uppercase;
                     transition: 0.5s;
-                    color: rgba($color: #ffffff, $alpha: 1.0);
-                    border: solid 1px rgba($color: #666666, $alpha: 1.0);
-    
-                    &:hover{
-                        border: solid 1px rgba($color: #ffffff, $alpha: 1.0);
+                    color: rgba($color: #ffffff, $alpha: 1);
+                    border: solid 1px rgba($color: #666666, $alpha: 1);
+
+                    &:hover {
+                        border: solid 1px rgba($color: #ffffff, $alpha: 1);
                     }
                 }
-    
             }
             // ============barrier in between database-login and other-login-methods====
-            .barrier{
+            .barrier {
                 width: 80%;
                 height: 1px;
-                background-color: rgba($color: #504a4a, $alpha: 1.0);
+                background-color: rgba($color: #504a4a, $alpha: 1);
                 margin: 10px 0px;
             }
             // =============other-login-methods==========
-            .other-login-methods{
+            .other-login-methods {
                 width: 100%;
                 // ================login-button===========
-                button{
+                button {
                     width: 100%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
                     margin-bottom: 10px;
-                    border: solid 1px rgba($color: #525151, $alpha: 1.0);
-    
-                    &:hover{
-                        background-color: rgba($color: #e4e4e4, $alpha: 1.0);
+                    border: solid 1px rgba($color: #525151, $alpha: 1);
+
+                    &:hover {
+                        background-color: rgba($color: #e4e4e4, $alpha: 1);
                     }
                     // ==========icon in login button======
-                    img{
+                    img {
                         width: 50px;
                         margin-right: 15px;
                     }
                 }
             }
             //=================Go to sign up button==================
-            .user__signup-btn{
+            .user__signup-btn {
                 text-decoration: none;
                 width: 100%;
                 background-color: white;
@@ -133,14 +132,14 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: solid 1px rgba($color: #535353, $alpha: 1.0);
+                border: solid 1px rgba($color: #535353, $alpha: 1);
                 font-size: 15px;
-    
-                &:hover{
-                    background-color: rgba($color: #e4e4e4, $alpha: 1.0);
+
+                &:hover {
+                    background-color: rgba($color: #e4e4e4, $alpha: 1);
                 }
-    
-                .icon{
+
+                .icon {
                     margin-right: 10px;
                     font-size: 25px;
                 }
@@ -148,176 +147,173 @@
         }
     }
     // ==================go to home page button=============
-    .home-btn{
+    .home-btn {
         position: absolute;
         text-decoration: none;
         color: rgb(255, 255, 255);
         text-transform: uppercase;
         width: 80px;
         height: 35px;
-        background-color: rgba($color: #151516, $alpha: 1.0);
+        background-color: rgba($color: #151516, $alpha: 1);
         border-radius: 3px;
         display: flex;
         justify-content: center;
         align-items: center;
         right: 10%;
         bottom: 5%;
-        
-        &:hover{
-            background-color: rgba($color: #525151, $alpha: 1.0);
+
+        &:hover {
+            background-color: rgba($color: #525151, $alpha: 1);
         }
     }
 }
 
-.other-login-method-signup__title{
+.other-login-method-signup__title {
     font-size: 18px;
 }
 // ======responsive for both mobiles and tablets===================
 @media only screen and (min-width: 320px) and (max-width: 670px) {
-    .wrapper{
-        .login-form-container{
+    .wrapper {
+        .login-form-container {
             width: 80%;
             position: relative;
-           
-            h2{
+
+            h2 {
                 padding-top: 5px;
                 padding-bottom: 0px;
             }
-        
-            form{
+
+            form {
                 padding: 5px 7px;
-        
-                .database-login{
+
+                .database-login {
                     // ==============container which stores user's infor for logging in===
-                    .database-login-infor-container{
-                        div{
+                    .database-login-infor-container {
+                        div {
                             height: 40px;
-        
-                            input{
+
+                            input {
                                 font-size: 15px;
                             }
-        
-                            .icon{
+
+                            .icon {
                                 padding: 7px;
                             }
                         }
-        
-                        .invalid-feedback{
+
+                        .invalid-feedback {
                             height: 20px;
                             font-size: 15px;
                         }
-        
                     }
                     // ==============login button===========
-                    .database-login__submit-btn{
+                    .database-login__submit-btn {
                         height: 40px;
                         font-size: 15px;
                     }
                 }
                 // ============barrier in between database-login and other-login-methods====
-                .barrier{
+                .barrier {
                     margin-top: 10px;
                 }
                 // =============other-login-methods==========
-                .other-login-methods{
+                .other-login-methods {
                     // ================login-button===========
-                    button{
+                    button {
                         font-size: 15px;
                         // ==========icon in login button======
-                        img{
+                        img {
                             width: 35px;
                         }
                     }
                 }
                 //=================Go to sign up button==================
-                .user__signup-btn{
+                .user__signup-btn {
                     min-height: 40px;
                 }
-    
             }
         }
         // ==================go to home page button=============
-        .home-btn{
+        .home-btn {
             position: unset;
             margin: 15px 0px;
         }
     }
-    
-    .other-login-method-signup__title{
+
+    .other-login-method-signup__title {
         font-size: 18px;
     }
 }
 // ================responsive for tablets only========================
 @media only screen and (min-width: 670px) and (max-width: 1024px) {
-    .wrapper{
-        .login-form-container{
+    .wrapper {
+        .login-form-container {
             width: 70%;
             position: relative;
-           
-            h2{
+
+            h2 {
                 padding-top: 5px;
                 padding-bottom: 0px;
             }
-        
-            form{
+
+            form {
                 padding: 5px 7px;
-        
-                .database-login{
-                    font-size: 18px;//------------
+
+                .database-login {
+                    font-size: 18px; //------------
                     // ==============container which stores user's infor for logging in===
-                    .database-login-infor-container{
-                        div{
-                            height: 50px;//------------
-        
-                            input{
-                                font-size: 18px;//------------
+                    .database-login-infor-container {
+                        div {
+                            height: 50px; //------------
+
+                            input {
+                                font-size: 18px; //------------
                             }
-        
-                            .icon{
+
+                            .icon {
                                 padding: 7px;
                             }
                         }
-        
-                        .invalid-feedback{
+
+                        .invalid-feedback {
                             height: 20px;
                             font-size: 15px;
                         }
-        
                     }
                     // ==============login button===========
-                    .database-login__submit-btn{
+                    .database-login__submit-btn {
                         height: 50px;
-                        font-size: 18px;//------------
+                        font-size: 18px; //------------
                     }
                 }
                 // ============barrier in between database-login and other-login-methods====
-                .barrier{
+                .barrier {
                     margin-top: 10px;
                 }
                 // =============other-login-methods==========
-                .other-login-methods{
+                .other-login-methods {
                     // ================login-button===========
-                    button{
+                    button {
                         font-size: 18px;
                         // ==========icon in login button======
-                        img{
+                        img {
                             width: 45px;
                         }
                     }
                 }
                 // ==================go to home page button=============
-                .home-btn{
-                    right: 0%;//-------------------
-                    bottom: -20%;//------------------
+                .home-btn {
+                    right: 0%; //-------------------
+                    bottom: -20%; //------------------
                 }
                 //=================Go to sign up button==================
-                .user__signup-btn{
+                .user__signup-btn {
                     min-height: 50px;
                 }
             }
         }
         // ==================go to home page button=============
-        .home-btn{
+        .home-btn {
             position: unset;
             margin: 15px 0px;
         }
@@ -325,8 +321,8 @@
 }
 
 @media only screen and (min-width: 835px) and (max-width: 1024px) {
-    .wrapper{
-        .login-form-container{
+    .wrapper {
+        .login-form-container {
             width: 60%;
             position: relative;
         }
@@ -334,18 +330,18 @@
 }
 // =====================responsive for mobiles only=============
 @media only screen and (min-width: 320px) and (max-width: 443px) {
-    .wrapper{
-        .login-form-container{
+    .wrapper {
+        .login-form-container {
             width: 95%;
             position: relative;
-        
-            form{
+
+            form {
                 // ============barrier in between database-login and other-login-methods====
-                .barrier{
+                .barrier {
                     margin-top: 10px;
                 }
                 // ==================go to home page button=============
-                .home-btn{
+                .home-btn {
                     right: 50%;
                     transform: translateX(50%);
                     bottom: -15%;
@@ -356,9 +352,7 @@
 }
 
 @media only screen and (min-width: 320px) and (max-width: 400px) {
-    .other-login-method-signup__title{
+    .other-login-method-signup__title {
         font-size: 16px;
     }
 }
-
-

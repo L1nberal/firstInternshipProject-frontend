@@ -1,24 +1,24 @@
-.wrapper{
+.wrapper {
     background-color: white;
     min-width: 180px;
     border-radius: 3px;
     border: solid 1px #cfcece;
 
-    .menu-header{
-        background-color: rgba($color: #f6f6f6, $alpha: 1.0);
+    .menu-header {
+        background-color: rgba($color: #f6f6f6, $alpha: 1);
         border: none;
         min-width: 180px;
         min-height: 35px;
         display: flex;
         align-items: center;
         justify-content: start;
-    
-        .header-icon{
+
+        .header-icon {
             margin-right: 20px;
         }
     }
 
-    .setting-btn{
+    .setting-btn {
         text-decoration: none;
         color: black;
         font-size: 14px;
@@ -33,31 +33,31 @@
         text-indent: 10px;
         padding: 0px 10px;
 
-        &:hover{
+        &:hover {
             background-color: #9085a9;
         }
     }
 }
 // =====================responsive for both mobiles and  tablets=======================
 @media only screen and (min-width: 320px) and (max-width: 1024px) {
-    .wrapper{
+    .wrapper {
         min-width: 100px;
-        .menu-header{
+        .menu-header {
             min-width: 100%;
             min-height: 30px;
             font-size: 11px;
-        
-            .header-icon{
+
+            .header-icon {
                 margin-right: 10px;
             }
         }
-    
-        .setting-btn{
+
+        .setting-btn {
             font-size: 10px;
             min-width: 100%;
             min-height: 25px;
-    
-            &:hover{
+
+            &:hover {
                 background-color: #9085a9;
             }
         }
@@ -65,14 +65,14 @@
 }
 // =============responsive for tablets==========
 @media only screen and (min-width: 750px) and (max-width: 1024px) {
-    .wrapper{
+    .wrapper {
         min-width: 120px;
 
-        .menu-header{
+        .menu-header {
             min-width: 100%;
         }
-    
-        .setting-btn{
+
+        .setting-btn {
             font-size: 12px;
         }
     }

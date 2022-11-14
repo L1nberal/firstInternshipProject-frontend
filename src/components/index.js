@@ -1,15 +1,15 @@
-export {default as Home} from './pages/Home'
-export {default as Login} from './pages/Login'
-export {default as PrivatePage} from './pages/PrivatePage'
-export {default as Signup} from  './pages/Signup'
-export {default as AppDetails} from  './pages/AppDetails'
-export {default as OrganisationDetails} from './pages/OrganisationDetails'
-export {default as AddOrganisations} from './pages/AddOrganisations'
-export {default as AddCategories} from './pages/AddCategories'
-export {default as AddApps} from './pages/AddApps'
-export {default as OwnedApps} from './pages/OrganisationDetails/Components/OwnedApps'
-export {default as DevelopedApps} from './pages/OrganisationDetails/Components/DevelopedApps'
-export {default as Categories} from './pages/Categories'
-export {default as OrganisationUpdate} from './pages/OrganisationUpdate'
-export {default as AppUpdate} from './pages/AppUpdate'
-export {default as NoMatch} from './pages/NoMatch'
+export { default as Home } from './pages/Home';
+export { default as Login } from './pages/Login';
+export { default as PrivatePage } from './pages/PrivatePage';
+export { default as Signup } from './pages/Signup';
+export { default as AppDetails } from './pages/AppDetails';
+export { default as OrganisationDetails } from './pages/OrganisationDetails';
+export { default as AddOrganisations } from './pages/AddOrganisations';
+export { default as AddCategories } from './pages/AddCategories';
+export { default as AddApps } from './pages/AddApps';
+export { default as OwnedApps } from './pages/OrganisationDetails/Components/OwnedApps';
+export { default as DevelopedApps } from './pages/OrganisationDetails/Components/DevelopedApps';
+export { default as Categories } from './pages/Categories';
+export { default as OrganisationUpdate } from './pages/OrganisationUpdate';
+export { default as AppUpdate } from './pages/AppUpdate';
+export { default as NoMatch } from './pages/NoMatch';

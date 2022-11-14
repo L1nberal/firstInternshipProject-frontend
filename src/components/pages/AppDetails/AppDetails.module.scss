@@ -1,50 +1,50 @@
-.wrapper{   
+.wrapper {
     width: 1250px;
     min-height: 100vh;
     margin-top: 25px;
 
-    .infor{
+    .infor {
         display: flex;
         margin-bottom: 30px;
 
-        .app-details{
+        .app-details {
             width: 70%;
-            background-color: rgba($color: #ffffff, $alpha: 1.0);
+            background-color: rgba($color: #ffffff, $alpha: 1);
             border-radius: 7px;
             padding: 15px;
             margin-right: 25px;
-    
-            .head{
-                position: relative; 
-            
-                .above{
+
+            .head {
+                position: relative;
+
+                .above {
                     display: flex;
 
-                    img{
+                    img {
                         width: 180px;
                     }
-        
-                    .head__infor{
+
+                    .head__infor {
                         font-weight: bolder;
                         margin-left: 15px;
                         width: 100%;
-                        
-                        .name{
+
+                        .name {
                             margin-bottom: 10px;
                             font-size: 20px;
                         }
-        
-                        .owner{
+
+                        .owner {
                             margin-bottom: 10px;
-    
-                            .owner__name{
+
+                            .owner__name {
                                 text-indent: 5px;
                                 display: inline-block;
                             }
                         }
-    
-                        .category{
-                            .category__name{
+
+                        .category {
+                            .category__name {
                                 text-indent: 5px;
                                 display: inline-block;
                             }
@@ -52,140 +52,136 @@
                     }
                 }
 
-                .below{
+                .below {
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     margin-top: 10px;
 
-                    .head__btn-group{
+                    .head__btn-group {
                         margin-right: 28%;
-    
-                        .head__update-btn{
+
+                        .head__update-btn {
                             margin-right: 10px;
                         }
                     }
-        
-                    .download-container{
+
+                    .download-container {
                         height: 70px;
                         display: flex;
                         justify-content: center;
                         align-items: end;
-                        color:rgba(179, 149, 149, 0.562); 
-        
-                        .head__download-link{
+                        color: rgba(179, 149, 149, 0.562);
+
+                        .head__download-link {
                             font-size: 35px;
-                            
-                            img{
+
+                            img {
                                 width: 100%;
                             }
-        
-                            &:hover{
-                                color: rgba($color: #c88f8f, $alpha: 1.0);
+
+                            &:hover {
+                                color: rgba($color: #c88f8f, $alpha: 1);
                             }
                         }
-        
-                        .message{
+
+                        .message {
                             text-align: center;
                         }
                     }
                 }
             }
-    
-            .general-infor{
-                h6{
+
+            .general-infor {
+                h6 {
                     font-weight: bold;
                 }
 
                 margin-top: 35px;
                 text-indent: 50px;
             }
-            
-            .carousel{
+
+            .carousel {
                 margin: 30px 0px;
                 height: 500px;
-    
-                .carousel__title{
+
+                .carousel__title {
                     margin-bottom: 15px;
                     font-weight: bolder;
                 }
-                
-                .carousel-provider{
-                    .carousel-slide{
+
+                .carousel-provider {
+                    .carousel-slide {
                         height: 400px;
-        
-                        img{
+
+                        img {
                             width: 200px;
                             height: 400px;
-    
                         }
                     }
-
                 }
-                
-                .carousel-provider-mobile-tablet{
+
+                .carousel-provider-mobile-tablet {
                     display: none;
                 }
-    
-                .btn-container{
+
+                .btn-container {
                     margin: 10px auto;
                     width: 160px;
                     display: flex;
                     justify-content: space-between;
-    
-                    .carousel-left-btn{
-                        background-color:rgba(7, 7, 7, 0.562); 
-                        border: 0px;         
-                        padding: 10px 15px;  
+
+                    .carousel-left-btn {
+                        background-color: rgba(7, 7, 7, 0.562);
+                        border: 0px;
+                        padding: 10px 15px;
                         border-radius: 5px;
                         color: white;
-    
-                        &:hover{
-                            background-color:rgba(179, 149, 149, 0.562); 
+
+                        &:hover {
+                            background-color: rgba(179, 149, 149, 0.562);
                             color: black;
                         }
                     }
-        
-                    .carousel-right-btn{
-                        background-color:rgba(7, 7, 7, 0.562);   
-                        border: 0px;     
+
+                    .carousel-right-btn {
+                        background-color: rgba(7, 7, 7, 0.562);
+                        border: 0px;
                         color: white;
-                        padding: 10px 15px;  
+                        padding: 10px 15px;
                         border-radius: 5px;
-    
-                        &:hover{
-                            background-color:rgba(179, 149, 149, 0.562); 
+
+                        &:hover {
+                            background-color: rgba(179, 149, 149, 0.562);
                             color: black;
                         }
-    
                     }
                 }
             }
-           
 
-            .developer{
-                .developer__title{
+            .developer {
+                .developer__title {
                     font-weight: bolder;
                 }
-    
-                .developer__contact{
+
+                .developer__contact {
                     margin-top: 20px;
-    
-                    .title{
+
+                    .title {
                         font-weight: bolder;
                     }
-    
-                    .infor{
+
+                    .infor {
                         font-weight: bolder;
                         padding-left: 25px;
-    
-                        div{
+
+                        div {
                             font-weight: bolder;
                             margin-top: 10px;
                             font-size: 18px;
                             width: 100%;
 
-                            &:first-child{
+                            &:first-child {
                                 margin-top: 0px;
                             }
                         }
@@ -193,66 +189,65 @@
                 }
             }
         }
-    
-        .related-apps{
-            background-color: rgba($color: #ffffff, $alpha: 1.0);
+
+        .related-apps {
+            background-color: rgba($color: #ffffff, $alpha: 1);
             width: 30%;
             padding: 15px;
             border-radius: 7px;
             max-height: 1015px;
             overflow-y: scroll;
-    
-            .related-apps__title{
+
+            .related-apps__title {
                 margin-bottom: 25px;
             }
-    
-            a{
+
+            a {
                 text-decoration: none;
-                color: rgba($color: #c88f8f, $alpha: 1.0);
-    
-                .app-container{
+                color: rgba($color: #c88f8f, $alpha: 1);
+
+                .app-container {
                     margin: 15px 0px;
                     height: 105px;
                     border-radius: 0px;
                     border: 0px;
                     position: relative;
-                    
-                    &::after{
+
+                    &::after {
                         content: '';
                         position: absolute;
                         width: 100%;
                         height: 0.5px;
                         bottom: 0px;
                         left: 0px;
-                        background-color: rgba($color: #c4c2c2, $alpha: 1.0);
+                        background-color: rgba($color: #c4c2c2, $alpha: 1);
                     }
-        
-                    &:last-child::after{
+
+                    &:last-child::after {
                         display: none;
                     }
-        
-                    .image{
+
+                    .image {
                         width: 70px;
                         height: 70px;
                         margin-right: 15px;
                     }
-        
-                    .name{
+
+                    .name {
                         margin-bottom: 10px;
                     }
-        
-                    .description{
+
+                    .description {
                         height: 100%;
                         width: 200px;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
-        
                     }
                 }
             }
             // message is shown when there are no related apps
-            .related-apps__message{
+            .related-apps__message {
                 font-size: 15px;
             }
         }
@@ -260,68 +255,68 @@
 }
 // ======responsive for both mobiles and tablets===================
 @media only screen and (min-width: 320px) and (max-width: 1024px) {
-    .wrapper{
+    .wrapper {
         width: 100%;
         padding: 0px 10px;
 
-        .infor{
+        .infor {
             margin-bottom: 10px;
 
-            .app-details{
+            .app-details {
                 padding: 5px;
 
-                .head{
-                    .above{
+                .head {
+                    .above {
                         display: flex;
                         flex-direction: column;
-                        
-                        img{
+
+                        img {
                             width: 100px;
                             height: 100px;
                             margin: 0px auto;
                         }
-    
-                        .head__infor{
+
+                        .head__infor {
                             text-align: center;
                             margin: 0px;
                             margin-top: 10px;
 
-                            .name{
+                            .name {
                                 font-size: 15px;
                             }
-                            
-                            .owner{
+
+                            .owner {
                                 font-size: 15px;
                             }
-    
-                            .category{
+
+                            .category {
                                 font-size: 15px;
                             }
                         }
                     }
 
-                    .below{
+                    .below {
                         margin-top: 15px;
 
-                        .head__btn-group{
+                        .head__btn-group {
                             display: flex;
                             flex-direction: column;
                             left: 0%;
-    
-                            .head__update-btn{
+
+                            .head__update-btn {
                                 margin-right: 0px;
                                 min-width: 100px;
-                               margin-bottom: 5px;
+                                margin-bottom: 5px;
                             }
                         }
-    
-                        .download-container{
+
+                        .download-container {
                             height: 100%;
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
-                                img{
+
+                            .head__download-link {
+                                img {
                                     width: 100%;
                                     height: auto;
                                 }
@@ -330,8 +325,8 @@
                     }
                 }
 
-                .general-infor{
-                    h6{
+                .general-infor {
+                    h6 {
                         font-weight: bold;
                         font-size: 15px;
                     }
@@ -340,76 +335,76 @@
                     text-indent: 50px;
                     font-size: 15px;
                 }
-        
-                .carousel{
+
+                .carousel {
                     margin: 30px 0px;
                     height: 400px;
-        
-                    .carousel__title{
+
+                    .carousel__title {
                         margin-bottom: 15px;
                         font-weight: bolder;
                         font-size: 15px;
                     }
 
-                    .carousel-provider{
+                    .carousel-provider {
                         display: none;
                     }
-                    
-                    .carousel-provider-mobile-tablet{
+
+                    .carousel-provider-mobile-tablet {
                         display: block;
 
-                        .carousel-slide{
+                        .carousel-slide {
                             height: 350px;
-            
-                            img{
+
+                            img {
                                 width: 95%;
                                 height: 350px;
                             }
                         }
                     }
 
-                    .btn-container{
+                    .btn-container {
                         width: 120px;
-        
-                        .carousel-left-btn{
-                            padding: 5px 8px;  
+
+                        .carousel-left-btn {
+                            padding: 5px 8px;
                             font-size: 15px;
                         }
-            
-                        .carousel-right-btn{
-                            padding: 5px 8px;  
+
+                        .carousel-right-btn {
+                            padding: 5px 8px;
                             font-size: 15px;
                         }
                     }
                 }
 
-                .developer{
+                .developer {
                     margin-top: 10%;
 
-                    .developer__title{
+                    .developer__title {
                         font-weight: bolder;
                         font-size: 15px;
                     }
-        
-                    .developer__contact{
+
+                    .developer__contact {
                         margin-top: 20px;
-        
-                        .title{
+
+                        .title {
                             font-weight: bolder;
                             font-size: 15px;
                         }
-        
-                        .infor{
+
+                        .infor {
                             font-weight: bolder;
                             padding-left: 15px;
                             display: flex;
                             flex-direction: column;
-        
-                            div{
+
+                            div {
                                 font-weight: bolder;
                                 font-size: 18px;
-                                
-                                div{
+
+                                div {
                                     word-wrap: break-word;
                                     font-size: 15px;
                                 }
@@ -420,25 +415,25 @@
             }
         }
 
-        .related-apps{
-            .related-apps__title{
+        .related-apps {
+            .related-apps__title {
                 font-size: 15px;
                 font-weight: bold;
             }
-    
-            a{
-                .app-container{
-                    div{
+
+            a {
+                .app-container {
+                    div {
                         padding: 0px;
 
-                        .description{
+                        .description {
                             display: none;
                         }
                     }
                 }
             }
             // message is shown when there are no related apps
-            .related-apps__message{
+            .related-apps__message {
                 font-size: 15px;
             }
         }
@@ -446,46 +441,45 @@
 }
 // ==============responsive for mobiles=======================
 @media only screen and (min-width: 320px) and (max-width: 599px) {
-    .wrapper{
-        .infor{
+    .wrapper {
+        .infor {
             display: unset;
 
-            .app-details{
+            .app-details {
                 margin-right: 0px;
                 width: 100%;
 
-                .head{
+                .head {
                     display: flex;
                     flex-direction: column;
                 }
 
-                .general-infor{
+                .general-infor {
                     margin-top: 35px;
                     text-indent: 50px;
                     overflow-y: scroll;
-
                 }
-                
-                .carousel{
+
+                .carousel {
                     margin: 30px 0px 60px 0px;
                     height: 300px;
 
-                    .carousel-provider{
+                    .carousel-provider {
                         display: none;
                     }
 
-                    .carousel-provider-mobile-tablet{
+                    .carousel-provider-mobile-tablet {
                         display: block;
 
-                        .carousel-slide{
-                            img{
+                        .carousel-slide {
+                            img {
                                 width: 95%;
                                 height: 250px;
                             }
                         }
                     }
 
-                    .btn-container{
+                    .btn-container {
                         position: absolute;
                         top: 74%;
                         right: 50%;
@@ -494,39 +488,38 @@
                 }
             }
 
-            .related-apps{
+            .related-apps {
                 margin-top: 10px;
                 width: 100%;
                 overflow-x: scroll;
                 overflow-y: unset;
                 padding: 5px;
 
-                .related-apps__title{
+                .related-apps__title {
                     margin-bottom: 0px;
                 }
 
-                .related-apps__container{
+                .related-apps__container {
                     display: flex;
 
-                    a{
-                        .app-container{
+                    a {
+                        .app-container {
                             margin: 0px;
                             margin-right: 10px;
-        
-                            div{
+
+                            div {
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
-    
-                                .image{
+
+                                .image {
                                     margin-right: 0px;
                                 }
-        
-                                p{
+
+                                p {
                                     display: none;
                                 }
                             }
-    
                         }
                     }
                 }
@@ -536,63 +529,63 @@
 }
 
 @media only screen and (min-width: 320px) and (max-width: 375px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .above{
-                        img{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .above {
+                        img {
                             width: 100px;
                             height: 100px;
                             margin: 0px auto;
                             margin-bottom: 20px;
                         }
-    
-                        .head__infor{
+
+                        .head__infor {
                             margin: 0px;
                             display: flex;
                             flex-direction: column;
                             align-items: center;
-    
-                            .owner{
+
+                            .owner {
                                 text-align: center;
                             }
                         }
                     }
 
-                    .below{
-                        .head__btn-group{
+                    .below {
+                        .head__btn-group {
                             margin-right: 14%;
-                            
-                            .head__update-btn{
+
+                            .head__update-btn {
                                 width: 120px;
                                 font-size: 13px;
                                 padding: 5px;
                             }
-    
-                            .head__delete-btn{
+
+                            .head__delete-btn {
                                 width: 120px;
                                 font-size: 13px;
                                 padding: 5px;
                             }
                         }
-    
-                        .download-container{
+
+                        .download-container {
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
+
+                            .head__download-link {
                                 height: 100%;
                                 display: flex;
                                 align-items: center;
-    
-                                img{
+
+                                img {
                                     width: 120px;
                                     margin: 0px;
                                 }
                             }
-    
-                            .message{
+
+                            .message {
                                 font-size: 13px;
                             }
                         }
@@ -604,34 +597,33 @@
 }
 
 @media only screen and (min-width: 375px) and (max-width: 430px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
-                            
-                            .head__update-btn{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
+                            .head__update-btn {
                                 width: 135px;
                                 font-size: 15px;
                             }
-    
-                            .head__delete-btn{
+
+                            .head__delete-btn {
                                 width: 135px;
                                 font-size: 15px;
                             }
                         }
 
-                        .download-container{
+                        .download-container {
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
+
+                            .head__download-link {
                                 height: 100%;
                                 display: flex;
                                 align-items: center;
-    
-                                img{
+
+                                img {
                                     width: 130px;
                                     margin: 0px;
                                 }
@@ -645,34 +637,33 @@
 }
 
 @media only screen and (min-width: 430px) and (max-width: 599px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
-                            
-                            .head__update-btn{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
+                            .head__update-btn {
                                 width: 140px;
                                 font-size: 15px;
                             }
-    
-                            .head__delete-btn{
+
+                            .head__delete-btn {
                                 width: 140px;
                                 font-size: 15px;
                             }
                         }
 
-                        .download-container{
+                        .download-container {
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
+
+                            .head__download-link {
                                 height: 100%;
                                 display: flex;
                                 align-items: center;
-    
-                                img{
+
+                                img {
                                     width: 140px;
                                     margin: 0px;
                                 }
@@ -686,11 +677,11 @@
 }
 
 @media only screen and (min-width: 490px) and (max-width: 599px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
                         padding: 0px 15px;
                     }
                 }
@@ -700,11 +691,11 @@
 }
 
 @media only screen and (min-width: 565px) and (max-width: 599px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
                         padding: 0px 30px;
                     }
                 }
@@ -714,77 +705,76 @@
 }
 // ========repsonsive for tablets==========
 @media only screen and (min-width: 600px) and (max-width: 1023px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-
-                        .head__btn-group{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
                             margin-right: 20%;
 
-                            .head__delete-btn{
+                            .head__delete-btn {
                                 width: 145px;
                             }
                         }
 
-                        .download-container{
+                        .download-container {
                             height: 100%;
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
+
+                            .head__download-link {
                                 display: flex;
                                 align-items: center;
 
-                                img{
+                                img {
                                     width: 145px;
                                     height: auto;
                                 }
                             }
                         }
 
-                        .message{
+                        .message {
                             font-size: 15px;
                         }
                     }
                 }
 
-                .general-infor{
+                .general-infor {
                     margin-top: 35px;
                     text-indent: 50px;
                 }
-        
-                .carousel{
+
+                .carousel {
                     margin: 30px 0px 60px 0px;
                     height: 400px;
                 }
 
-                .developer{
+                .developer {
                     margin-top: 10%;
 
-                    .developer__title{
+                    .developer__title {
                         font-weight: bolder;
                     }
-        
-                    .developer__contact{
+
+                    .developer__contact {
                         margin-top: 20px;
-        
-                        .title{
+
+                        .title {
                             font-weight: bolder;
                         }
-        
-                        .infor{
+
+                        .infor {
                             font-weight: bolder;
                             padding-left: 15px;
                             display: flex;
                             flex-direction: column;
-        
-                            div{
+
+                            div {
                                 font-weight: bolder;
                                 font-size: 18px;
-                                
-                                div{
+
+                                div {
                                     word-wrap: break-word;
                                 }
                             }
@@ -793,25 +783,24 @@
                 }
             }
 
-            .related-apps{
-                a{
-                    .app-container{
+            .related-apps {
+                a {
+                    .app-container {
                         margin: 0px;
-    
-                        div{
+
+                        div {
                             display: flex;
                             align-items: center;
                             justify-content: center;
 
-                            .image{
+                            .image {
                                 margin-right: 0px;
                             }
-    
-                            p{
+
+                            p {
                                 display: none;
                             }
                         }
-
                     }
                 }
             }
@@ -820,18 +809,18 @@
 }
 
 @media only screen and (min-width: 678px) and (max-width: 1023px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
                             margin-right: 30%;
                         }
 
-                        .download-container{    
-                            .head__download-link{
-                                img{
+                        .download-container {
+                            .head__download-link {
+                                img {
                                     width: 145px;
                                     height: auto;
                                 }
@@ -845,18 +834,18 @@
 }
 
 @media only screen and (min-width: 770px) and (max-width: 1023px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
                             margin-right: 35%;
                         }
 
-                        .download-container{    
-                            .head__download-link{
-                                img{
+                        .download-container {
+                            .head__download-link {
+                                img {
                                     width: 145px;
                                     height: auto;
                                 }
@@ -870,18 +859,18 @@
 }
 
 @media only screen and (min-width: 860px) and (max-width: 1024px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
                             margin-right: 45%;
                         }
 
-                        .download-container{    
-                            .head__download-link{
-                                img{
+                        .download-container {
+                            .head__download-link {
+                                img {
                                     width: 145px;
                                     height: auto;
                                 }
@@ -895,15 +884,14 @@
 }
 
 @media only screen and (min-width: 890px) and (max-width: 1024px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
                             margin-right: 50%;
                         }
-
                     }
                 }
             }
@@ -912,32 +900,32 @@
 }
 // ============responsive for computers============
 @media only screen and (min-width: 1024px) and (max-width: 1077px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .above{
-                        .head__btn-group{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .above {
+                        .head__btn-group {
                             left: 28%;
                         }
                     }
 
-                    .below{
+                    .below {
                         padding: 0px 15px;
 
-                        .head__btn-group{
+                        .head__btn-group {
                             margin-right: 35%;
                         }
 
-                        .download-container{
+                        .download-container {
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
+
+                            .head__download-link {
                                 display: flex;
                                 align-items: center;
 
-                                img{
+                                img {
                                     width: 145px;
                                     height: auto;
                                 }
@@ -949,34 +937,34 @@
         }
     }
 }
-@media only screen and (min-width: 1023px) and (max-width: 1024px){
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
+@media only screen and (min-width: 1023px) and (max-width: 1024px) {
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
                             width: 100%;
                             margin-right: 30%;
 
-                            .head__update-btn{
+                            .head__update-btn {
                                 width: 60%;
                             }
 
-                            .head__delete-btn{
+                            .head__delete-btn {
                                 width: 60%;
                             }
                         }
 
-                        .download-container{
+                        .download-container {
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
+
+                            .head__download-link {
                                 display: flex;
                                 align-items: center;
 
-                                img{
+                                img {
                                     width: 150px;
                                     height: auto;
                                 }
@@ -990,25 +978,25 @@
 }
 
 @media only screen and (min-width: 1024px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .head{
-                    .below{
-                        .head__btn-group{
+    .wrapper {
+        .infor {
+            .app-details {
+                .head {
+                    .below {
+                        .head__btn-group {
                             width: 100%;
                             margin-right: 30%;
                         }
 
-                        .download-container{
+                        .download-container {
                             display: flex;
                             align-items: center;
-    
-                            .head__download-link{
+
+                            .head__download-link {
                                 display: flex;
                                 align-items: center;
 
-                                img{
+                                img {
                                     width: 150px;
                                     height: auto;
                                 }
@@ -1022,15 +1010,15 @@
 }
 
 @media only screen and (min-width: 920px) and (max-width: 1050px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .carousel{
-                    .carousel-provider-mobile-tablet{
+    .wrapper {
+        .infor {
+            .app-details {
+                .carousel {
+                    .carousel-provider-mobile-tablet {
                         display: block;
 
-                        .carousel-slide{
-                            img{
+                        .carousel-slide {
+                            img {
                                 width: 95%;
                                 height: 400px;
                             }
@@ -1038,7 +1026,7 @@
                     }
                 }
 
-                .developer{
+                .developer {
                     margin-top: 20%;
                 }
             }
@@ -1047,19 +1035,19 @@
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1255px) {
-    .wrapper{
-        .infor{
-            .app-details{
-                .carousel{
-                    .carousel-provider{
+    .wrapper {
+        .infor {
+            .app-details {
+                .carousel {
+                    .carousel-provider {
                         display: none;
                     }
 
-                    .carousel-provider-mobile-tablet{
+                    .carousel-provider-mobile-tablet {
                         display: block;
 
-                        .carousel-slide{
-                            img{
+                        .carousel-slide {
+                            img {
                                 width: 95%;
                                 height: 450px;
                             }
@@ -1067,7 +1055,7 @@
                     }
                 }
 
-                .developer{
+                .developer {
                     margin-top: 20%;
                 }
             }

@@ -1,1 +1,1 @@
-export  * as icons from './FontAwesome'
+export * as icons from './FontAwesome';

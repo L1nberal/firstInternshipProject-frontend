@@ -1,89 +1,86 @@
-.wrapper{
+.wrapper {
     min-height: 100vh;
     width: 1250px;
 
-    .title{
+    .title {
         margin: 30px 0px;
         text-align: center;
 
-        span{
-            color: rgba($color: #c88f8f, $alpha: 1.0);
-
+        span {
+            color: rgba($color: #c88f8f, $alpha: 1);
         }
     }
-    
-    .apps-container{
+
+    .apps-container {
         margin-top: 40px;
 
-        .head{
+        .head {
             vertical-align: middle;
 
-            .head__checkbox{
+            .head__checkbox {
                 text-align: center;
             }
 
-            .head__index{
+            .head__index {
                 text-align: center;
             }
 
-            .head__image{
+            .head__image {
                 text-align: center;
             }
 
-            .head__name{
+            .head__name {
                 text-align: center;
             }
 
-            .head__download-link{
+            .head__download-link {
                 text-align: center;
             }
         }
 
-        .body{
+        .body {
             vertical-align: middle;
 
-            .body__checkbox{
+            .body__checkbox {
                 vertical-align: middle;
                 text-align: center;
             }
 
-            .body__index{
+            .body__index {
                 vertical-align: middle;
             }
-    
-            .body__image{
+
+            .body__image {
                 width: 150px;
                 padding: 25px;
                 margin: 0px auto;
-    
-                img{
+
+                img {
                     width: 150px;
                     border-radius: 25px;
                 }
             }
-    
-            .body__name{
+
+            .body__name {
                 text-align: center;
                 vertical-align: middle;
-    
             }
-    
-            .body__download-link{
+
+            .body__download-link {
                 text-align: center;
-                color: rgba($color: #e39696, $alpha: 1.0);
+                color: rgba($color: #e39696, $alpha: 1);
                 vertical-align: middle;
                 padding: 40px;
-                
-                img{
+
+                img {
                     display: block;
                     width: 200px;
                     margin: 0px auto;
                 }
-    
             }
 
-            .message{
-                color: rgba($color: #e39696, $alpha: 1.0);
+            .message {
+                color: rgba($color: #e39696, $alpha: 1);
                 text-align: center;
             }
         }
@@ -91,53 +88,52 @@
 }
 // ======responsive for both mobiles and tablets===================
 @media only screen and (min-width: 320px) and (max-width: 1024px) {
-    .wrapper{
+    .wrapper {
         width: 100%;
         padding: 0px 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
 
-        .title{
+        .title {
             font-size: 15px;
         }
 
-        .delete-btn{
+        .delete-btn {
             font-size: 15px;
         }
-        
-        .apps-container{
+
+        .apps-container {
             font-size: 15px;
-    
-            .head{
-                .head__name{
+
+            .head {
+                .head__name {
                     display: none;
                 }
             }
-    
-            .body{
+
+            .body {
                 font-size: 14px;
 
-                .body__image{
-                    img{
+                .body__image {
+                    img {
                         width: 70px;
                     }
                 }
-        
-                .body__name{
+
+                .body__name {
                     display: none;
                 }
-        
-                .body__download-link{
+
+                .body__download-link {
                     padding: 10px;
 
-                    img{
+                    img {
                         width: 100px;
                     }
-        
                 }
-    
-                .message{
+
+                .message {
                     font-size: 14px;
                 }
             }
@@ -147,24 +143,23 @@
 
 // ======responsive for tablets===================
 @media only screen and (min-width: 768px) and (max-width: 1293px) {
-    .wrapper{
+    .wrapper {
         width: 100%;
         padding: 0px 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        
-        .apps-container{
+
+        .apps-container {
             width: 90%;
-            
-            .body{
-                .body__download-link{
+
+            .body {
+                .body__download-link {
                     padding: 10px;
 
-                    img{
+                    img {
                         width: 150px;
                     }
-        
                 }
             }
         }

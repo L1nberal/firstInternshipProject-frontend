@@ -1,43 +1,43 @@
-.wrapper{
+.wrapper {
     height: 50px;
     display: flex;
     align-items: center;
     width: 1250px;
-    
+
     // =========================right part of the header===========
-    .wrapper__left{
+    .wrapper__left {
         width: 100%;
         display: flex;
         align-items: center;
 
-        .logo{
+        .logo {
             width: 30px;
             height: 30px;
             margin-left: 10px;
         }
 
-        .nav-bar{
+        .nav-bar {
             height: 50px;
             margin-left: 20px;
             display: flex;
             align-items: center;
 
-            .nav-bar__icon{
-                display: none;       
+            .nav-bar__icon {
+                display: none;
             }
 
-            .nav-bar__container{
+            .nav-bar__container {
                 display: flex;
                 padding: 0px;
                 margin: 0px;
                 height: 100%;
 
-                .nav-bar__container-logo{
+                .nav-bar__container-logo {
                     display: none;
                 }
-              
-                .list-option-container{
-                    .list-option{
+
+                .list-option-container {
+                    .list-option {
                         padding: 0px 15px;
                         height: 100%;
                         display: flex;
@@ -51,31 +51,30 @@
                         background-color: transparent;
                         border: none;
                         text-decoration: none;
-    
-                        &:hover{
+
+                        &:hover {
                             color: rgb(255, 255, 255);
-    
-                            &::after{
+
+                            &::after {
                                 display: block;
                                 width: 100%;
                             }
                         }
-    
-                        &::after{
+
+                        &::after {
                             content: '';
                             height: 3px;
-                            background-color: rgba($color: #e679c2, $alpha: 1.0);
+                            background-color: rgba($color: #e679c2, $alpha: 1);
                             width: 0%;
                             position: absolute;
                             bottom: 0;
                             left: 0;
                             transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-                            
                         }
                     }
                 }
                 // ===============contact infor of the management of the website==========
-                .contact{
+                .contact {
                     position: absolute;
                     visibility: hidden;
                     top: 50px;
@@ -85,76 +84,76 @@
                     height: 350px;
                     padding: 10px 0px;
                     z-index: 5;
-                    background-color:rgba(255, 255, 255, 0.867);
-                    transition: 0.2s;  
-                    
-                    .wrapper{
+                    background-color: rgba(255, 255, 255, 0.867);
+                    transition: 0.2s;
+
+                    .wrapper {
                         width: 1250px;
                         height: 100%;
                         margin: 0px auto;
 
-                        .wrapper__left{
+                        .wrapper__left {
                             height: 100%;
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
                             align-items: center;
 
-                            .title{
+                            .title {
                                 font-weight: bolder;
                                 margin: 10px 0px;
                                 text-align: start;
                                 width: 100%;
                             }
 
-                            .infor{
+                            .infor {
                                 display: flex;
 
-                                div{
+                                div {
                                     width: 100%;
                                     margin-right: 25px;
                                     position: relative;
 
-                                    &::after{
-                                        content: "";
+                                    &::after {
+                                        content: '';
                                         width: 1px;
                                         height: 90%;
-                                        background-color: rgba($color: #5a6692, $alpha: 1.0);
+                                        background-color: rgba($color: #5a6692, $alpha: 1);
                                         position: absolute;
                                         top: 3%;
                                         right: 0px;
                                     }
 
-                                    &:last-child{
-                                        &::after{
+                                    &:last-child {
+                                        &::after {
                                             width: 0px;
                                         }
                                     }
 
-                                    h6{
+                                    h6 {
                                         font-weight: bolder;
                                     }
 
-                                    p{
-                                        color:  rgba($color: #e679c2, $alpha: 1.0)
+                                    p {
+                                        color: rgba($color: #e679c2, $alpha: 1);
                                     }
 
-                                    a{
+                                    a {
                                         display: block;
                                     }
                                 }
                             }
                         }
 
-                        .wrapper__right{
+                        .wrapper__right {
                             width: 100%;
                             height: 100%;
 
-                            .spinner{
+                            .spinner {
                                 margin: 0px auto;
                             }
 
-                            .map{
+                            .map {
                                 width: 100%;
                                 height: 100%;
                             }
@@ -165,40 +164,40 @@
         }
     }
     // =====================left part of the header=============
-    .wrapper__right{
+    .wrapper__right {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
         // =====================search=====================
-        .search-engine{
+        .search-engine {
             display: flex;
             width: 70%;
             justify-content: center;
             align-items: center;
             height: 40px;
-            background-color: rgba($color: #ffffff, $alpha: 1.0);
+            background-color: rgba($color: #ffffff, $alpha: 1);
             border-radius: 5px;
             position: relative;
 
-            .search-container{
+            .search-container {
                 width: 100%;
                 padding: 0px 10px;
-                .search-bar{
+                .search-bar {
                     display: flex;
                     flex: 1;
                     height: 100%;
 
-                    .search__input{
-                        width: 100%; 
+                    .search__input {
+                        width: 100%;
                         border: 0px;
                         height: 100%;
                         outline: none;
                     }
-                } 
+                }
 
-                .search-results{
+                .search-results {
                     visibility: hidden;
                     position: absolute;
                     top: 100%;
@@ -206,64 +205,62 @@
                     width: 100%;
                     z-index: 20;
                     // ==========each item ============
-                    div{
-                        border-bottom: solid 1px rgba($color: #e6e6e6, $alpha: 1.0);
-                        background-color: rgba($color: #f0f0f0, $alpha: 1.0);
+                    div {
+                        border-bottom: solid 1px rgba($color: #e6e6e6, $alpha: 1);
+                        background-color: rgba($color: #f0f0f0, $alpha: 1);
 
-
-                        &:hover{
-                            background-color: rgba($color: #ebebeb, $alpha: 1.0);
+                        &:hover {
+                            background-color: rgba($color: #ebebeb, $alpha: 1);
                         }
 
-                        a{
+                        a {
                             text-decoration: none;
-                            
-                            div{
+
+                            div {
                                 border: 0px;
                                 height: fit-content;
                             }
                         }
-                       
-                        &:last-child{
+
+                        &:last-child {
                             border: 0px;
                         }
                     }
-
                 }
             }
         }
-    
-        .user{
+
+        .user {
             margin-right: 3%;
             // ==================user, before logging in=============
-            .user__login-btn{
+            .user__login-btn {
                 color: white;
                 text-decoration: none;
-                background-color: rgba($color: #a772e8, $alpha: 1.0);
+                background-color: rgba($color: #a772e8, $alpha: 1);
                 padding: 10px 20px;
                 border-radius: 3px;
                 margin-right: 10px;
 
-                &:hover{
-                    background-color: rgba($color: #9157d6, $alpha: 1.0);
+                &:hover {
+                    background-color: rgba($color: #9157d6, $alpha: 1);
                 }
-                &:active{
-                    background-color: rgba($color: #9b64df, $alpha: 1.0);
+                &:active {
+                    background-color: rgba($color: #9b64df, $alpha: 1);
                 }
             }
             // =============user, after logging in==================
-            .user__container{
+            .user__container {
                 display: flex;
                 align-items: center;
                 justify-content: center;
 
-                .avatar{
+                .avatar {
                     width: 37px;
                     border-radius: 5px;
                     margin-right: 5px;
                 }
 
-                .username{
+                .username {
                     width: 100px;
                     color: white;
                     white-space: nowrap;
@@ -271,43 +268,41 @@
                     text-overflow: ellipsis;
                 }
             }
-
         }
     }
 }
 // ======responsive for both mobiles and tablets===================
 @media only screen and (min-width: 320px) and (max-width: 1024px) {
-    .wrapper{
+    .wrapper {
         width: 100%;
         justify-content: unset;
 
-        .wrapper__left{
+        .wrapper__left {
             display: flex;
             width: 23%;
 
-            .logo{
+            .logo {
                 display: none;
             }
             // =============navbar for computer==========
-            .nav-bar{
-                .nav-bar__icon{
+            .nav-bar {
+                .nav-bar__icon {
                     display: block;
                     font-size: 25px;
-                    color: rgba($color: #ffffff, $alpha: 1.0);
+                    color: rgba($color: #ffffff, $alpha: 1);
 
-                    &:hover{
-                        color: rgba($color: #050505, $alpha: 1.0);
+                    &:hover {
+                        color: rgba($color: #050505, $alpha: 1);
                     }
-                    
                 }
 
-                &:hover{
-                    .nav-bar__container{
+                &:hover {
+                    .nav-bar__container {
                         left: 0%;
 
-                        .list-option-container{
-                            .list-option{
-                                &::after{
+                        .list-option-container {
+                            .list-option {
+                                &::after {
                                     width: 0px;
                                 }
                             }
@@ -315,7 +310,7 @@
                     }
                 }
 
-                .nav-bar__container{
+                .nav-bar__container {
                     overflow-y: scroll;
                     display: flex;
                     flex-direction: column;
@@ -324,35 +319,35 @@
                     left: -70%;
                     z-index: 10;
                     width: 70%;
-                    background-color: rgba($color: #fbfbfb, $alpha: 1.0);
+                    background-color: rgba($color: #fbfbfb, $alpha: 1);
                     color: #000000;
                     padding: 30px 0px 0px 0px;
                     transition: 0.3s;
 
-                    .nav-bar__container-logo{
+                    .nav-bar__container-logo {
                         width: 30%;
                         margin: 20px auto;
                         display: block;
                     }
 
-                    .list-option-container{
-                        .list-option{
+                    .list-option-container {
+                        .list-option {
                             position: relative;
                             height: 50px;
                             padding-left: 30px;
                             width: 100%;
                             color: #000000;
                             z-index: 15;
-                            background-color: rgba($color: #ffffff, $alpha: 1.0);                        
-                            
-                            &:hover{
-                                background-color: rgba($color: #444444, $alpha: 1.0);
-                                color: rgba($color: #ffffff, $alpha: 1.0);    
+                            background-color: rgba($color: #ffffff, $alpha: 1);
+
+                            &:hover {
+                                background-color: rgba($color: #444444, $alpha: 1);
+                                color: rgba($color: #ffffff, $alpha: 1);
                             }
                         }
                     }
 
-                    .contact{
+                    .contact {
                         display: block;
                         padding: 10px;
                         height: 60%;
@@ -360,65 +355,65 @@
                         width: 100%;
                         top: unset;
 
-                        .wrapper{
+                        .wrapper {
                             width: 100%;
                             height: 100%;
                             display: flex;
                             flex-direction: column;
 
-                            .wrapper__left{
+                            .wrapper__left {
                                 width: 100%;
                                 height: auto;
 
-                                .title{
+                                .title {
                                     margin-bottom: 15px;
                                 }
 
-                                .infor{
+                                .infor {
                                     display: flex;
-    
-                                    div{
+
+                                    div {
                                         width: 100%;
                                         margin-right: 25px;
                                         position: relative;
-    
-                                        &::after{
-                                            content: "";
+
+                                        &::after {
+                                            content: '';
                                             width: 1px;
                                             height: 90%;
-                                            background-color: rgba($color: #5a6692, $alpha: 1.0);
+                                            background-color: rgba($color: #5a6692, $alpha: 1);
                                             position: absolute;
                                             top: 2%;
                                             right: -7%;
                                         }
-    
-                                        &:last-child{
+
+                                        &:last-child {
                                             margin-right: 0px;
 
-                                            &::after{
+                                            &::after {
                                                 width: 0px;
                                             }
                                         }
-    
-                                        h6{
+
+                                        h6 {
                                             font-weight: bolder;
                                         }
-    
-                                        p{
-                                            color:  rgba($color: #e679c2, $alpha: 1.0)
+
+                                        p {
+                                            color: rgba($color: #e679c2, $alpha: 1);
                                         }
-    
-                                        a{
+
+                                        a {
                                             display: block;
                                         }
                                     }
                                 }
                             }
 
-                            .wrapper__right{
+                            .wrapper__right {
                                 min-height: 100%;
 
-                                .map{
+                                .map {
                                     display: block;
                                     width: 100%;
                                     height: 100%;
@@ -430,8 +425,8 @@
             }
         }
 
-        .wrapper__right{
-            .search-engine{
+        .wrapper__right {
+            .search-engine {
                 width: 70%;
             }
         }
@@ -439,53 +434,53 @@
 }
 // ================responsive for mobiles only================
 @media only screen and (min-width: 320px) and (max-width: 600px) {
-    .wrapper{
-        .wrapper__left{
-            width:  fit-content;
+    .wrapper {
+        .wrapper__left {
+            width: fit-content;
 
-            .logo{
+            .logo {
                 display: none;
                 width: 20px;
                 height: 20px;
             }
             // =============navbar for computer==========
-            .nav-bar{
+            .nav-bar {
                 margin-left: 0px;
 
-                .nav-bar__icon{
+                .nav-bar__icon {
                     font-size: 24px;
                     padding: 0px 10px;
                 }
 
-                .nav-bar__container{
+                .nav-bar__container {
                     width: 75%;
                     left: -75%;
 
-                    .list-option-container{
-                        .list-option{
+                    .list-option-container {
+                        .list-option {
                             font-size: 12px;
                         }
                     }
 
-                    .contact{
+                    .contact {
                         padding: 5px;
 
-                        .wrapper{
-                            .wrapper__left{
-                                .title{
+                        .wrapper {
+                            .wrapper__left {
+                                .title {
                                     font-size: 12px;
                                 }
-                                .infor{
+                                .infor {
                                     font-size: 12px;
 
-                                    div{
+                                    div {
                                         margin-right: 15px;
 
-                                        &:last-child{
+                                        &:last-child {
                                             margin-right: 0px;
                                         }
 
-                                        h6{
+                                        h6 {
                                             font-size: 12px;
                                         }
                                     }
@@ -496,9 +491,9 @@
                 }
             }
         }
-        
-        .wrapper__right{
-            .search-engine{
+
+        .wrapper__right {
+            .search-engine {
                 width: 70%;
                 margin-right: 5px;
             }
@@ -507,19 +502,19 @@
 }
 
 @media only screen and (min-width: 450px) and (max-width: 600px) {
-    .wrapper{
-        .wrapper__left{
-            width:  fit-content;
+    .wrapper {
+        .wrapper__left {
+            width: fit-content;
 
-            .logo{
+            .logo {
                 display: none;
                 width: 20px;
                 height: 20px;
             }
         }
-        
-        .wrapper__right{
-            .search-engine{
+
+        .wrapper__right {
+            .search-engine {
                 width: 70%;
                 margin-left: 25px;
                 margin-right: 5px;
@@ -529,9 +524,9 @@
 }
 
 @media only screen and (min-width: 600px) and (max-width: 680px) {
-    .wrapper{
-        .wrapper__right{
-            .search-engine{
+    .wrapper {
+        .wrapper__right {
+            .search-engine {
                 width: 65%;
                 margin-left: 25px;
                 margin-right: 5px;
@@ -541,13 +536,13 @@
 }
 // =================responsive for computer===============
 @media only screen and (min-width: 1024px) and (max-width: 1115px) {
-    .wrapper{
-        .wrapper__left{
+    .wrapper {
+        .wrapper__left {
             // =============navbar for computer==========
-            .nav-bar{
-                .nav-bar__container{
-                    .list-option-container{
-                        .list-option{
+            .nav-bar {
+                .nav-bar__container {
+                    .list-option-container {
+                        .list-option {
                             font-size: 12px;
                         }
                     }
@@ -555,8 +550,8 @@
             }
         }
 
-        .wrapper__right{
-            .search-engine{
+        .wrapper__right {
+            .search-engine {
                 width: 70%;
                 margin-right: 15px;
             }
@@ -565,12 +560,12 @@
 }
 // ==============responsive for computer============
 @media only screen and (min-width: 1024px) and (max-width: 1590px) {
-    .wrapper{
-        .wrapper__left{
+    .wrapper {
+        .wrapper__left {
             // =============navbar for computer==========
-            .nav-bar{
-                .nav-bar__container{
-                    .contact{
+            .nav-bar {
+                .nav-bar__container {
+                    .contact {
                         height: 320px;
                     }
                 }

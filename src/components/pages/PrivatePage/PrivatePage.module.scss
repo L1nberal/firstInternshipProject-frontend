@@ -1,180 +1,175 @@
-.warning-wrapper{
+.warning-wrapper {
     min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    .warning{
+
+    .warning {
         margin: 10px 0px;
         color: red;
         font-size: 25px;
     }
 
-    .message{
+    .message {
         font-size: 20px;
         margin-bottom: 10px;
     }
 }
 
-.wrapper{
+.wrapper {
     min-height: 100vh;
     width: 100%;
 
-    .title{
+    .title {
         margin: 25px 0px;
         text-align: center;
 
-        span{
+        span {
             margin-left: 10px;
             color: #e679c2;
         }
     }
 
-    .tabs-head{
+    .tabs-head {
         width: 50%;
         margin: 0px auto;
     }
-    .private-infor-container{
+    .private-infor-container {
         width: 50%;
         margin: 0px auto;
         position: relative;
 
-        .image{
+        .image {
             width: 150px;
         }
 
-        .update-section{
+        .update-section {
             background-color: white;
             padding: 10px;
             border-radius: 10px;
 
-            .back-btn{
+            .back-btn {
                 position: absolute;
                 right: 2%;
 
-                .icon{
+                .icon {
                     margin-left: 7px;
                 }
             }
 
-            .change-infor-form{
-                margin-bottom:  15px;
+            .change-infor-form {
+                margin-bottom: 15px;
 
-                .form__image{
-                    margin-bottom:  15px;
+                .form__image {
+                    margin-bottom: 15px;
                     display: flex;
                     flex-direction: column;
-    
-                    h6{
+
+                    h6 {
                         font-weight: bold;
                     }
-    
-                    input{
+
+                    input {
                         margin: 10px 0px;
                     }
-    
-                    img{
+
+                    img {
                         width: 200px;
-    
                     }
                 }
-    
-                .form__username{
-                    margin-bottom:  15px;
-    
-                    h6{
+
+                .form__username {
+                    margin-bottom: 15px;
+
+                    h6 {
                         font-weight: bold;
                     }
-    
-                    input{
+
+                    input {
                         display: block;
                         margin-bottom: 10px;
-                        border: solid 1px rgba($color: #e3e3e3, $alpha: 1.0);
+                        border: solid 1px rgba($color: #e3e3e3, $alpha: 1);
                     }
-    
-                    
                 }
             }
-            
-            .change-password-form{
-                .form__password{
-                    margin-bottom:  15px;
-    
-                    h6{
+
+            .change-password-form {
+                .form__password {
+                    margin-bottom: 15px;
+
+                    h6 {
                         font-weight: bold;
-    
-                        .change-password-option{
+
+                        .change-password-option {
                             margin-right: 10px;
                         }
                     }
-    
-                    div{
+
+                    div {
                         margin-bottom: 10px;
-    
-                        input{
+
+                        input {
                             margin-left: 10px;
-                            border: solid 1px rgba($color: #e3e3e3, $alpha: 1.0);
+                            border: solid 1px rgba($color: #e3e3e3, $alpha: 1);
                         }
-    
-                        .invalid-feedback{
+
+                        .invalid-feedback {
                             width: 100%;
                             // height: 30px;
                             color: red;
                         }
                     }
-
                 }
-                .change-password-btn{
+                .change-password-btn {
                     background-color: #0d6efd;
                     color: #fff;
                     border: 0px;
                     padding: 10px;
                     border-radius: 7px;
-                    
-                    &:hover{
+
+                    &:hover {
                         background-color: #0c60dd;
                     }
                 }
             }
         }
 
-        .private-infor{
+        .private-infor {
             width: 100%;
             display: flex;
             background-color: white;
             padding: 10px;
             border-radius: 15px;
             min-height: 200px;
-    
-            img{
+
+            img {
                 width: 150px;
                 height: 150px;
             }
 
-            div{
+            div {
                 margin: 0px 10px 10px 10px;
 
-                span{
+                span {
                     color: #e679c2;
                 }
             }
         }
 
-        .buttons{
+        .buttons {
             position: absolute;
             bottom: 5%;
             right: 2%;
 
-            .disabled-user-btn{
+            .disabled-user-btn {
                 margin-left: 10px;
             }
         }
     }
 
-
-    .posted-apps-container{
+    .posted-apps-container {
         width: 50%;
         margin: 0px auto;
         position: relative;
@@ -184,26 +179,26 @@
         max-height: 760px;
         overflow: scroll;
 
-        .apps-posted{
+        .apps-posted {
             width: 100%;
 
-            .each-app{
+            .each-app {
                 margin-bottom: 20px;
                 height: 215px;
 
-                .each-app__image{
+                .each-app__image {
                     width: 130px;
                     margin-right: 10px;
                     height: 130px;
                 }
 
-                .each-app__description{
+                .each-app__description {
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
 
-                .more-btn{
+                .more-btn {
                     position: absolute;
                     right: 2%;
                     bottom: 5%;
@@ -212,7 +207,7 @@
         }
     }
 
-    .other-users-container{
+    .other-users-container {
         width: 50%;
         margin: 0px auto;
         position: relative;
@@ -222,26 +217,26 @@
         max-height: 800px;
         overflow: scroll;
 
-        .users{
-            .each-user{
+        .users {
+            .each-user {
                 margin-bottom: 15px;
 
-                &:last-child{
+                &:last-child {
                     margin-bottom: 0px;
                 }
-                
-                .each-user__head{
+
+                .each-user__head {
                     display: flex;
                     justify-content: space-between;
 
-                    .username{
+                    .username {
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         width: 100%;
                     }
 
-                    .from{
+                    .from {
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -251,15 +246,15 @@
                     }
                 }
 
-                .each-user__avatar{
+                .each-user__avatar {
                     width: 120px;
                 }
 
-                .each-user__email{
+                .each-user__email {
                     margin: 0px 10px;
                 }
 
-                .delete-btn{
+                .delete-btn {
                     position: absolute;
                     right: 2%;
                     bottom: 5%;
@@ -270,130 +265,129 @@
 }
 // ======responsive for both mobiles and tablets===================
 @media only screen and (min-width: 320px) and (max-width: 1270px) {
-    .warning-wrapper{
-        .warning{
+    .warning-wrapper {
+        .warning {
             font-size: 20px;
         }
 
-        .message{
+        .message {
             font-size: 15px;
             text-align: center;
         }
     }
 
-    .wrapper{
-        .tabs-head{
+    .wrapper {
+        .tabs-head {
             width: 90%;
 
-            li{
+            li {
                 display: block;
                 width: 100%;
                 font-size: 15px;
 
-                button{
+                button {
                     border: 0px;
                     width: 100%;
                     border-radius: 0px;
                 }
             }
         }
-    
-        .private-infor-container{
+
+        .private-infor-container {
             width: 95%;
-    
-            .update-section{
-                .back-btn{
-                    .icon{
+
+            .update-section {
+                .back-btn {
+                    .icon {
                         margin-left: 7px;
                     }
                 }
-    
-                .change-infor-form{
+
+                .change-infor-form {
                     margin: 10px 0px;
                 }
             }
-    
-            .private-infor{
+
+            .private-infor {
                 display: block;
                 padding: 10px;
-        
-                img{
+
+                img {
                     width: 150px;
                     display: block;
                     margin: 0px auto;
                     margin-bottom: 10px;
                 }
-    
-                div{
+
+                div {
                     text-align: center;
                 }
             }
 
-            .buttons{
+            .buttons {
                 position: unset;
                 margin-top: 10px;
 
-                .update-btn{
+                .update-btn {
                     display: block;
                     margin: 0px auto;
                     font-size: 14px;
                     margin-bottom: 10px;
                 }
 
-                .disabled-user-btn{
+                .disabled-user-btn {
                     margin: 0px auto;
                     display: block;
                     font-size: 14px;
                 }
             }
         }
-        
-        .posted-apps-container{
+
+        .posted-apps-container {
             width: 95%;
-    
-            .apps-posted{
-                .each-app{
-    
-                    .each-app__name{
+
+            .apps-posted {
+                .each-app {
+                    .each-app__name {
                         font-size: 15px;
                         white-space: nowrap;
                         overflow: hidden;
-                        text-overflow: ellipsis;                    
+                        text-overflow: ellipsis;
                     }
-    
-                    .each-app__image{
+
+                    .each-app__image {
                         width: 80px;
                         height: 80px;
                     }
-    
-                    .more-btn{
+
+                    .more-btn {
                         font-size: 15px;
                     }
                 }
             }
         }
-    
-        .other-users-container{
+
+        .other-users-container {
             width: 95%;
-    
-            .users{
-                .each-user{
-                    .each-user__head{
+
+            .users {
+                .each-user {
+                    .each-user__head {
                         font-size: 14px;
                     }
 
-                    .each-user__avatar{
+                    .each-user__avatar {
                         width: 80px;
                     }
-    
-                    .each-user__email{
+
+                    .each-user__email {
                         font-size: 14px;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
                     }
-    
-                    .delete-btn{
+
+                    .delete-btn {
                         font-size: 13px;
                     }
                 }
@@ -403,60 +397,59 @@
 }
 // =====================respinsive for tablets only ==============
 @media only screen and (min-width: 768px) and (max-width: 1094px) {
-    .wrapper{
-        .tabs-head{
-            li{
+    .wrapper {
+        .tabs-head {
+            li {
                 font-size: 20px;
             }
         }
 
-        .title{
+        .title {
             font-size: 22px;
         }
-    
-        .private-infor-container{
-            .buttons{
-                .update-btn{
+
+        .private-infor-container {
+            .buttons {
+                .update-btn {
                     font-size: 20px;
                 }
 
-                .disabled-user-btn{
+                .disabled-user-btn {
                     font-size: 20px;
                 }
             }
         }
-        
-        .posted-apps-container{
-            .apps-posted{
-                .each-app{
 
-                    .each-app__name{
-                        font-size: 20px;                   
-                    }
-                    
-                    .each-app__description{
+        .posted-apps-container {
+            .apps-posted {
+                .each-app {
+                    .each-app__name {
                         font-size: 20px;
                     }
 
-                    .more-btn{
+                    .each-app__description {
+                        font-size: 20px;
+                    }
+
+                    .more-btn {
                         font-size: 20px;
                     }
                 }
             }
         }
-    
-        .other-users-container{    
-            .users{
-                .each-user{
-                    .each-user__head{
+
+        .other-users-container {
+            .users {
+                .each-user {
+                    .each-user__head {
                         font-size: 20px;
                     }
 
-                    .each-user__email{
+                    .each-user__email {
                         font-size: 20px;
                     }
-    
-                    .delete-btn{
+
+                    .delete-btn {
                         font-size: 20px;
                     }
                 }

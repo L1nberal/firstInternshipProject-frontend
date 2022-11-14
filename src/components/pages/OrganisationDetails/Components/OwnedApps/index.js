@@ -1,40 +1,42 @@
-import classnames from 'classnames/bind'
-import React from 'react'
+import classnames from 'classnames/bind';
+import React from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
-import style from './OwnedApps.module.scss'
+import style from './OwnedApps.module.scss';
 
-const cx = classnames.bind(style)
+const cx = classnames.bind(style);
 
-function OwnedApps({apps, organisations, organisationId, organisation}) {
-    let ownedApps = []
-    
+function OwnedApps({ apps, organisations, organisationId, organisation }) {
+    let ownedApps = [];
+
     // detecting the device's OS
     function getMobileOperatingSystem() {
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    
+
         // Windows Phone must come first because its UA also contains "Android"
         if (/windows phone/i.test(userAgent)) {
-            return 'WindowPhone'
+            return 'WindowPhone';
         }
-    
-        if (/android/i.test(userAgent)) {
-            return 'Android'
 
+        if (/android/i.test(userAgent)) {
+            return 'Android';
         }
-    
+
         // iOS detection from: http://stackoverflow.com/a/9039885/177710
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            return 'IOS'
+            return 'IOS';
         }
-    
-        return "unknown";
+
+        return 'unknown';
     }
 
     return (
         <div className={cx('wrapper')}>
-            <h4 className={cx('title')}>Danh sách các ứng dụng được sở hữu bởi <Link to={`/organisation-details-${organisationId}`}>{organisation.attributes.name}</Link></h4>
+            <h4 className={cx('title')}>
+                Danh sách các ứng dụng được sở hữu bởi{' '}
+                <Link to={`/organisation-details-${organisationId}`}>{organisation.attributes.name}</Link>
+            </h4>
 
             <div className={cx('apps-container')}>
                 <Table striped bordered hover>
@@ -47,14 +49,16 @@ function OwnedApps({apps, organisations, organisationId, organisation}) {
                             <th className={cx('head__download-link')}>Liên kết tải xuống</th>
                         </tr>
                     </thead>
-                    {organisations.map(organisation => {
-                        if(organisation.id === organisationId) {
+                    {organisations.map((organisation) => {
+                        if (organisation.id === organisationId) {
                             return (
                                 <React.Fragment key={organisation.id}>
                                     {apps.map((app, index) => {
-                                        if(app.attributes.Owner.data.attributes.name === organisation.attributes.name) {
-                                            ownedApps.push(app)
-                                        } 
+                                        if (
+                                            app.attributes.Owner.data.attributes.name === organisation.attributes.name
+                                        ) {
+                                            ownedApps.push(app);
+                                        }
                                     })}
 
                                     {ownedApps.map((ownedApp, index) => {
@@ -66,36 +70,58 @@ function OwnedApps({apps, organisations, organisationId, organisation}) {
                                                             <td>{index + 1}</td>
                                                             <td className={cx('image')}>
                                                                 <Link to={`/app-details-${ownedApp.id}`}>
-                                                                    <img 
-                                                                        src={`http://localhost:1337${ownedApp.attributes.photo.data.attributes.url}`} 
+                                                                    <img
+                                                                        src={`http://localhost:1337${ownedApp.attributes.photo.data.attributes.url}`}
                                                                     />
                                                                 </Link>
                                                             </td>
-                                                            <td className={cx('name')} >
+                                                            <td className={cx('name')}>
                                                                 <span>{ownedApp.attributes.name}</span>
                                                             </td>
                                                             <td className={cx('category')}>
-                                                                <span>{ownedApp.attributes.category.data.attributes.name}</span>
+                                                                <span>
+                                                                    {ownedApp.attributes.category.data.attributes.name}
+                                                                </span>
                                                             </td>
                                                             <td className={cx('download-link')}>
                                                                 {getMobileOperatingSystem() === 'Android' && (
-                                                                    <a className={cx('head__download-link')} href={ownedApp.attributes.androidLink} target="blank"><img src='/pictures/android-download.png'/></a>
+                                                                    <a
+                                                                        className={cx('head__download-link')}
+                                                                        href={ownedApp.attributes.androidLink}
+                                                                        target="blank"
+                                                                    >
+                                                                        <img src="/pictures/android-download.png" />
+                                                                    </a>
                                                                 )}
                                                                 {getMobileOperatingSystem() === 'IOS' && (
-                                                                    <a className={cx('head__download-link')} href={ownedApp.attributes.iosLink} target="blank"><img src='/pictures/Apple-ios-download.png'/></a>
+                                                                    <a
+                                                                        className={cx('head__download-link')}
+                                                                        href={ownedApp.attributes.iosLink}
+                                                                        target="blank"
+                                                                    >
+                                                                        <img src="/pictures/Apple-ios-download.png" />
+                                                                    </a>
                                                                 )}
                                                                 {getMobileOperatingSystem() === 'WindowPhone' && (
-                                                                    <span className={cx('message')}>Hiện tại ứng dụng này vẫn chưa có trên nền tảng Window phone</span>
+                                                                    <span className={cx('message')}>
+                                                                        Hiện tại ứng dụng này vẫn chưa có trên nền tảng
+                                                                        Window phone
+                                                                    </span>
                                                                 )}
-                                                                {getMobileOperatingSystem() != 'Android' && getMobileOperatingSystem() != 'IOS' && getMobileOperatingSystem() != 'WindowPhone' && (
-                                                                    <span className={cx('message')}>Ứng dụng không khả dụng trên thiết bị của bạn</span>
-                                                                )}
+                                                                {getMobileOperatingSystem() != 'Android' &&
+                                                                    getMobileOperatingSystem() != 'IOS' &&
+                                                                    getMobileOperatingSystem() != 'WindowPhone' && (
+                                                                        <span className={cx('message')}>
+                                                                            Ứng dụng không khả dụng trên thiết bị của
+                                                                            bạn
+                                                                        </span>
+                                                                    )}
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </React.Fragment>
                                             </React.Fragment>
-                                        )
+                                        );
                                     })}
                                     {ownedApps.length === 0 && (
                                         <td colSpan={5}>
@@ -106,13 +132,13 @@ function OwnedApps({apps, organisations, organisationId, organisation}) {
                                         </td>
                                     )}
                                 </React.Fragment>
-                            )
+                            );
                         }
                     })}
                 </Table>
             </div>
         </div>
-    )
+    );
 }
 
-export default OwnedApps
+export default OwnedApps;

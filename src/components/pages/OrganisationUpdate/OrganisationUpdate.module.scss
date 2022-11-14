@@ -1,24 +1,24 @@
-.warning-wrapper{
+.warning-wrapper {
     height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    .warning{
+
+    .warning {
         margin: 10px 0px;
         color: red;
         font-size: 25px;
     }
 
-    .message{
+    .message {
         font-size: 20px;
         margin-bottom: 10px;
     }
 }
 
-.wrapper{
+.wrapper {
     width: 1250px;
     min-height: 100vh;
     margin-top: 50px;
@@ -26,35 +26,35 @@
     padding: 15px;
     border-radius: 10px;
 
-    .form{
-        .infor-input{
+    .form {
+        .infor-input {
             height: 50px;
         }
 
-        .about{
+        .about {
             width: 100%;
             min-height: 100px;
             resize: none;
-            border: solid 1px rgba($color: #c6c6c6, $alpha: 1.0);
+            border: solid 1px rgba($color: #c6c6c6, $alpha: 1);
             border-radius: 5px;
         }
 
-        .logo{
+        .logo {
             margin: 15px 0px;
 
-            img{
+            img {
                 width: 200px;
                 border-radius: 10px;
             }
         }
 
-        .photos{
+        .photos {
             margin: 15px 0px;
             width: 100%;
             overflow-x: scroll;
             display: flex;
 
-            img{
+            img {
                 width: 250px;
                 height: auto;
                 border-radius: 10px;
@@ -62,31 +62,30 @@
             }
         }
 
-        .checkboxes{
+        .checkboxes {
             display: flex;
             width: 100%;
             overflow-x: scroll;
 
-            .checkbox-container{
+            .checkbox-container {
                 margin-right: 40px;
                 height: 250px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                
-                
-                .app-container{
+
+                .app-container {
                     height: 100%;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
 
-                    .name{
+                    .name {
                         text-align: center;
                         height: 90px;
                     }
 
-                    img{
+                    img {
                         width: 200px;
                         border-radius: 15px;
                     }
@@ -98,48 +97,48 @@
 
 // ======responsive for both mobiles and tablets===================
 @media only screen and (min-width: 320px) and (max-width: 1024px) {
-    .wrapper{
+    .wrapper {
         width: 100%;
         padding: 0px 10px;
         background-color: #f1f1f1;
 
-        .form{
-            background-color: rgba($color: #ffffff, $alpha: 1.0);
+        .form {
+            background-color: rgba($color: #ffffff, $alpha: 1);
             padding: 10px;
             border-radius: 10px;
             font-size: 15px;
 
-            .infor-input{
+            .infor-input {
                 font-size: 15px;
             }
-    
-            .about{
+
+            .about {
                 font-size: 15px;
             }
-    
-            .logo{
+
+            .logo {
                 margin: 15px 0px;
-    
-                img{
+
+                img {
                     display: block;
                     width: 150px;
                     margin: 0px auto;
                 }
             }
-    
-            .photos{
-                img{
+
+            .photos {
+                img {
                     width: 200px;
                     height: auto;
                 }
             }
-    
-            .checkboxes{
-                .checkbox-container{
+
+            .checkboxes {
+                .checkbox-container {
                     height: 180px;
-                    
-                    .app-container{
-                        img{
+
+                    .app-container {
+                        img {
                             width: 120px;
                             height: 120px;
                         }
@@ -147,7 +146,7 @@
                 }
             }
 
-            .submit-btn{
+            .submit-btn {
                 display: block;
                 margin: 0px auto;
             }
@@ -156,47 +155,47 @@
 }
 // =================responsive for mobiles only=================
 @media only screen and (min-width: 320px) and (max-width: 599px) {
-    .warning-wrapper{
-        .message{
+    .warning-wrapper {
+        .message {
             text-align: center;
         }
     }
 
-    .wrapper{
-        .form{
+    .wrapper {
+        .form {
             font-size: 14px;
 
-            .infor-input{
+            .infor-input {
                 font-size: 14px;
             }
-    
-            .about{
+
+            .about {
                 font-size: 14px;
             }
-    
-            .logo{
+
+            .logo {
                 margin: 15px 0px;
-    
-                img{
+
+                img {
                     width: 100px;
                     margin: 0px auto;
                 }
             }
-    
-            .photos{
-                img{
+
+            .photos {
+                img {
                     width: 180px;
                     height: auto;
                 }
             }
-    
-            .checkboxes{
-                .checkbox-container{
+
+            .checkboxes {
+                .checkbox-container {
                     height: 180px;
                 }
             }
 
-            .submit-btn{
+            .submit-btn {
                 display: block;
                 margin: 0px auto;
             }

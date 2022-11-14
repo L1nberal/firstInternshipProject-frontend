@@ -1,77 +1,77 @@
-.wrapper{
+.wrapper {
     width: 1250px;
     min-height: 100vh;
 
-    .title{
+    .title {
         margin: 30px 0px;
         text-align: center;
 
-        span{
-            color: rgba($color: #e39696, $alpha: 1.0);
+        span {
+            color: rgba($color: #e39696, $alpha: 1);
         }
     }
 
-    .apps-container{
+    .apps-container {
         margin-top: 50px;
 
-        .head{
-            .head__index{
+        .head {
+            .head__index {
                 text-align: center;
             }
-            .head__image{
+            .head__image {
                 text-align: center;
             }
-            .head__name{
+            .head__name {
                 text-align: center;
             }
-            .head__category{
+            .head__category {
                 text-align: center;
             }
-            .head__download-link{
+            .head__download-link {
                 text-align: center;
             }
         }
 
-        .each-app{
+        .each-app {
             vertical-align: middle;
 
-            .image{
+            .image {
                 padding: 15px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
 
-                img{
+                img {
                     width: 150px;
                     border-radius: 15px;
                 }
             }
 
-            .name{
+            .name {
                 text-align: center;
             }
 
-            .category{
+            .category {
                 text-align: center;
             }
 
-            .download-link{
+            .download-link {
                 text-align: center;
-                color: rgba($color: #e39696, $alpha: 1.0);
-                
-                img{
+                color: rgba($color: #e39696, $alpha: 1);
+
+                img {
                     display: block;
                     width: 200px;
                     margin: 0px auto;
                 }
             }
         }
-        
-        .message{
+
+        .message {
             text-align: center;
 
-            span{
-                color: rgba($color: #e39696, $alpha: 1.0);
+            span {
+                color: rgba($color: #e39696, $alpha: 1);
             }
         }
     }

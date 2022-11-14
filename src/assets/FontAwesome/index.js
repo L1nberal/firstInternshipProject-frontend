@@ -12,9 +12,8 @@ import {
     faKey,
     faBars,
     faEye,
-    faEyeSlash
-} from '@fortawesome/free-solid-svg-icons'
-
+    faEyeSlash,
+} from '@fortawesome/free-solid-svg-icons';
 
 export {
     faAngleLeft,
@@ -30,6 +29,5 @@ export {
     faKey,
     faBars,
     faEye,
-    faEyeSlash
-}
-
+    faEyeSlash,
+};
